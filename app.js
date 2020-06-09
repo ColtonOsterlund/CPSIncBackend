@@ -532,6 +532,9 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 			}
 			else if(res != null){
 				//passwords match
+				//create and assign JWT
+				token = jwt.sign({_id: objects[0].userID}, process.env.TOKEN_SECRET, {expiresIn: '1h'}) //change the id from username to the userID
+				res.header('auth-token', token).header('user-id', objects[0].userID).send("Logged In")
 			}
 			else{
 				//passwords dont match
@@ -543,10 +546,6 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 		//res.send("logged in")
 	
 		//console.log("got here 4")
-
-		//create and assign JWT
-		token = jwt.sign({_id: objects[0].userID}, process.env.TOKEN_SECRET, {expiresIn: '1h'}) //change the id from username to the userID
-		res.header('auth-token', token).header('user-id', objects[0].userID).send("Logged In")
 
 
 	})

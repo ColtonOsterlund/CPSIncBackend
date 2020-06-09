@@ -527,6 +527,9 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 		}
 		
 		bcrypt.compare(password, objects[0].password, function(err, response){
+
+			console.log(response)
+
 			if(err){
 				return res.send("error comparing password with stored hashed password: " + err)
 			}

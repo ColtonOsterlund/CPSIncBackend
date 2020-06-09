@@ -526,11 +526,11 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 			return res.send("Username or Password is Incorrect")
 		}
 		
-		bcrypt.compare(password, objects[0].password, function(err, res){
+		bcrypt.compare(password, objects[0].password, function(err, response){
 			if(err){
 				return res.send("error comparing password with stored hashed password: " + err)
 			}
-			else if(res != null){
+			else if(response != null){
 				//passwords match
 				//create and assign JWT
 				console.log("passwords match")

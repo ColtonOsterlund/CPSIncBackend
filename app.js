@@ -530,7 +530,7 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 			if(err){
 				return res.send("error comparing password with stored hashed password: " + err)
 			}
-			else if(response != null){
+			else if(response == true){
 				//passwords match
 				//create and assign JWT
 				console.log("passwords match")

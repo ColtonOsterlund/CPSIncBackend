@@ -526,7 +526,7 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 			return res.send("Username or Password is Incorrect")
 		}
 		
-		bcrypt.compareSync(password, objects[0].password, function(err, res){
+		bcrypt.compare(password, objects[0].password, function(err, res){
 			if(err){
 				return res.send("error comparing password with stored hashed password: " + err)
 			}
@@ -541,7 +541,7 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 			else{
 				//passwords dont match
 				console.log("passwords dont match")
-				
+
 				return res.send("Username or Passoword is Incorrect")
 			}
 		})

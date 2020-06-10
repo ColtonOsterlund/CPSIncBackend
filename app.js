@@ -460,7 +460,7 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 
 	var username = req.body.username
 	var email = req.body.email
-	var hashedPassword = bcrypt.hash(req.body.password, 10, function(err, hash){
+	bcrypt.hash(req.body.password, 10, function(err, hashPass){
 		if(err){
 			console.log("error while hashing password: " + err)
 			return res.send(err)	
@@ -468,7 +468,7 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 
 		else{
 
-			var userID = bcrypt.hash(email, 10, function(err, hash){
+			bcrypt.hash(email, 10, function(err, hashID){
 				if(err){
 					console.log("error creating userID: " + err)
 					return res.send(err)	
@@ -487,7 +487,7 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 						}
 						else{
 							//save user to database
-							sqlQuery("INSERT INTO user (username, email, password, userID) VALUES (?, ?, ?, ?)", [username, email, hashedPassword, userID], (err, objects) =>{
+							sqlQuery("INSERT INTO user (username, email, password, userID) VALUES (?, ?, ?, ?)", [username, email, hashPass, hashID], (err, objects) =>{
 								if(err){
 									res.send("Server Error")
 									return

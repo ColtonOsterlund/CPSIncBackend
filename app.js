@@ -460,44 +460,51 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 
 	var username = req.body.username
 	var email = req.body.email
-	var hashedPassword = bcrypt.hashSync(req.body.password, 10, function(err, hash){
+	var hashedPassword = bcrypt.hash(req.body.password, 10, function(err, hash){
 		if(err){
 			console.log("error while hashing password: " + err)
 			return res.send(err)	
 		}
-	})
-	//use hashSync so that it is synchronous and finished the hash before the next code executes - implements a callback function itself
-	var userID = bcrypt.hash(email, 10, function(err, hash){
-		if(err){
-			console.log("error creating userID: " + err)
-			return res.send(err)	
-		}
-		else{
-			sqlQuery("SELECT * FROM user WHERE username = ? OR email = ?", [username, email], (err, objects) => {
 
+		else{
+
+			var userID = bcrypt.hash(email, 10, function(err, hash){
 				if(err){
-					res.send("Server Error")
-					return
-				}
-		
-				if(objects[0] != undefined){
-					res.send("Username or Email has Already Been Used")
-					return
+					console.log("error creating userID: " + err)
+					return res.send(err)	
 				}
 				else{
-					//save user to database
-					sqlQuery("INSERT INTO user (username, email, password, userID) VALUES (?, ?, ?, ?)", [username, email, hashedPassword, userID], (err, objects) =>{
+					sqlQuery("SELECT * FROM user WHERE username = ? OR email = ?", [username, email], (err, objects) => {
+		
 						if(err){
 							res.send("Server Error")
 							return
 						}
-		
-						res.header('user-id', userID).send("User created: " + username)
+				
+						if(objects[0] != undefined){
+							res.send("Username or Email has Already Been Used")
+							return
+						}
+						else{
+							//save user to database
+							sqlQuery("INSERT INTO user (username, email, password, userID) VALUES (?, ?, ?, ?)", [username, email, hashedPassword, userID], (err, objects) =>{
+								if(err){
+									res.send("Server Error")
+									return
+								}
+				
+								res.header('user-id', userID).send("User created: " + username)
+							})
+						}
 					})
 				}
-			})
+			}) //use the email since you know it is going to be unique for each user
+
+
 		}
-	}) //use the email since you know it is going to be unique for each user
+	})
+	//use hashSync so that it is synchronous and finished the hash before the next code executes - implements a callback function itself
+	
 
  })
  

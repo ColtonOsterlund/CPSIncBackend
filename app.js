@@ -539,7 +539,7 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 			console.log(response)
 
 			if(err){
-				console.log(error)
+				console.log(err)
 				return res.send("error comparing password with stored hashed password: " + err)
 			}
 			else if(response == true){

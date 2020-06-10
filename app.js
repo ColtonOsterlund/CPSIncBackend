@@ -493,7 +493,7 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 									return
 								}
 				
-								res.header('user-id', userID).send("User created: " + username)
+								res.header('user-id', hashID).send("User created: " + username)
 							})
 						}
 					})

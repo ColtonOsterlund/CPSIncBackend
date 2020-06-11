@@ -548,7 +548,7 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 				//create and assign JWT
 				console.log("passwords match")
 
-				token = jwt.sign({_id: objects[0].userID}, process.env.TOKEN_SECRET, {expiresIn: '1h'}) //change the id from username to the userID
+				token = jwt.sign({_id: objects[0].userID}, process.env.TOKEN_SECRET, {expiresIn: '6h'}) //change the id from username to the userID
 				return res.header('auth-token', token).header('user-id', objects[0].userID).send("Logged In")
 			}
 			else{

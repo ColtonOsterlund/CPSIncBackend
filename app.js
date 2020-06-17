@@ -44,6 +44,8 @@ app.get("/user/email", authorizeUser, (req, res) => {
 				jsonObjects.push(userObject)
 			})
 
+			console.log(JSON.stringify(jsonObjects))
+
 			return res.send(JSON.stringify(jsonObjects))
 		}
 	})

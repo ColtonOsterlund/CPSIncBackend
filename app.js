@@ -25,6 +25,30 @@ app.get("/", authorizeUser, (req, res) => {
 	
 })
 
+app.get("/user/email", authorizeUser, (req, res) => {
+
+	var userID = encrypt(String(req.header("user-id")))
+	
+	sqlQuery("SELECT * FROM user WHERE userID = ?", userID.substring(0, 60), (err, objects) => {
+		if(err){
+			return res.send("Error: " + err)
+		}
+		else{
+			var jsonObjects = [] //empty array to put all herds into to then be turned to a JSON object
+
+			objects.forEach(function(user){
+				var userObject = {
+					email: user.email
+				}
+
+				jsonObjects.push(userObject)
+			})
+
+			return res.send(JSON.stringify(jsonObjects))
+		}
+	})
+})
+
 
 
 app.get("/herd", authorizeUser, (req, res) => {

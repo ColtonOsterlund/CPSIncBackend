@@ -29,7 +29,7 @@ app.get("/user/email", authorizeUser, (req, res) => {
 
 	var userID = encrypt(String(req.header("user-id")))
 	
-	sqlQuery("SELECT * FROM user WHERE userID = ?", userID.substring(0, 60), (err, objects) => {
+	sqlQuery("SELECT * FROM user WHERE userID = ?", [userID], (err, objects) => {
 		if(err){
 			return res.send("Error: " + err)
 		}
@@ -302,21 +302,21 @@ app.post('/sync', authorizeUser, (req, res) => {
 
 	console.log(userID.substring(0, 59))
 
-	sqlQuery("DELETE FROM herd WHERE userID = ?", [userID.substring(0, 60)], (err, rows) => {
+	sqlQuery("DELETE FROM herd WHERE userID = ?", [userID], (err, rows) => {
 
 		if(err != null){
 			return res.send(err)
 		}
 
 		else{
-			sqlQuery("DELETE FROM cow WHERE userID = ?", [userID.substring(0, 60)], (err, rows) => {
+			sqlQuery("DELETE FROM cow WHERE userID = ?", [userID], (err, rows) => {
 
 				if(err != null){
 					return res.send(err)
 				}
 		
 				else{
-					sqlQuery("DELETE FROM test WHERE userID = ?", [userID.substring(0, 60)], (err, rows) => {
+					sqlQuery("DELETE FROM test WHERE userID = ?", [userID], (err, rows) => {
 
 						if(err != null){
 							return res.send(err)
@@ -352,7 +352,7 @@ app.post('/herd', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 
 	console.log(userID.substring(0, 59))
 
-	sqlQuery("DELETE FROM herd WHERE userID = ?", [userID.substring(0, 60)], (err, rows) => {
+	sqlQuery("DELETE FROM herd WHERE userID = ?", [userID], (err, rows) => {
 
 		if(err != null){
 			return res.send(err)

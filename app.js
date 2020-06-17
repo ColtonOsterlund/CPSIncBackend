@@ -28,6 +28,8 @@ app.get("/", authorizeUser, (req, res) => {
 app.get("/user/email", authorizeUser, (req, res) => {
 
 	var userID = encrypt(String(req.header("user-id")))
+
+	console.log("User id = " + userID)
 	
 	sqlQuery("SELECT * FROM user WHERE userID = ?", [userID], (err, objects) => {
 		if(err){

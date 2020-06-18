@@ -536,6 +536,7 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 			//console.log("got here 1")
 			//res.send("Server Error")
 			return console.log("ERROR : " + err)
+		}
 
 		if(objects[0] == undefined){ //email did not match - user not in database
 			//console.log("got here 2")
@@ -570,7 +571,7 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 		//res.send("logged in")
 	
 		//console.log("got here 4")
-
+	
 
 	})
 

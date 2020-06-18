@@ -25,43 +25,6 @@ app.get("/", authorizeUser, (req, res) => {
 	
 })
 
-app.get("/user/email/address", authorizeUser, (req, res) => {
-
-	var userID = String(req.header("user-id"))
-
-	console.log("User id = " + userID)
-	
-	sqlQuery("SELECT * FROM user WHERE userID = ?", [userID], (err, objects) => {
-		if(err){
-			return res.send("Error: " + err)
-		}
-		else{
-			var jsonObjects = [] //empty array to put all herds into to then be turned to a JSON object
-
-			objects.forEach(function(user){
-				var userObject = {
-					email: user.email,
-					address1: user.address1,
-					address2: user.address2,
-					city: user.city,
-					country: user.country,
-					firstName: user.firstName,
-					lastName: user.lastName,
-					phone: user.phone,
-					province: user.province,
-					zip: user.zip
-				}
-
-				jsonObjects.push(userObject)
-			})
-
-			console.log(JSON.stringify(jsonObjects))
-
-			return res.send(JSON.stringify(jsonObjects))
-		}
-	})
-})
-
 
 
 app.get("/herd", authorizeUser, (req, res) => {
@@ -500,6 +463,12 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 	var firstName = req.body.firstName
 	var lastName = req.body.lastName
 	var phone = req.body.phone
+	var address1 = req.body.address1
+	var address2 = req.body.address2
+	var city = req.body.city
+	var country = req.body.country
+	var province = req.body.province
+	var zipCode = req.body.zipCode
 	bcrypt.hash(req.body.password, 10, function(err, hashPass){
 		if(err){
 			console.log("error while hashing password: " + err)
@@ -527,7 +496,7 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 						}
 						else{
 							//save user to database
-							sqlQuery("INSERT INTO user (username, email, password, userID) VALUES (?, ?, ?, ?)", [username, email, hashPass, hashID], (err, objects) =>{
+							sqlQuery("INSERT INTO user (username, email, password, userID, firstName, lastName, phone, address1, address2, city, country, province, zipCode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [username, email, hashPass, hashID, firstName, lastName, phone, address1, address2, city, country, province, zipCode], (err, objects) =>{
 								if(err){
 									res.send("Server Error")
 									return
@@ -544,49 +513,6 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 		}
 	})
 	//use hashSync so that it is synchronous and finished the hash before the next code executes - implements a callback function itself
-	
-
- })
- 
- 
- 
-
- app.post('/user/address', authorizeUser, (req, res) => { 
-	console.log(req.body)
-	
-	const validationError = joi.validate(req.body, joiUserValidationSchema)
-
-	console.log("VALIDATION ERROR: " + validationError)
-	
-	if(validationError[0] != null){ //checks if there was a validation error
-		return res.send(validationError.details[0].message)
-		console.log("validation error !!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-	}
-	
-	var userID = String(req.header("user-id"))
-
-	var address1 = req.body.address1
-	var address2 = req.body.address2
-	var city = req.body.city
-	var country = req.body.country
-	var province = req.body.province
-	var zip =  req.body.zip
-	
-	sqlQuery("INSERT INTO user (address1, address2, city, country, province, zip) VALUES (?, ?, ?, ?, ?, ?) WHERE userID = ?", [address1, address2, city, country, province, zip, userID], (err, objects) => {
-		
-						if(err){
-							res.send("Server Error")
-							return
-						}
-				
-						if(objects[0] != undefined){
-							res.send("Username or Email has Already Been Used")
-							return
-						}
-						else{
-							return res.send("Success")
-						}
-					})
 	
 
  })
@@ -610,7 +536,6 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 			//console.log("got here 1")
 			//res.send("Server Error")
 			return console.log("ERROR : " + err)
-		}
 
 		if(objects[0] == undefined){ //email did not match - user not in database
 			//console.log("got here 2")

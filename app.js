@@ -550,6 +550,48 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
  
  
  
+
+ app.post('/user/address', authorizeUser, (req, res) => { 
+	console.log(req.body)
+	
+	const validationError = joi.validate(req.body, joiUserValidationSchema)
+
+	console.log("VALIDATION ERROR: " + validationError)
+	
+	if(validationError[0] != null){ //checks if there was a validation error
+		return res.send(validationError.details[0].message)
+		console.log("validation error !!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+	}
+	
+	var userID = String(req.header("user-id"))
+
+	var address1 = req.body.address1
+	var address2 = req.body.address2
+	var city = req.body.city
+	var country = req.body.country
+	var province = req.body.province
+	var zip =  req.body.zip
+	
+	sqlQuery("INSERT INTO user (address1, address2, city, country, province, zip) VALUES (?, ?, ?, ?, ?, ?) WHERE userID = ?", [address1, address2, city, country, province, zip, userID], (err, objects) => {
+		
+						if(err){
+							res.send("Server Error")
+							return
+						}
+				
+						if(objects[0] != undefined){
+							res.send("Username or Email has Already Been Used")
+							return
+						}
+						else{
+							return res.send("Success")
+						}
+					})
+	
+
+ })
+
+
  
  
   app.post('/user/login', (req, res) => {

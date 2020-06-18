@@ -497,6 +497,9 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 
 	var username = req.body.username
 	var email = req.body.email
+	var firstName = req.body.firstName
+	var lastName = req.body.lastName
+	var phone = req.body.phone
 	bcrypt.hash(req.body.password, 10, function(err, hashPass){
 		if(err){
 			console.log("error while hashing password: " + err)

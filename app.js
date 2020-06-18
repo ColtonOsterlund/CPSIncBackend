@@ -25,7 +25,7 @@ app.get("/", authorizeUser, (req, res) => {
 	
 })
 
-app.get("/user/email", authorizeUser, (req, res) => {
+app.get("/user/email/address", authorizeUser, (req, res) => {
 
 	var userID = String(req.header("user-id"))
 
@@ -40,7 +40,16 @@ app.get("/user/email", authorizeUser, (req, res) => {
 
 			objects.forEach(function(user){
 				var userObject = {
-					email: user.email
+					email: user.email,
+					address1: user.address1,
+					address2: user.address2,
+					city: user.city,
+					country: user.country,
+					firstName: user.firstName,
+					lastName: user.lastName,
+					phone: user.phone,
+					province: user.province,
+					zip: user.zip
 				}
 
 				jsonObjects.push(userObject)

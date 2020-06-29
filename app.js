@@ -6,6 +6,7 @@ const morgan = require('morgan');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const joi = require('@hapi/joi')
+const customJoi = joi.extend(require('joi-phone-number'))
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv')
@@ -244,10 +245,11 @@ app.get("/test", authorizeUser, (req, res) => {
 
 
   //VALIDATION
- const joiUserValidationSchema = joi.object().keys({
-	 username: joi.string().min(6).required(),
-	 email: joi.string().required().email(),
-	 password: joi.string().min(6).required()
+ const joiUserValidationSchema = customJoi.object().keys({
+	 username: customJoi.string().min(6).required(),
+	 email: customJoi.string().required().email(),
+	 password: customJoi.string().min(6).required(),
+	 phone: customJoi.string().required().phoneNumber({format: e164})
  })
  
  const joiHerdValidationSchema = {
@@ -449,7 +451,7 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
  app.post('/user/register', (req, res) => { 
 	console.log(req.body)
 	
-	joi.validate(req.body, joiUserValidationSchema, (err, value) => {
+	customJoi.validate(req.body, joiUserValidationSchema, (err, value) => {
 		if(err){
 			return res.send(err.details[0].message)
 		}

@@ -451,7 +451,7 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 	
 	joi.validate(req.body, joiUserValidationSchema, (err, value) => {
 		if(err){
-			return res.send(validationError.details[0].message)
+			return res.send(err.details[0].message)
 		}
 		else{
 			var username = req.body.username

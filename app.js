@@ -246,7 +246,7 @@ app.get("/test", authorizeUser, (req, res) => {
   //VALIDATION
  const joiUserValidationSchema = joi.object().keys({
 	 username: joi.string().min(6).required(),
-	 email: joi.string().min(7).required().email(),
+	 email: joi.string().required().email(),
 	 password: joi.string().min(6).required()
  })
  
@@ -449,71 +449,68 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
  app.post('/user/register', (req, res) => { 
 	console.log(req.body)
 	
-	const validationError = joi.validate(req.body, joiUserValidationSchema)
-
-	console.log("VALIDATION ERROR: " + validationError)
-	
-	if(validationError[0] != null){ //checks if there was a validation error
-		return res.send(validationError.details[0].message)
-		console.log("validation error !!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-	}
-
-	var username = req.body.username
-	var email = req.body.email
-	var firstName = req.body.firstName
-	var lastName = req.body.lastName
-	var phone = req.body.phone
-	var address1 = req.body.address1
-	var address2 = req.body.address2
-	var city = req.body.city
-	var country = req.body.country
-	var province = req.body.province
-	var zipCode = req.body.zipCode
-	bcrypt.hash(req.body.password, 10, function(err, hashPass){
+	joi.validate(req.body, joiUserValidationSchema, (err, value) => {
 		if(err){
-			console.log("error while hashing password: " + err)
-			return res.send(err)	
+			return res.send(validationError.details[0].message)
 		}
-
 		else{
-
-			bcrypt.hash(email, 10, function(err, hashID){
+			var username = req.body.username
+			var email = req.body.email
+			var firstName = req.body.firstName
+			var lastName = req.body.lastName
+			var phone = req.body.phone
+			var address1 = req.body.address1
+			var address2 = req.body.address2
+			var city = req.body.city
+			var country = req.body.country
+			var province = req.body.province
+			var zipCode = req.body.zipCode
+			bcrypt.hash(req.body.password, 10, function(err, hashPass){
 				if(err){
-					console.log("error creating userID: " + err)
+					console.log("error while hashing password: " + err)
 					return res.send(err)	
 				}
-				else{
-					sqlQuery("SELECT * FROM user WHERE username = ? OR email = ?", [username, email], (err, objects) => {
 		
+				else{
+		
+					bcrypt.hash(email, 10, function(err, hashID){
 						if(err){
-							res.send("Server Error")
-							return
-						}
-				
-						if(objects[0] != undefined){
-							res.send("Username or Email has Already Been Used")
-							return
+							console.log("error creating userID: " + err)
+							return res.send(err)	
 						}
 						else{
-							//save user to database
-							sqlQuery("INSERT INTO user (username, email, password, userID, firstName, lastName, phone, address1, address2, city, country, province, zip) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [username, email, hashPass, hashID, firstName, lastName, phone, address1, address2, city, country, province, zipCode], (err, objects) =>{
+							sqlQuery("SELECT * FROM user WHERE username = ? OR email = ?", [username, email], (err, objects) => {
+				
 								if(err){
 									res.send("Server Error")
 									return
 								}
-				
-								res.header('user-id', hashID).send("User created: " + username)
+						
+								if(objects[0] != undefined){
+									res.send("Username or Email has Already Been Used")
+									return
+								}
+								else{
+									//save user to database
+									sqlQuery("INSERT INTO user (username, email, password, userID, firstName, lastName, phone, address1, address2, city, country, province, zip) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [username, email, hashPass, hashID, firstName, lastName, phone, address1, address2, city, country, province, zipCode], (err, objects) =>{
+										if(err){
+											res.send("Server Error")
+											return
+										}
+						
+										res.header('user-id', hashID).send("User created: " + username)
+									})
+								}
 							})
 						}
-					})
+					}) //use the email since you know it is going to be unique for each user
+		
+		
 				}
-			}) //use the email since you know it is going to be unique for each user
-
-
+			})
+			//use hashSync so that it is synchronous and finished the hash before the next code executes - implements a callback function itself
 		}
 	})
-	//use hashSync so that it is synchronous and finished the hash before the next code executes - implements a callback function itself
-	
 
  })
 

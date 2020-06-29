@@ -6,7 +6,6 @@ const morgan = require('morgan');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const joi = require('@hapi/joi')
-//const customJoi = joi.extend(require('joi-phone-number'))
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv')

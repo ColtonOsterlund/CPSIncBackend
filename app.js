@@ -526,8 +526,8 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 
 	var object = sqlQuery("SELECT * FROM user WHERE email = ?", [email], (err, objects) => { //callback function so that query loads before data is checked/sent back to user
 
-		console.log(objects[0])
-		console.log(objects[0].password)
+		//console.log(objects[0])
+		//console.log(objects[0].password)
 
 		if(err != null){
 			//console.log("got here 1")

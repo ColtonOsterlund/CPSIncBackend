@@ -252,7 +252,7 @@ app.get("/test", authorizeUser, (req, res) => {
 	 password: joi.string().min(6).required(),
 	 phone: joi.string(),
 	 address1: joi.string(),
-	 address2: joi.string(),
+	 address2: joi.string().allow(""),
 	 city: joi.string(),
 	 country: joi.string(),
 	 province: joi.string(),

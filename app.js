@@ -247,7 +247,17 @@ app.get("/test", authorizeUser, (req, res) => {
  const joiUserValidationSchema = joi.object().keys({
 	 username: joi.string().min(6).required(),
 	 email: joi.string().required().email(),
-	 password: joi.string().min(6).required()
+	 firstName: joi.string(),
+	 lastName: joi.string(),
+	 password: joi.string().min(6).required(),
+	 phone: joi.string(),
+	 address1: joi.string(),
+	 address2: joi.string(),
+	 city: joi.string(),
+	 country: joi.string(),
+	 province: joi.string(),
+	 province: joi.string(),
+	 zipCode: joi.string()
  })
  
  const joiHerdValidationSchema = {

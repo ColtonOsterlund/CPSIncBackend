@@ -284,10 +284,7 @@ app.post('/sync', authorizeUser, (req, res) => {
 
 	var userID = encrypt(String(req.header("user-id")))
 
-	sqlQuery("DELETE FROM herd WHERE userID = ?;" + 
-	" DELETE FROM cow WHERE userID = ?;" +
-	" DELETE FROM test WHERE userID = ?", 
-	["depreciated" + userID, "depreciated" + userID, "depreciated" + userID], (err, rows) => {
+	sqlQuery("DELETE FROM herd WHERE userID = ?;" ["depreciated" + userID], (err, rows) => {
 
 		if(err != null){
 			return res.send(err)
@@ -295,27 +292,27 @@ app.post('/sync', authorizeUser, (req, res) => {
 
 		else{
 			console.log("had no errors");
-			// sqlQuery("DELETE FROM cow WHERE userID = ?", ["depreciated" + userID], (err, rows) => {
+			sqlQuery("DELETE FROM cow WHERE userID = ?", ["depreciated" + userID], (err, rows) => {
 
-			// 	if(err != null){
-			// 		return res.send(err)
-			// 	}
+				if(err != null){
+					return res.send(err)
+				}
 		
-			// 	else{
-			// 		sqlQuery("DELETE FROM test WHERE userID = ?", ["depreciated" + userID], (err, rows) => {
+				else{
+					sqlQuery("DELETE FROM test WHERE userID = ?", ["depreciated" + userID], (err, rows) => {
 
-			// 			if(err != null){
-			// 				return res.send(err)
-			// 			}
+						if(err != null){
+							return res.send(err)
+						}
 				
-			// 			else{
-			// 				return res.send("Success")
-			// 			}
+						else{
+							return res.send("Success")
+						}
 				
-			// 		})
-			// 	}
+					})
+				}
 		
-			// })
+			})
 		}
 
 	})

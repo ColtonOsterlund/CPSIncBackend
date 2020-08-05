@@ -294,6 +294,7 @@ app.post('/sync', authorizeUser, (req, res) => {
 		}
 
 		else{
+			console.log("had no errors");
 			// sqlQuery("DELETE FROM cow WHERE userID = ?", ["depreciated" + userID], (err, rows) => {
 
 			// 	if(err != null){

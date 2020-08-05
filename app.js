@@ -285,8 +285,8 @@ app.post('/sync', authorizeUser, (req, res) => {
 	var userID = encrypt(String(req.header("user-id")))
 
 	sqlQuery("DELETE FROM herd WHERE userID = ?;" + 
-	"DELETE FROM cow WHERE userID = ?;" +
-	"DELETE FROM test WHERE userID = ?", 
+	" DELETE FROM cow WHERE userID = ?;" +
+	" DELETE FROM test WHERE userID = ?", 
 	["depreciated" + userID, "depreciated" + userID, "depreciated" + userID], (err, rows) => {
 
 		if(err != null){

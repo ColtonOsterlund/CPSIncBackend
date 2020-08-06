@@ -10,6 +10,7 @@ const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv')
 const crypto = require('crypto')
+const async = require('async')
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(morgan('short'));
@@ -306,7 +307,39 @@ app.post('/sync', authorizeUser, (req, res) => {
 						}
 				
 						else{
-							return res.send("Success")
+							var syncObjects = req.body
+
+							async.forEachSeries(syncObjects, function(object){
+								console.log(object.objectType);
+
+							}, function(err){
+								if(err){
+								  //handle the error if the query throws an error
+								  console.log("Error")
+								}else{
+								  //whatever you wanna do after all the iterations are done
+								  console.log("Success")
+								}
+							});
+							
+							// syncObjects.forEach(function(object){
+							// 	if(object.objectType == "Herd"){
+							// 		//add Herd to DB
+							// 		var id = encrypt(String(req.body.id))
+							// 		var location = encrypt(String(req.body.location))
+							// 		var milkingSystem = encrypt(String(req.body.milkingSystem))
+							// 		var pin = encrypt(String(req.body.pin))
+							// 		var userID = encrypt(String(req.header("user-id")))
+
+							// 	}
+							// 	else if(object.objectType == "Cow"){
+							// 		//add Cow to DB
+							// 	}
+							// 	else if(object.objectType == "Test"){
+							// 		//add Test to DB
+							// 	}
+							// })
+
 						}
 				
 					})

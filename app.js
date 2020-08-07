@@ -319,7 +319,7 @@ app.post('/sync', authorizeUser, (req, res) => {
 
 							//console.log(syncObjects)
 
-							async.forEachOf(syncObjects, function(object){
+							async.eachOf(syncObjects, function(object){
 								console.log(object.objectType);
 
 								if(object.objectType == "Herd"){

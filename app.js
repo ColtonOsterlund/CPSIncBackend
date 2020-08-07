@@ -338,9 +338,104 @@ app.post('/sync', authorizeUser, (req, res) => {
 												}
 										
 												else{
-													return res.send("Success")
+													console.log("had no errors")
+													var syncObjects = req.body
 
-													//put the next steps here
+													console.log(syncObjects)
+
+													async.forEachOf(syncObjects, function(object){
+														console.log(object.objectType);
+
+														if(object.objectType == "Herd"){
+
+															console.log("inserting herd into database")
+
+															//Add Herd to DB
+															var id = encrypt(String(object.id))
+															var location = encrypt(String(object.location))
+															var milkingSystem = encrypt(String(object.milkingSystem))
+															var pin = encrypt(String(object.pin))
+															var userID = encrypt(String(object.userID))
+
+															sqlQuery("INSERT INTO herd (id, location, milkingSystem, pin, userID) VALUES (?, ?, ?, ?, ?)", [id, location, milkingSystem, pin, userID], (err, rows) => {
+																if(err != null){
+																	return res.send(err)
+																}
+																else{
+																	console.log("finished inserting herd into DB")
+																}
+															})
+
+														}
+														else if(object.objectType == "Cow"){
+
+															console.log("inserting cow into database")
+
+															//Add Cow to DB
+															var id = encrypt(String(object.id))
+															var daysInMilk = encrypt(String(object.daysInMilk))
+															var dryOffDay = encrypt(String(object.dryOffDay))
+															var mastitisHistory = encrypt(String(object.mastitisHistory))
+															var methodOfDryOff = encrypt(String(object.methodOfDryOff))
+															var dailyMilkAverage = encrypt(String(object.dailyMilkAverage))
+															var parity = encrypt(String(object.parity))
+															var reproductionStatus = encrypt(String(object.reproductionStatus))
+															var numberOfTimesBred = encrypt(String(object.numberOfTimesBred))
+															var farmBreedingIndex = encrypt(String(object.farmBreedingIndex))
+															var herdID = encrypt(String(object.herdID))
+															var userID = encrypt(String(object.userID))
+
+															sqlQuery("INSERT INTO cow (id, daysInMilk, dryOffDay, mastitisHistory, methodOfDryOff, dailyMilkAverage, parity, reproductionStatus, numberOfTimesBred, farmBreedingIndex, herdID, userID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [id, daysInMilk, dryOffDay, mastitisHistory, methodOfDryOff, dailyMilkAverage, parity, reproductionStatus, numberOfTimesBred, farmBreedingIndex, herdID, userID], (err, rows) => {
+																if(err != null){
+																	return res.send(err)
+																}
+																else{
+																	console.log("finished inserting cow into DB")
+																}
+															})
+														}
+
+														else if(object.objectType == "Test"){
+
+															console.log("instering test into database")
+
+															//Add Test to DB
+															var date = encrypt(String(object.date))
+															var followUpNum = encrypt(String(object.followUpNum))
+															var milkFever = encrypt(String(object.milkFever))
+															var testID = encrypt(String(object.testID))
+															var testType = encrypt(String(object.testType))
+															var units = encrypt(String(object.units))
+															var value = encrypt(String(object.value))
+															var cowID = encrypt(String(object.cowID))
+															var userID = encrypt(String(object.userID))
+
+															sqlQuery("INSERT INTO test (date, followUpNum, testID, milkFever, testType, units, value, cowID, userID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", [date, followUpNum, testID, milkFever, testType, units, value, cowID, userID], (err, rows) => {
+																if(err != null){
+																	return res.send(err)
+																}
+																else{
+																	console.log("finished inserting test into DB")
+																}
+															})
+														}
+
+													}, function(err){
+
+														console.log("in function")
+
+														if(err){
+														//handle the error if the query throws an error
+														console.log("Error")
+														return res.send(err)
+														}else{
+														//whatever you wanna do after all the iterations are done
+														console.log("Success")
+														return res.send("Success")
+														}
+													});
+
+													
 
 												}
 										

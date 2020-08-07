@@ -287,6 +287,8 @@ app.post('/sync', authorizeUser, (req, res) => {
 
 	sqlQuery("DELETE FROM herd WHERE userID = ?;" ["depreciated" + userID], (err, rows) => {
 
+		console.log("Deleting Herd");
+
 		if(err != null){
 			return res.send(err)
 		}
@@ -295,18 +297,23 @@ app.post('/sync', authorizeUser, (req, res) => {
 			console.log("had no errors");
 			sqlQuery("DELETE FROM cow WHERE userID = ?", ["depreciated" + userID], (err, rows) => {
 
+				console.log("Deleting Cows")
+
 				if(err != null){
 					return res.send(err)
 				}
 		
 				else{
+					console.log("had no errors")
 					sqlQuery("DELETE FROM test WHERE userID = ?", ["depreciated" + userID], (err, rows) => {
+						console.log("Deleting tests")
 
 						if(err != null){
 							return res.send(err)
 						}
 				
 						else{
+							console.log("had no errors")
 							var syncObjects = req.body
 
 							async.forEachSeries(syncObjects, function(object){

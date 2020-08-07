@@ -317,7 +317,7 @@ app.post('/sync', authorizeUser, (req, res) => {
 							console.log("had no errors")
 							var syncObjects = req.body
 
-							//console.log(syncObjects)
+							console.log(syncObjects)
 
 							async.forEachOf(syncObjects, function(object){
 								console.log(object.objectType);

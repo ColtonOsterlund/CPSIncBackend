@@ -290,6 +290,7 @@ app.post('/sync', authorizeUser, (req, res) => {
 		console.log("Deleting Herd");
 
 		if(err != null){
+			console.log(err)
 			return res.send(err)
 		}
 

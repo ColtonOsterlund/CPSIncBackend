@@ -317,18 +317,75 @@ app.post('/sync', authorizeUser, (req, res) => {
 							console.log("had no errors")
 							var syncObjects = req.body
 
-							console.log(syncObjects)
+							//console.log(syncObjects)
 
 							async.forEach(syncObjects, function(object){
 								console.log(object.objectType);
+
+								if(object.objectType == "Herd"){
+									//Add Herd to DB
+									var id = encrypt(String(req.body.id))
+									var location = encrypt(String(req.body.location))
+									var milkingSystem = encrypt(String(req.body.milkingSystem))
+									var pin = encrypt(String(req.body.pin))
+									var userID = encrypt(String(req.header("user-id")))
+
+									sqlQuery("INSERT INTO herd (id, location, milkingSystem, pin, userID) VALUES (?, ?, ?, ?, ?)", [id, location, milkingSystem, pin, userID], (err, rows) => {
+										if(err != null){
+											return res.send(err)
+										}
+									})
+
+								}
+								else if(object.objectType == "Cow"){
+									//Add Cow to DB
+									var id = encrypt(String(req.body.id))
+									var daysInMilk = encrypt(String(req.body.daysInMilk))
+									var dryOffDay = encrypt(String(req.body.dryOffDay))
+									var mastitisHistory = encrypt(String(req.body.mastitisHistory))
+									var methodOfDryOff = encrypt(String(req.body.methodOfDryOff))
+									var dailyMilkAverage = encrypt(String(req.body.dailyMilkAverage))
+									var parity = encrypt(String(req.body.parity))
+									var reproductionStatus = encrypt(String(req.body.reproductionStatus))
+									var numberOfTimesBred = encrypt(String(req.body.numberOfTimesBred))
+									var farmBreedingIndex = encrypt(String(req.body.farmBreedingIndex))
+									var herdID = encrypt(String(req.body.herdID))
+									var userID = encrypt(String(req.header("user-id")))
+
+									sqlQuery("INSERT INTO cow (id, daysInMilk, dryOffDay, mastitisHistory, methodOfDryOff, dailyMilkAverage, parity, reproductionStatus, numberOfTimesBred, farmBreedingIndex, herdID, userID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [id, daysInMilk, dryOffDay, mastitisHistory, methodOfDryOff, dailyMilkAverage, parity, reproductionStatus, numberOfTimesBred, farmBreedingIndex, herdID, userID], (err, rows) => {
+										if(err != null){
+											return res.send(err)
+										}
+									})
+								}
+								else if(object.objectType == "Test"){
+									//Add Test to DB
+									var date = encrypt(String(req.body.date))
+									var followUpNum = encrypt(String(req.body.followUpNum))
+									var milkFever = encrypt(String(req.body.milkFever))
+									var testID = encrypt(String(req.body.testID))
+									var testType = encrypt(String(req.body.testType))
+									var units = encrypt(String(req.body.units))
+									var value = encrypt(String(req.body.value))
+									var cowID = encrypt(String(req.body.cowID))
+									var userID = encrypt(String(req.header("user-id")))
+
+									sqlQuery("INSERT INTO test (date, followUpNum, testID, milkFever, testType, units, value, cowID, userID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", [date, followUpNum, testID, milkFever, testType, units, value, cowID, userID], (err, rows) => {
+										if(err != null){
+											return res.send(err)
+										}
+									})
+								}
 
 							}, function(err){
 								if(err){
 								  //handle the error if the query throws an error
 								  console.log("Error")
+								  return res.send(err)
 								}else{
 								  //whatever you wanna do after all the iterations are done
 								  console.log("Success")
+								  return res.send("Success")
 								}
 							});
 							

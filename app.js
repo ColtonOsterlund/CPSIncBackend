@@ -388,6 +388,9 @@ app.post('/sync', authorizeUser, (req, res) => {
 								}
 
 							}, function(err){
+
+								console.log("in function")
+
 								if(err){
 								  //handle the error if the query throws an error
 								  console.log("Error")

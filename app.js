@@ -420,6 +420,8 @@ app.post('/sync', authorizeUser, (req, res) => {
 															})
 														}
 
+														callback()
+
 													}, function(err){
 
 														console.log("in function")

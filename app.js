@@ -323,6 +323,9 @@ app.post('/sync', authorizeUser, (req, res) => {
 								console.log(object.objectType);
 
 								if(object.objectType == "Herd"){
+
+									console.log("inserting herd into database")
+
 									//Add Herd to DB
 									var id = encrypt(String(req.body.id))
 									var location = encrypt(String(req.body.location))
@@ -338,6 +341,9 @@ app.post('/sync', authorizeUser, (req, res) => {
 
 								}
 								else if(object.objectType == "Cow"){
+
+									console.log("inserting cow into database")
+
 									//Add Cow to DB
 									var id = encrypt(String(req.body.id))
 									var daysInMilk = encrypt(String(req.body.daysInMilk))
@@ -358,7 +364,11 @@ app.post('/sync', authorizeUser, (req, res) => {
 										}
 									})
 								}
+
 								else if(object.objectType == "Test"){
+
+									console.log("instering test into database")
+
 									//Add Test to DB
 									var date = encrypt(String(req.body.date))
 									var followUpNum = encrypt(String(req.body.followUpNum))

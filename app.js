@@ -67,17 +67,17 @@ app.get("/herd", authorizeUser, (req, res) => {
 
 					objects.forEach(function(herd){
 						if(herd.userID.substring(0, 11) != "depreciated"){
-						console.log(herd.id)
+							console.log(herd.id)
 
-						var herdObject = {
-							id: decrypt(herd.id),
-							location: decrypt(herd.location),
-							milkingSystem: decrypt(herd.milkingSystem),
-							pin: decrypt(herd.pin)
+							var herdObject = {
+								id: decrypt(herd.id),
+								location: decrypt(herd.location),
+								milkingSystem: decrypt(herd.milkingSystem),
+								pin: decrypt(herd.pin)
+							}
+
+							jsonObjects.push(herdObject)
 						}
-
-						jsonObjects.push(herdObject)
-					}
 					})
 
 					return res.send(JSON.stringify(jsonObjects))
@@ -101,22 +101,22 @@ app.get("/cow", authorizeUser, (req, res) => {
 
 					objects.forEach(function(cow){
 						if(cow.userID.substring(0, 11) != "depreciated"){
-						var cowObject = {
-							id: decrypt(cow.id),
-							daysInMilk: decrypt(cow.daysInMilk),
-							dryOffDay: decrypt(cow.dryOffDay),
-							mastitisHistory: decrypt(cow.mastitisHistory),
-							methodOfDryOff: decrypt(cow.methodOfDryOff),
-							dailyMilkAverage: decrypt(cow.dailyMilkAverage),
-							parity: decrypt(cow.parity),
-							reproductionStatus: decrypt(cow.reproductionStatus),
-							numberOfTimesBred: decrypt(cow.numberOfTimesBred),
-							farmBreedingIndex: decrypt(cow.farmBreedingIndex),
-							herdID: decrypt(cow.herdID)
-						}
+							var cowObject = {
+								id: decrypt(cow.id),
+								daysInMilk: decrypt(cow.daysInMilk),
+								dryOffDay: decrypt(cow.dryOffDay),
+								mastitisHistory: decrypt(cow.mastitisHistory),
+								methodOfDryOff: decrypt(cow.methodOfDryOff),
+								dailyMilkAverage: decrypt(cow.dailyMilkAverage),
+								parity: decrypt(cow.parity),
+								reproductionStatus: decrypt(cow.reproductionStatus),
+								numberOfTimesBred: decrypt(cow.numberOfTimesBred),
+								farmBreedingIndex: decrypt(cow.farmBreedingIndex),
+								herdID: decrypt(cow.herdID)
+							}
 
-						jsonObjects.push(cowObject)
-					}
+							jsonObjects.push(cowObject)
+						}
 					})
 
 					return res.send(JSON.stringify(jsonObjects))
@@ -134,22 +134,22 @@ app.get("/cow", authorizeUser, (req, res) => {
 
 					objects.forEach(function(cow){
 						if(cow.userID.substring(0, 11) != "depreciated"){
-						var cowObject = {
-							id: decrypt(cow.id),
-							daysInMilk: decrypt(cow.daysInMilk),
-							dryOffDay: decrypt(cow.dryOffDay),
-							mastitisHistory: decrypt(cow.mastitisHistory),
-							methodOfDryOff: decrypt(cow.methodOfDryOff),
-							dailyMilkAverage: decrypt(cow.dailyMilkAverage),
-							parity: decrypt(cow.parity),
-							reproductionStatus: decrypt(cow.reproductionStatus),
-							numberOfTimesBred: decrypt(cow.numberOfTimesBred),
-							farmBreedingIndex: decrypt(cow.farmBreedingIndex),
-							herdID: decrypt(cow.herdID)
-						}
+							var cowObject = {
+								id: decrypt(cow.id),
+								daysInMilk: decrypt(cow.daysInMilk),
+								dryOffDay: decrypt(cow.dryOffDay),
+								mastitisHistory: decrypt(cow.mastitisHistory),
+								methodOfDryOff: decrypt(cow.methodOfDryOff),
+								dailyMilkAverage: decrypt(cow.dailyMilkAverage),
+								parity: decrypt(cow.parity),
+								reproductionStatus: decrypt(cow.reproductionStatus),
+								numberOfTimesBred: decrypt(cow.numberOfTimesBred),
+								farmBreedingIndex: decrypt(cow.farmBreedingIndex),
+								herdID: decrypt(cow.herdID)
+							}
 
-						jsonObjects.push(cowObject)
-					}
+							jsonObjects.push(cowObject)
+						}
 					})
 
 					return res.send(JSON.stringify(jsonObjects))
@@ -167,22 +167,22 @@ app.get("/cow", authorizeUser, (req, res) => {
 
 					objects.forEach(function(cow){
 						if(cow.userID.substring(0, 11) != "depreciated"){
-						var cowObject = {
-							id: decrypt(cow.id),
-							daysInMilk: decrypt(cow.daysInMilk),
-							dryOffDay: decrypt(cow.dryOffDay),
-							mastitisHistory: decrypt(cow.mastitisHistory),
-							methodOfDryOff: decrypt(cow.methodOfDryOff),
-							dailyMilkAverage: decrypt(cow.dailyMilkAverage),
-							parity: decrypt(cow.parity),
-							reproductionStatus: decrypt(cow.reproductionStatus),
-							numberOfTimesBred: decrypt(cow.numberOfTimesBred),
-							farmBreedingIndex: decrypt(cow.farmBreedingIndex),
-							herdID: decrypt(cow.herdID)
-						}
+							var cowObject = {
+								id: decrypt(cow.id),
+								daysInMilk: decrypt(cow.daysInMilk),
+								dryOffDay: decrypt(cow.dryOffDay),
+								mastitisHistory: decrypt(cow.mastitisHistory),
+								methodOfDryOff: decrypt(cow.methodOfDryOff),
+								dailyMilkAverage: decrypt(cow.dailyMilkAverage),
+								parity: decrypt(cow.parity),
+								reproductionStatus: decrypt(cow.reproductionStatus),
+								numberOfTimesBred: decrypt(cow.numberOfTimesBred),
+								farmBreedingIndex: decrypt(cow.farmBreedingIndex),
+								herdID: decrypt(cow.herdID)
+							}
 
-						jsonObjects.push(cowObject)
-					}
+							jsonObjects.push(cowObject)
+						}
 					})
 
 					return res.send(JSON.stringify(jsonObjects))
@@ -205,18 +205,18 @@ app.get("/test", authorizeUser, (req, res) => {
 
 					objects.forEach(function(test){
 						if(test.userID.substring(0, 11) != "depreciated"){
-						var cowObject = {
-							date: decrypt(test.date),
-							dataType: decrypt(test.dataType),
-							runtime: decrypt(test.runtime),
-							testType: decrypt(test.testType),
-							units: decrypt(test.units),
-							value: decrypt(test.value),
-							cowID: decrypt(test.cowID)
-						}
+							var cowObject = {
+								date: decrypt(test.date),
+								dataType: decrypt(test.dataType),
+								runtime: decrypt(test.runtime),
+								testType: decrypt(test.testType),
+								units: decrypt(test.units),
+								value: decrypt(test.value),
+								cowID: decrypt(test.cowID)
+							}
 
-						jsonObjects.push(testObject)
-					}
+							jsonObjects.push(testObject)
+						}
 					})
 
 					return res.send(JSON.stringify(jsonObjects))
@@ -234,18 +234,18 @@ app.get("/test", authorizeUser, (req, res) => {
 
 					objects.forEach(function(test){
 						if(test.userID.substring(0, 11) != "depreciated"){
-						var testObject = {
-							date: decrypt(test.date),
-							dataType: decrypt(test.dataType),
-							runtime: decrypt(test.runtime),
-							testType: decrypt(test.testType),
-							units: decrypt(test.units),
-							value: decrypt(test.value),
-							cowID: decrypt(test.cowID)
-						}
+							var testObject = {
+								date: decrypt(test.date),
+								dataType: decrypt(test.dataType),
+								runtime: decrypt(test.runtime),
+								testType: decrypt(test.testType),
+								units: decrypt(test.units),
+								value: decrypt(test.value),
+								cowID: decrypt(test.cowID)
+							}
 
-						jsonObjects.push(testObject)
-					}
+							jsonObjects.push(testObject)
+						}
 					})
 
 					return res.send(JSON.stringify(jsonObjects))

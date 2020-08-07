@@ -319,7 +319,7 @@ app.post('/sync', authorizeUser, (req, res) => {
 
 							console.log(syncObjects)
 
-							async.forEachSeries(syncObjects, function(object){
+							async.forEach(syncObjects, function(object){
 								console.log(object.objectType);
 
 							}, function(err){

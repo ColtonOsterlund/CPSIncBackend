@@ -420,7 +420,7 @@ app.post('/sync', authorizeUser, (req, res) => {
 															})
 														}
 
-														callback()
+														return
 
 													}, function(err){
 

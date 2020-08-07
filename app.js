@@ -425,13 +425,13 @@ app.post('/sync', authorizeUser, (req, res) => {
 														console.log("in function")
 
 														if(err){
-														//handle the error if the query throws an error
-														console.log("Error")
-														return res.send(err)
+															//handle the error if the query throws an error
+															console.log("Error")
+															return res.send(err)
 														}else{
-														//whatever you wanna do after all the iterations are done
-														console.log("Success")
-														return res.send("Success")
+															//whatever you wanna do after all the iterations are done
+															console.log("Success")
+															return res.send("Success")
 														}
 													});
 

@@ -337,6 +337,9 @@ app.post('/sync', authorizeUser, (req, res) => {
 										if(err != null){
 											return res.send(err)
 										}
+										else{
+											console.log("finished inserting herd into DB")
+										}
 									})
 
 								}
@@ -362,6 +365,9 @@ app.post('/sync', authorizeUser, (req, res) => {
 										if(err != null){
 											return res.send(err)
 										}
+										else{
+											console.log("finished inserting cow into DB")
+										}
 									})
 								}
 
@@ -383,6 +389,9 @@ app.post('/sync', authorizeUser, (req, res) => {
 									sqlQuery("INSERT INTO test (date, followUpNum, testID, milkFever, testType, units, value, cowID, userID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", [date, followUpNum, testID, milkFever, testType, units, value, cowID, userID], (err, rows) => {
 										if(err != null){
 											return res.send(err)
+										}
+										else{
+											console.log("finished inserting test into DB")
 										}
 									})
 								}

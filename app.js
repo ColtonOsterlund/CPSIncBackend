@@ -66,6 +66,8 @@ app.get("/herd", authorizeUser, (req, res) => {
 					var jsonObjects = [] //empty array to put all herds into to then be turned to a JSON object
 
 					objects.forEach(function(herd){
+
+						console.log(herd.userID.substring(0, 10))
 						if(herd.userID.substring(0, 10) != "depreciated"){
 						console.log(herd.id)
 

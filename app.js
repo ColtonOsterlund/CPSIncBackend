@@ -41,7 +41,7 @@ app.get("/herd", authorizeUser, (req, res) => {
 					var jsonObjects = [] //empty array to put all herds into to then be turned to a JSON object
 
 					objects.forEach(function(herd){
-						if(herd.userID.substring(0, 10) != "depreciated"){
+						if(herd.userID.substring(0, 11) != "depreciated"){
 							var herdObject = {
 								id: decrypt(herd.id),
 								location: decrypt(herd.location),
@@ -66,9 +66,7 @@ app.get("/herd", authorizeUser, (req, res) => {
 					var jsonObjects = [] //empty array to put all herds into to then be turned to a JSON object
 
 					objects.forEach(function(herd){
-
-						console.log(herd.userID.substring(0, 10))
-						if(herd.userID.substring(0, 10) != "depreciated"){
+						if(herd.userID.substring(0, 11) != "depreciated"){
 						console.log(herd.id)
 
 						var herdObject = {
@@ -102,7 +100,7 @@ app.get("/cow", authorizeUser, (req, res) => {
 					var jsonObjects = [] //empty array to put all herds into to then be turned to a JSON object
 
 					objects.forEach(function(cow){
-						if(cow.userID.substring(0, 10) != "depreciated"){
+						if(cow.userID.substring(0, 11) != "depreciated"){
 						var cowObject = {
 							id: decrypt(cow.id),
 							daysInMilk: decrypt(cow.daysInMilk),
@@ -135,7 +133,7 @@ app.get("/cow", authorizeUser, (req, res) => {
 					var jsonObjects = [] //empty array to put all herds into to then be turned to a JSON object
 
 					objects.forEach(function(cow){
-						if(cow.userID.substring(0, 10) != "depreciated"){
+						if(cow.userID.substring(0, 11) != "depreciated"){
 						var cowObject = {
 							id: decrypt(cow.id),
 							daysInMilk: decrypt(cow.daysInMilk),
@@ -168,7 +166,7 @@ app.get("/cow", authorizeUser, (req, res) => {
 					var jsonObjects = [] //empty array to put all herds into to then be turned to a JSON object
 
 					objects.forEach(function(cow){
-						if(cow.userID.substring(0, 10) != "depreciated"){
+						if(cow.userID.substring(0, 11) != "depreciated"){
 						var cowObject = {
 							id: decrypt(cow.id),
 							daysInMilk: decrypt(cow.daysInMilk),
@@ -206,7 +204,7 @@ app.get("/test", authorizeUser, (req, res) => {
 					var jsonObjects = [] //empty array to put all herds into to then be turned to a JSON object
 
 					objects.forEach(function(test){
-						if(test.userID.substring(0, 10) != "depreciated"){
+						if(test.userID.substring(0, 11) != "depreciated"){
 						var cowObject = {
 							date: decrypt(test.date),
 							dataType: decrypt(test.dataType),
@@ -235,7 +233,7 @@ app.get("/test", authorizeUser, (req, res) => {
 					var jsonObjects = [] //empty array to put all herds into to then be turned to a JSON object
 
 					objects.forEach(function(test){
-						if(test.userID.substring(0, 10) != "depreciated"){
+						if(test.userID.substring(0, 11) != "depreciated"){
 						var testObject = {
 							date: decrypt(test.date),
 							dataType: decrypt(test.dataType),

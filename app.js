@@ -207,11 +207,12 @@ app.get("/test", authorizeUser, (req, res) => {
 						if(test.userID.substring(0, 11) != "depreciated"){
 							var cowObject = {
 								date: decrypt(test.date),
-								dataType: decrypt(test.dataType),
-								runtime: decrypt(test.runtime),
+								followUpNum: decrypt(test.followUpNum),
+								testID: decrypt(test.testID),
 								testType: decrypt(test.testType),
 								units: decrypt(test.units),
 								value: decrypt(test.value),
+								milkFever: decrypt(test.milkFever),
 								cowID: decrypt(test.cowID)
 							}
 
@@ -236,11 +237,12 @@ app.get("/test", authorizeUser, (req, res) => {
 						if(test.userID.substring(0, 11) != "depreciated"){
 							var testObject = {
 								date: decrypt(test.date),
-								dataType: decrypt(test.dataType),
-								runtime: decrypt(test.runtime),
+								followUpNum: decrypt(test.followUpNum),
+								testID: decrypt(test.testID),
 								testType: decrypt(test.testType),
 								units: decrypt(test.units),
 								value: decrypt(test.value),
+								milkFever: decrypt(test.milkFever),
 								cowID: decrypt(test.cowID)
 							}
 

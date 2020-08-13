@@ -644,7 +644,7 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 							return res.send(err)	
 						}
 						else{
-							sqlQuery("SELECT * FROM user WHERE username = ? OR email = ?", [username, email], (err, objects) => {
+							sqlQuery("SELECT * FROM user WHERE username = ? OR email = ? OR phone = ?", [username, email, phone], (err, objects) => {
 				
 								if(err){
 									res.send("Server Error")
@@ -652,7 +652,7 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 								}
 						
 								if(objects[0] != undefined){
-									res.send("Username or Email has Already Been Used")
+									res.send("Username, Email or Phone Number has Already Been Used")
 									return
 								}
 								else{

@@ -11,6 +11,7 @@ const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv')
 const crypto = require('crypto')
 const async = require('async')
+const validatePhoneNumber = require('validate-phone-number-node-js')
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(morgan('short'));
@@ -656,6 +657,12 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 									return
 								}
 								else{
+
+									if(validatePhoneNumber.validate(phone) == false){
+										res.send("Phone Number is Invalid")
+										return
+									}
+
 									//save user to database
 									sqlQuery("INSERT INTO user (username, email, password, userID, firstName, lastName, phone, address1, address2, city, country, province, zip) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [username, email, hashPass, hashID, firstName, lastName, phone, address1, address2, city, country, province, zipCode], (err, objects) =>{
 										if(err){

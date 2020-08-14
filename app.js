@@ -260,11 +260,11 @@ app.get("/test", authorizeUser, (req, res) => {
 
 
 app.get("/backup", authorizeUser, (req, res) => {
-	console.log("Fetching ALL Herds")
+	console.log("Backup Route")
 
 	var userID = encrypt(String(req.header("user-id")))
 
-	console.log(userID)
+	console.log("User ID: " + userID)
 
 	var jsonObjects = [] //empty array to put all objects into to then be turned to a JSON object
 

@@ -285,6 +285,7 @@ app.get("/backup", authorizeUser, (req, res) => {
 			objects.forEach(function(herd){
 				if(herd.userID.substring(0, 11) != "depreciated"){
 					var herdObject = {
+						objectType: "Herd",
 						id: decrypt(herd.id),
 						location: decrypt(herd.location),
 						milkingSystem: decrypt(herd.milkingSystem),
@@ -304,6 +305,7 @@ app.get("/backup", authorizeUser, (req, res) => {
 					objects.forEach(function(cow){
 						if(cow.userID.substring(0, 11) != "depreciated"){
 							var cowObject = {
+								objectType: "Cow",
 								id: decrypt(cow.id),
 								daysInMilk: decrypt(cow.daysInMilk),
 								dryOffDay: decrypt(cow.dryOffDay),
@@ -330,6 +332,7 @@ app.get("/backup", authorizeUser, (req, res) => {
 							objects.forEach(function(test){
 								if(test.userID.substring(0, 11) != "depreciated"){
 									var testObject = {
+										objectType: "Test",
 										date: decrypt(test.date),
 										followUpNum: decrypt(test.followUpNum),
 										testID: decrypt(test.testID),

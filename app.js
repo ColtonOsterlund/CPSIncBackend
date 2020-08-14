@@ -257,7 +257,101 @@ app.get("/test", authorizeUser, (req, res) => {
 		}
 })
 
- 
+
+
+app.get("/backup", authorizeUser, (req, res) => {
+	console.log("Fetching ALL Herds")
+
+	var userID = encrypt(String(req.header("user-id")))
+
+	var jsonObjects = [] //empty array to put all objects into to then be turned to a JSON object
+
+	//get all herds associated with userID
+
+
+	//get all cows associated with userID
+
+
+	//get all tests associated with userID
+	
+	sqlQuery("SELECT * FROM herd WHERE userID = ?", [userID], (err, objects) => {
+		if(err){
+			return res.send("Error: " + err)
+		}
+		else{
+			
+			objects.forEach(function(herd){
+				if(herd.userID.substring(0, 11) != "depreciated"){
+					var herdObject = {
+						id: decrypt(herd.id),
+						location: decrypt(herd.location),
+						milkingSystem: decrypt(herd.milkingSystem),
+						pin: decrypt(herd.pin)
+					}
+
+					jsonObjects.push(herdObject)
+				}
+			})
+
+			sqlQuery("SELECT * FROM cow WHERE userID = ?", [userID], (err, objects) => {
+				if(err){
+					return res.send("Error: " + err)
+				}
+				else{
+					
+					objects.forEach(function(cow){
+						if(cow.userID.substring(0, 11) != "depreciated"){
+							var cowObject = {
+								id: decrypt(cow.id),
+								daysInMilk: decrypt(cow.daysInMilk),
+								dryOffDay: decrypt(cow.dryOffDay),
+								mastitisHistory: decrypt(cow.mastitisHistory),
+								methodOfDryOff: decrypt(cow.methodOfDryOff),
+								dailyMilkAverage: decrypt(cow.dailyMilkAverage),
+								parity: decrypt(cow.parity),
+								reproductionStatus: decrypt(cow.reproductionStatus),
+								numberOfTimesBred: decrypt(cow.numberOfTimesBred),
+								farmBreedingIndex: decrypt(cow.farmBreedingIndex),
+								herdID: decrypt(cow.herdID)
+							}
+		
+							jsonObjects.push(cowObject)
+						}
+					})
+		
+					sqlQuery("SELECT * FROM test WHERE userID = ?", [userID], (err, objects) => {
+						if(err){
+							return res.send("Error: " + err)
+						}
+						else{
+							
+							objects.forEach(function(test){
+								if(test.userID.substring(0, 11) != "depreciated"){
+									var testObject = {
+										date: decrypt(test.date),
+										followUpNum: decrypt(test.followUpNum),
+										testID: decrypt(test.testID),
+										testType: decrypt(test.testType),
+										units: decrypt(test.units),
+										value: decrypt(test.value),
+										milkFever: decrypt(test.milkFever),
+										cowID: decrypt(test.cowID)
+									}
+				
+									jsonObjects.push(testObject)
+								}
+							})
+
+							return res.send(JSON.stringify(jsonObjects))
+
+						}
+					})
+				}
+			})	
+		}
+	})
+})
+
 
 
   //VALIDATION

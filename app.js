@@ -264,6 +264,8 @@ app.get("/backup", authorizeUser, (req, res) => {
 
 	var userID = encrypt(String(req.header("user-id")))
 
+	console.log(userID)
+
 	var jsonObjects = [] //empty array to put all objects into to then be turned to a JSON object
 
 	//get all herds associated with userID

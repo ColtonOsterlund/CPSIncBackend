@@ -757,11 +757,14 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 								}
 								else{
 
+									console.log("\n\n" + phone.substring(5, 11) + "\n\n");
+									console.log("\n\n" + phone.substring(2, 11)+ "\n\n")
+
 									if(validatePhoneNumber.validate(phone) == false){
 										res.send("Phone Number is Invalid")
 										return
 									}
-									else if(phone.substring(2, 11) == '1111111111' || phone.substring(5, 11) == '1111111'){
+									else if(phone.substring(2, 11) == '1111111111' || phone.substring(5, 8) == '1111111'){
 										res.send("Phone Number is Invalid")
 										return
 									}

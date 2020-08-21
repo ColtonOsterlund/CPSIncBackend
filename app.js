@@ -780,6 +780,24 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
  })
 
 
+ app.post('/user/register', (req, res) => { 
+	console.log(req.body)
+	var userID = encrypt(String(req.header("user-id")))
+
+	sqlQuery("DELETE FROM user WHERE userID = ?", [userID], (err) => {
+				
+		if(err){
+			res.send("Server Error")
+			return
+		}
+		else{
+			res.send("Success")
+			return
+		}
+	})
+
+ })
+
  
  
   app.post('/user/login', (req, res) => {

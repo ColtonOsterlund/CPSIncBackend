@@ -780,7 +780,7 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
  })
 
 
- app.post('/user/register', (req, res) => { 
+ app.post('/user/delete', (req, res) => { 
 	console.log(req.body)
 	var userID = encrypt(String(req.header("user-id")))
 

@@ -764,7 +764,7 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 										res.send("Phone Number is Invalid")
 										return
 									}
-									else if(phone.substring(2, 12) == '1111111111' || phone.substring(5, 12) == '1111111'){
+									else if(phone.substring(2, 5) == "111" || phone.substring(5, 12) == '1111111'){
 										res.send("Phone Number is Invalid")
 										return
 									}

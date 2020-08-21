@@ -756,19 +756,6 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 									return
 								}
 								else{
-
-									console.log("\n\n" + phone.substring(5, 12) + "\n\n");
-									console.log("\n\n" + phone.substring(2, 12)+ "\n\n")
-
-									if(validatePhoneNumber.validate(phone) == false){
-										res.send("Phone Number is Invalid")
-										return
-									}
-									else if(phone.substring(2, 5) == "111" || phone.substring(5, 8) == '111' || phone.substring(8, 12) == '1111'){
-										res.send("Phone Number is Invalid")
-										return
-									}
-
 									//save user to database
 									sqlQuery("INSERT INTO user (username, email, password, userID, firstName, lastName, phone, address1, address2, city, country, province, zip) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [username, email, hashPass, hashID, firstName, lastName, phone, address1, address2, city, country, province, zipCode], (err, objects) =>{
 										if(err){

@@ -11,7 +11,8 @@ const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv')
 const crypto = require('crypto')
 const async = require('async')
-const validatePhoneNumber = require('validate-phone-number-node-js')
+const validatePhoneNumber = require('validate-phone-number-node-js');
+const { Console } = require('console');
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(morgan('short'));
@@ -26,7 +27,6 @@ app.get("/", authorizeUser, (req, res) => {
 	res.send("ROOT")
 	
 })
-
 
 
 app.get("/herd", authorizeUser, (req, res) => {
@@ -758,6 +758,10 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 								else{
 
 									if(validatePhoneNumber.validate(phone) == false){
+										res.send("Phone Number is Invalid")
+										return
+									}
+									else if(phone.substring(2, 11) == '1111111111' || phone.substring(5, 11) == '1111111'){
 										res.send("Phone Number is Invalid")
 										return
 									}

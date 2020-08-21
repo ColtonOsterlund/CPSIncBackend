@@ -784,6 +784,8 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 	console.log(req.body)
 	var userID = encrypt(String(req.header("user-id")))
 
+	console.log("\n\n" + userID + "\n\n")
+
 	sqlQuery("DELETE FROM user WHERE userID = ?", [userID], (err) => {
 				
 		if(err){

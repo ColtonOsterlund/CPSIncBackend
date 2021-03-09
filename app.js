@@ -34,7 +34,7 @@ app.get("/herd", authorizeUser, (req, res) => {
 
 		if(req.query.herdID != null){
 			//query from query string
-			sqlQuery("SELECT * FROM herd WHERE herdID = ?", encrypt(req.query.herdID), (err, objects) => {
+			sqlQuery("SELECT * FROM herd WHERE id = ?", encrypt(req.query.herdID), (err, objects) => {
 				if(err){
 					return res.send("Error: " + err)
 				}

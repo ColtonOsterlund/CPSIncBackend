@@ -359,10 +359,10 @@ app.get("/backup", authorizeUser, (req, res) => {
 
 //!!!!!!!!!!Based on file that is beeing send from CPS API
 app.get("/user-cow", (req, res) => {
-	console.log("Fetching cows by userID")
+	console.log("Fetching cows by userID and herdID")
 
-	if(req.query.userID != null){
-		sqlQuery("SELECT * FROM cow WHERE userID = ?", encrypt(req.query.userID), (err, objects) => {
+	if(req.query.userID != null && req.query.herdID != null){
+		sqlQuery("SELECT * FROM cow WHERE userID = ? && herdID = ?", [encrypt(req.query.userID), encrypt(req.query.herdID)], (err, objects) => {
 			if(err){
 				return res.send("Error: " + err)
 			}
@@ -373,6 +373,7 @@ app.get("/user-cow", (req, res) => {
 					if(cow.userID.substring(0, 11) != "depreciated"){
 						var cowObject = {
 							id: decrypt(cow.id),
+							herdID: decrypt(cow.herdID),
 							daysInMilk: decrypt(cow.daysInMilk),
 							dryOffDay: decrypt(cow.dryOffDay),
 							lactationNumber: decrypt(cow.lactationNumber),
@@ -753,6 +754,7 @@ app.post('/cow-file', (req, res) => { //NOT YET BEING VALIDATED
 
 		async.forEachOf(cowArray, function(object, key, callback) {
 			var id = encrypt(String(object.id))
+			var herdID = encrypt(String(object.herdID))
 			var daysInMilk = encrypt(String(object.daysInMilk))
 			var dryOffDay = encrypt(String(object.dryOffDay))
 			var lactationNumber = encrypt(String(object.lactationNumber))
@@ -769,9 +771,9 @@ app.post('/cow-file', (req, res) => { //NOT YET BEING VALIDATED
 			var userID = encrypt(String(req.header("user-id")))
 			
 				//query from query string
-				sqlQuery("INSERT INTO cow (id, daysInMilk, dryOffDay, lactationNumber, daysCarriedCalfIfPregnant, projectedDueDate, current305DayMilk, currentSomaticCellCount, "
-							+ "linearScoreAtLastTest, dateOfLastClinicalMastitis, chainVisibleId, animalRegistrationNoNLID, damBreed, userID, modifyDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 
-						[id, daysInMilk, dryOffDay, lactationNumber, daysCarriedCalfIfPregnant, projectedDueDate, current305DayMilk, currentSomaticCellCount,
+				sqlQuery("INSERT INTO cow (id, herdID, daysInMilk, dryOffDay, lactationNumber, daysCarriedCalfIfPregnant, projectedDueDate, current305DayMilk, currentSomaticCellCount, "
+							+ "linearScoreAtLastTest, dateOfLastClinicalMastitis, chainVisibleId, animalRegistrationNoNLID, damBreed, userID, modifyDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 
+						[id, herdID, daysInMilk, dryOffDay, lactationNumber, daysCarriedCalfIfPregnant, projectedDueDate, current305DayMilk, currentSomaticCellCount,
 						linearScoreAtLastTest, dateOfLastClinicalMastitis, chainVisibleId, animalRegistrationNoNLID, damBreed, userID, modifyDate], (err, objects) => {
 					if(err != null){
 						return res.send(err)
@@ -810,6 +812,7 @@ app.put("/cow", (req, res) => {
 
 		async.forEachOf(cowArray, function(object, key, callback) {
 			var id = encrypt(String(object.id))
+			var herdID = encrypt(String(object.herdID))
 			var daysInMilk = object.daysInMilk == null ? null : encrypt(String(object.daysInMilk))
 			var dryOffDay = object.dryOffDay == null ? null : encrypt(String(object.dryOffDay))
 			var lactationNumber = object.lactationNumber == null ? null : encrypt(String(object.lactationNumber))
@@ -833,10 +836,10 @@ app.put("/cow", (req, res) => {
 						+ "currentSomaticCellCount = CASE WHEN ? IS NOT NULL THEN ? ELSE currentSomaticCellCount END, linearScoreAtLastTest = CASE WHEN ? IS NOT NULL THEN ? ELSE linearScoreAtLastTest END, "
 						+ "dateOfLastClinicalMastitis = CASE WHEN ? IS NOT NULL THEN ? ELSE dateOfLastClinicalMastitis END, chainVisibleId = CASE WHEN ? IS NOT NULL THEN ? ELSE chainVisibleId END, "
 						+ "animalRegistrationNoNLID = CASE WHEN ? IS NOT NULL THEN ? ELSE animalRegistrationNoNLID END, damBreed = CASE WHEN ? IS NOT NULL THEN ? ELSE damBreed END, "
-						+ "culled = ?, modifyDate = ? WHERE userID = ? && id = ?", 
+						+ "culled = ?, modifyDate = ? WHERE userID = ? && id = ? && herdID = ?", 
 						[daysInMilk, daysInMilk, dryOffDay, dryOffDay, lactationNumber, lactationNumber, daysCarriedCalfIfPregnant, daysCarriedCalfIfPregnant, projectedDueDate, projectedDueDate, 
 							current305DayMilk, current305DayMilk, currentSomaticCellCount, currentSomaticCellCount, linearScoreAtLastTest, linearScoreAtLastTest, dateOfLastClinicalMastitis, 
-							dateOfLastClinicalMastitis, chainVisibleId, chainVisibleId, animalRegistrationNoNLID, animalRegistrationNoNLID, damBreed, damBreed, culled, modifyDate, userID, id], (err, objects) => {
+							dateOfLastClinicalMastitis, chainVisibleId, chainVisibleId, animalRegistrationNoNLID, animalRegistrationNoNLID, damBreed, damBreed, culled, modifyDate, userID, id, herdID], (err, objects) => {
 					if(err != null){
 						return res.send(err)
 					}
@@ -869,12 +872,13 @@ app.put("/cow-culled", (req, res) => {
 
 		async.forEachOf(cowArray, function(object, key, callback) {
 			var id = encrypt(String(object.id))
+			var herdID = encrypt(String(object.herdID))
 			var culled = object.culled
 			var userID = encrypt(String(req.header("user-id")))
 			
 				//query from query string
-				sqlQuery("UPDATE cow SET culled = ? WHERE userID = ? && id = ?", 
-						[culled, userID, id], (err, objects) => {
+				sqlQuery("UPDATE cow SET culled = ? WHERE userID = ? && id = ? && herdID = ?", 
+						[culled, userID, id, herdID], (err, objects) => {
 					if(err != null){
 						return res.send(err)
 					}

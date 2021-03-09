@@ -400,6 +400,34 @@ app.get("/user-cow", (req, res) => {
 	}
 })
 
+app.get("/user-herd", (req, res) => {
+	console.log("Fetching herds by userID")
+
+	if(req.query.userID != null){
+		sqlQuery("SELECT * FROM herd WHERE userID = ?", encrypt(req.query.userID), (err, objects) => {
+			if(err){
+				return res.send("Error: " + err)
+			}
+			else{
+				var jsonObjects = [] //empty array to put all herds into to then be turned to a JSON object
+
+				objects.forEach(function(herd){
+					if(herd.userID.substring(0, 11) != "depreciated"){
+						var cowObject = {
+							id: decrypt(herd.id),
+							location: decrypt(herd.location),
+							milkingSystem: decrypt(herd.milkingSystem)
+						}
+
+						jsonObjects.push(cowObject)
+					}
+				})
+
+				return res.send(JSON.stringify(jsonObjects))
+			}
+		})
+	}
+})
 
 
   //VALIDATION

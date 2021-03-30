@@ -607,7 +607,7 @@ app.post('/sync', authorizeUser, (req, res) => {
 															var chainVisibleId = encrypt(String(object.chainVisibleId))
 															var animalRegistrationNoNLID = encrypt(String(object.animalRegistrationNoNLID))
 															var damBreed = encrypt(String(object.damBreed))
-															var culled = encrypt(String(object.culled))
+															var culled = object.culled
 															var modifyDate = encrypt(String(object.modifyDate))
 
 															sqlQuery("INSERT INTO cow (id, daysInMilk, dryOffDay, mastitisHistory, methodOfDryOff, dailyMilkAverage, parity, reproductionStatus, numberOfTimesBred, farmBreedingIndex, herdID, userID, lactationNumber, daysCarriedCalfIfPregnant, projectedDueDate, current305DayMilk, currentSomaticCellCount, linearScoreAtLastTest, dateOfLastClinicalMastitis, chainVisibleId, animalRegistrationNoNLID, damBreed, culled, modifyDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [id, daysInMilk, dryOffDay, mastitisHistory, methodOfDryOff, dailyMilkAverage, parity, reproductionStatus, numberOfTimesBred, farmBreedingIndex, herdID, userID, lactationNumber, daysCarriedCalfIfPregnant, projectedDueDate, current305DayMilk, currentSomaticCellCount, linearScoreAtLastTest, dateOfLastClinicalMastitis, chainVisibleId, animalRegistrationNoNLID, damBreed, culled, modifyDate], (err, rows) => {
@@ -755,7 +755,7 @@ app.post('/cow', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 	var chainVisibleId = encrypt(String(object.chainVisibleId))
 	var animalRegistrationNoNLID = encrypt(String(object.animalRegistrationNoNLID))
 	var damBreed = encrypt(String(object.damBreed))
-	var culled = encrypt(String(object.culled))
+	var culled = object.culled
 	var modifyDate = encrypt(String(object.modifyDate))
 
 	// sqlQuery("DELETE FROM cow WHERE userID = ?", [userID.substring(0, 60)], (err, rows) => {

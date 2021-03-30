@@ -342,7 +342,7 @@ app.get("/backup", authorizeUser, (req, res) => {
 								chainVisibleId: decrypt(cow.chainVisibleId),
 								animalRegistrationNoNLID: decrypt(cow.animalRegistrationNoNLID),
 								damBreed: decrypt(cow.damBreed),
-								culled: decrypt(cow.culled),
+								culled: cow.culled,
 								modifyDate: decrypt(cow.modifyDate)
 							}
 		

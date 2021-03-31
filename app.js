@@ -446,6 +446,8 @@ app.get("/user-herd", (req, res) => {
 							milkingSystem: decrypt(herd.milkingSystem)
 						}
 
+						console.log(cowObject)
+
 						jsonObjects.push(cowObject)
 					}
 				})

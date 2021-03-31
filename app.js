@@ -699,17 +699,9 @@ app.post('/herd', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 	var location = encrypt(String(req.body.location))
 	var milkingSystem = encrypt(String(req.body.milkingSystem))
 	var pin = encrypt(String(req.body.pin))
-	var userID = encrypt(String(req.header("user-id")))
+	var userID = String(req.header("user-id"))
 
 	console.log(userID.substring(0, 59))
-
-	sqlQuery("DELETE FROM herd WHERE userID = ?", [userID], (err, rows) => {
-
-		if(err != null){
-			return res.send(err)
-		}
-
-		else{
 			
 			if(req.body.id != undefined){
 				//SET THIS BELOW AS THE CALLBACK FUNTION OF THE QUERY TO DELETE ALL PREVIOUS HERDS WITH THE SAME USERID
@@ -723,11 +715,8 @@ app.post('/herd', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 				})
 			}
 			else{
-				return res.send("Success")
+				return res.send("Request contained no herd data")
 			}
-		}
-
-	})
 
 })
 

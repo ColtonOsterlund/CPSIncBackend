@@ -440,13 +440,14 @@ app.get("/user-herd", (req, res) => {
 
 				objects.forEach(function(herd){
 					if(herd.userID.substring(0, 11) != "depreciated"){
-						var cowObject = {
+						var herdObject = {
 							id: decrypt(herd.id),
 							location: decrypt(herd.location),
-							milkingSystem: decrypt(herd.milkingSystem)
+							milkingSystem: decrypt(herd.milkingSystem),
+							pin: decrypt(herd.pin)
 						}
 
-						jsonObjects.push(cowObject)
+						jsonObjects.push(herdObject)
 					}
 				})
 

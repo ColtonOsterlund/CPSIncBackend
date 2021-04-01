@@ -384,8 +384,44 @@ app.get("/backup", authorizeUser, (req, res) => {
 	})
 })
 
-//!!!!!!!!!!Based on file that is beeing send from CPS API
-app.get("/user-cow", authorizeUser, (req, res) => {
+
+
+app.get("/user-test-app", authorizeUser, (req, res) => {
+	console.log("Fetching cows by userID and herdID")
+
+	if(req.query.userID != null && req.query.herdID != null && req.query.cowID != null){
+		sqlQuery("SELECT * FROM test WHERE userID = ? && herdID = ? && cowID = ?", [encrypt(req.query.userID), encrypt(req.query.herdID), encrypt(req.query.cowID)], (err, objects) => {
+			if(err){
+				return res.send("Error: " + err)
+			}
+			else{
+				var jsonObjects = [] //empty array to put all herds into to then be turned to a JSON object
+
+				objects.forEach(function(test){
+					if(test.userID.substring(0, 11) != "depreciated"){
+
+						var testObject = {
+							id: decrypt(cow.id),
+								
+						}
+
+						jsonObjects.push(testObject)
+					}
+				})
+
+				return res.send(JSON.stringify(jsonObjects))
+			}
+		})
+	}
+})
+
+
+
+
+
+
+
+app.get("/user-cow-app", authorizeUser, (req, res) => {
 	console.log("Fetching cows by userID and herdID")
 
 	if(req.query.userID != null && req.query.herdID != null){
@@ -436,7 +472,7 @@ app.get("/user-cow", authorizeUser, (req, res) => {
 	}
 })
 
-app.get("/user-herd", authorizeUser, (req, res) => {
+app.get("/user-herd-app", authorizeUser, (req, res) => {
 	console.log("Fetching herds by userID: " + encrypt(req.query.userID))
 
 	if(req.query.userID != null){
@@ -467,6 +503,87 @@ app.get("/user-herd", authorizeUser, (req, res) => {
 		})
 	}
 })
+
+
+
+
+
+
+//FROM HELENA !!!!!!!!!!Based on file that is beeing send from CPS API
+app.get("/user-cow", (req, res) => {
+	console.log("Fetching cows by userID and herdID")
+
+	if(req.query.userID != null && req.query.herdID != null){
+		sqlQuery("SELECT * FROM cow WHERE userID = ? && herdID = ?", [encrypt(req.query.userID), encrypt(req.query.herdID)], (err, objects) => {
+			if(err){
+				return res.send("Error: " + err)
+			}
+			else{
+				var jsonObjects = [] //empty array to put all herds into to then be turned to a JSON object
+
+				objects.forEach(function(cow){
+					if(cow.userID.substring(0, 11) != "depreciated"){
+						var cowObject = {
+							id: decrypt(cow.id),
+							herdID: decrypt(cow.herdID),
+							daysInMilk: decrypt(cow.daysInMilk),
+							dryOffDay: decrypt(cow.dryOffDay),
+							lactationNumber: decrypt(cow.lactationNumber),
+							daysCarriedCalfIfPregnant: decrypt(cow.daysCarriedCalfIfPregnant),
+							projectedDueDate: decrypt(cow.projectedDueDate),
+							current305DayMilk: decrypt(cow.current305DayMilk),
+							currentSomaticCellCount: decrypt(cow.currentSomaticCellCount),
+							linearScoreAtLastTest: decrypt(cow.linearScoreAtLastTest),
+							dateOfLastClinicalMastitis: decrypt(cow.dateOfLastClinicalMastitis),
+							chainVisibleId: decrypt(cow.chainVisibleId),
+							animalRegistrationNoNLID: decrypt(cow.animalRegistrationNoNLID),
+							damBreed: decrypt(cow.damBreed),
+							culled: cow.culled,
+							modifyDate: decrypt(cow.modifyDate)
+						}
+
+						jsonObjects.push(cowObject)
+					}
+				})
+
+				return res.send(JSON.stringify(jsonObjects))
+			}
+		})
+	}
+})
+
+//FROM HELENA
+app.get("/user-herd", (req, res) => {
+	console.log("Fetching herds by userID")
+
+	if(req.query.userID != null){
+		sqlQuery("SELECT * FROM herd WHERE userID = ?", encrypt(req.query.userID), (err, objects) => {
+			if(err){
+				return res.send("Error: " + err)
+			}
+			else{
+				var jsonObjects = [] //empty array to put all herds into to then be turned to a JSON object
+
+				objects.forEach(function(herd){
+					if(herd.userID.substring(0, 11) != "depreciated"){
+						var cowObject = {
+							id: decrypt(herd.id),
+							location: decrypt(herd.location),
+							milkingSystem: decrypt(herd.milkingSystem)
+						}
+
+						jsonObjects.push(cowObject)
+					}
+				})
+
+				return res.send(JSON.stringify(jsonObjects))
+			}
+		})
+	}
+})
+
+
+
 
 
   //VALIDATION

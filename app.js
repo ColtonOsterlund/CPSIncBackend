@@ -398,6 +398,9 @@ app.get("/user-cow", (req, res) => {
 
 				objects.forEach(function(cow){
 					if(cow.userID.substring(0, 11) != "depreciated"){
+
+						console.log(cow.culled);
+
 						var cowObject = {
 							id: decrypt(cow.id),
 								daysInMilk: decrypt(cow.daysInMilk),

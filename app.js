@@ -514,7 +514,7 @@ app.post('/herd', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 
 	console.log(userID.substring(0, 59))
 			
-			if(req.body.id != undefined){
+			if(req.body[0].id != undefined){
 				//SET THIS BELOW AS THE CALLBACK FUNTION OF THE QUERY TO DELETE ALL PREVIOUS HERDS WITH THE SAME USERID
 				sqlQuery("INSERT INTO herd (id, location, milkingSystem, pin, userID) VALUES (?, ?, ?, ?, ?)", [id, location, milkingSystem, pin, userID], (err, rows) => {
 					if(err != null){

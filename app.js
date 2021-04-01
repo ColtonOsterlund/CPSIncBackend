@@ -385,7 +385,7 @@ app.get("/backup", authorizeUser, (req, res) => {
 })
 
 //!!!!!!!!!!Based on file that is beeing send from CPS API
-app.get("/user-cow", (req, res) => {
+app.get("/user-cow", authorizeUser, (req, res) => {
 	console.log("Fetching cows by userID and herdID")
 
 	if(req.query.userID != null && req.query.herdID != null){
@@ -436,7 +436,7 @@ app.get("/user-cow", (req, res) => {
 	}
 })
 
-app.get("/user-herd", (req, res) => {
+app.get("/user-herd", authorizeUser, (req, res) => {
 	console.log("Fetching herds by userID: " + encrypt(req.query.userID))
 
 	if(req.query.userID != null){

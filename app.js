@@ -540,18 +540,18 @@ app.post('/cow', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 	var farmBreedingIndex = encrypt(String(req.body.farmBreedingIndex))
 	var herdID = encrypt(String(req.body.herdID))
 	var userID = encrypt(String(req.header("user-id")))
-	var lactationNumber = encrypt(String(object.lactationNumber))
-	var daysCarriedCalfIfPregnant = encrypt(String(object.daysCarriedCalfIfPregnant))
-	var projectedDueDate = encrypt(String(object.projectedDueDate))
-	var current305DayMilk = encrypt(String(object.current305DayMilk))
-	var currentSomaticCellCount = encrypt(String(object.currentSomaticCellCount))
-	var linearScoreAtLastTest = encrypt(String(object.linearScoreAtLastTest))
-	var dateOfLastClinicalMastitis = encrypt(String(object.dateOfLastClinicalMastitis))
-	var chainVisibleId = encrypt(String(object.chainVisibleId))
-	var animalRegistrationNoNLID = encrypt(String(object.animalRegistrationNoNLID))
-	var damBreed = encrypt(String(object.damBreed))
-	var culled = object.culled
-	var modifyDate = encrypt(String(object.modifyDate))
+	var lactationNumber = encrypt(String(req.body.lactationNumber))
+	var daysCarriedCalfIfPregnant = encrypt(String(req.body.daysCarriedCalfIfPregnant))
+	var projectedDueDate = encrypt(String(req.body.projectedDueDate))
+	var current305DayMilk = encrypt(String(req.body.current305DayMilk))
+	var currentSomaticCellCount = encrypt(String(req.body.currentSomaticCellCount))
+	var linearScoreAtLastTest = encrypt(String(req.body.linearScoreAtLastTest))
+	var dateOfLastClinicalMastitis = encrypt(String(req.body.dateOfLastClinicalMastitis))
+	var chainVisibleId = encrypt(String(req.body.chainVisibleId))
+	var animalRegistrationNoNLID = encrypt(String(req.body.animalRegistrationNoNLID))
+	var damBreed = encrypt(String(req.body.damBreed))
+	var culled = req.body.culled
+	var modifyDate = encrypt(String(req.body.modifyDate))
 
 	// sqlQuery("DELETE FROM cow WHERE userID = ?", [userID.substring(0, 60)], (err, rows) => {
 

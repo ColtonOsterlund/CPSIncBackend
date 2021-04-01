@@ -428,7 +428,7 @@ app.get("/user-cow", (req, res) => {
 })
 
 app.get("/user-herd", (req, res) => {
-	console.log("Fetching herds by userID")
+	console.log("Fetching herds by userID: " + encrypt(req.query.userID))
 
 	if(req.query.userID != null){
 		sqlQuery("SELECT * FROM herd WHERE userID = ?", encrypt(req.query.userID), (err, objects) => {
@@ -699,7 +699,7 @@ app.post('/herd', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 	var location = encrypt(String(req.body.location))
 	var milkingSystem = encrypt(String(req.body.milkingSystem))
 	var pin = encrypt(String(req.body.pin))
-	var userID = String(req.header("user-id"))
+	var userID = encrypt(String(req.header("user-id")))
 
 	console.log(userID.substring(0, 59))
 			
@@ -767,7 +767,7 @@ app.post('/cow', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 				})
 			}
 			else{
-				return res.send("Success")
+				return res.send("Request contained no cow data")
 			}
 	// 	}
 
@@ -787,6 +787,7 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 	var units = encrypt(String(req.body.units))
 	var value = encrypt(String(req.body.value))
 	var cowID = encrypt(String(req.body.cowID))
+	var herdID = encrypt(String(req.body.herdID))
 	var userID = encrypt(String(req.header("user-id")))
 	
 
@@ -799,7 +800,7 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 	// 	else{
 			if(req.body.value != undefined){
 				//SET THIS AS THE CALLBACK FUNCTION FOR THE QUERY TO DELETE ALL PREVIOUS TESTS WITH THE SAME USERID
-				sqlQuery("INSERT INTO test (date, dataType, runtime, testType, units, value, cowID, userID) VALUES (?, ?, ?, ?, ?, ?, ?, ?)", [date, dataType, runtime, testType, units, value, cowID, userID], (err, rows) => {
+				sqlQuery("INSERT INTO test (date, dataType, runtime, testType, units, value, cowID, userID, herdID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", [date, dataType, runtime, testType, units, value, cowID, userID, herdID], (err, rows) => {
 					if(err != null){
 						return res.send(err)
 					}

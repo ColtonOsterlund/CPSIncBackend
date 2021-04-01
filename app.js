@@ -500,6 +500,7 @@ app.get("/user-herd", (req, res) => {
 app.post('/herd', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 	
 	console.log(req.body)
+	console.log(req.body[0])
 
 	
 	var id = encrypt(String(req.body.id))
@@ -509,7 +510,7 @@ app.post('/herd', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 	var userID = encrypt(String(req.header("user-id")))
 
 	console.log("id: " + id)
-	console.log("id unencrypted: " + req.body[0].id)
+	console.log("id unencrypted: " + req.body.id)
 
 	console.log(userID.substring(0, 59))
 			

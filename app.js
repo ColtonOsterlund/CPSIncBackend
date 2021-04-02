@@ -401,7 +401,16 @@ app.get("/user-test-app", authorizeUser, (req, res) => {
 					if(test.userID.substring(0, 11) != "depreciated"){
 
 						var testObject = {
-							id: decrypt(cow.id),
+							objectType: "Test",
+							date: decrypt(test.date),
+							followUpNum: decrypt(test.followUpNum),
+							testID: decrypt(test.testID),
+							testType: decrypt(test.testType),
+							units: decrypt(test.units),
+							value: decrypt(test.value),
+							milkFever: decrypt(test.milkFever),
+							cowID: decrypt(test.cowID),
+							herdID: decrypt(test.herdID)
 								
 						}
 

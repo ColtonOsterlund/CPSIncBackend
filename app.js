@@ -518,6 +518,107 @@ app.get("/user-herd-app", authorizeUser, (req, res) => {
 
 
 
+
+
+
+
+
+
+
+app.post('/cow-update', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
+	
+	console.log(req.body)
+	
+	var id = encrypt(String(req.body.id))
+	var daysInMilk = encrypt(String(req.body.daysInMilk))
+	var dryOffDay = encrypt(String(req.body.dryOffDay))
+	var mastitisHistory = encrypt(String(req.body.mastitisHistory))
+	var methodOfDryOff = encrypt(String(req.body.methodOfDryOff))
+	var dailyMilkAverage = encrypt(String(req.body.dailyMilkAverage))
+	var parity = encrypt(String(req.body.parity))
+	var reproductionStatus = encrypt(String(req.body.reproductionStatus))
+	var numberOfTimesBred = encrypt(String(req.body.numberOfTimesBred))
+	var farmBreedingIndex = encrypt(String(req.body.farmBreedingIndex))
+	var herdID = encrypt(String(req.body.herdID))
+	var userID = encrypt(String(req.header("user-id")))
+	var lactationNumber = encrypt(String(req.body.lactationNumber))
+	var daysCarriedCalfIfPregnant = encrypt(String(req.body.daysCarriedCalfIfPregnant))
+	var projectedDueDate = encrypt(String(req.body.projectedDueDate))
+	var current305DayMilk = encrypt(String(req.body.current305DayMilk))
+	var currentSomaticCellCount = encrypt(String(req.body.currentSomaticCellCount))
+	var linearScoreAtLastTest = encrypt(String(req.body.linearScoreAtLastTest))
+	var dateOfLastClinicalMastitis = encrypt(String(req.body.dateOfLastClinicalMastitis))
+	var chainVisibleId = encrypt(String(req.body.chainVisibleId))
+	var animalRegistrationNoNLID = encrypt(String(req.body.animalRegistrationNoNLID))
+	var damBreed = encrypt(String(req.body.damBreed))
+	var culled = req.body.culled
+	var modifyDate = encrypt(String(req.body.modifyDate))
+
+
+			if(req.body.id != undefined){
+				//SET THIS BELOW AS THE CALLBACK FUNCTION FOR THE QUERY TO DELETE ALL PREVIOUS COWS WITH THE SAME USERID
+				sqlQuery("UPDATE cow SET id = ?, daysInMilk = ?, dryOffDay = ?, mastitisHistory = ?, methodOfDryOff = ?, dailyMilkAverage = ?, parity = ?, reproductionStatus = ?, numberOfTimesBred = ?, farmBreedingIndex = ?, lactationNumber = ?, daysCarriedCalfIfPregnant = ?, projectedDueDate = ?, current305DayMilk = ?, currentSomaticCellCount = ?, linearScoreAtLastTest = ?, dateOfLastClinicalMastitis = ?, chainVisibleId = ?, animalRegistrationNoNLID = ?, damBreed = ?, culled = ?, modifyDate = ? WHERE userID = ? AND herdID = ?", [id, daysInMilk, dryOffDay, mastitisHistory, methodOfDryOff, dailyMilkAverage, parity, reproductionStatus, numberOfTimesBred, farmBreedingIndex, lactationNumber, daysCarriedCalfIfPregnant, projectedDueDate, current305DayMilk, currentSomaticCellCount, linearScoreAtLastTest, dateOfLastClinicalMastitis, chainVisibleId, animalRegistrationNoNLID, damBreed, culled, modifyDate, userID, herdID], (err, rows) => {
+					if(err != null){
+						return res.send(err)
+					}
+					else{
+						return res.send("Success")
+					}
+				})
+			}
+			else{
+				return res.send("Request contained no cow data")
+			}
+
+
+	
+})
+
+
+
+
+
+
+
+
+app.post('/herd-update', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
+	
+	var id = encrypt(String(req.body.id))
+	var location = encrypt(String(req.body.location))
+	var milkingSystem = encrypt(String(req.body.milkingSystem))
+	var pin = encrypt(String(req.body.pin))
+	var userID = encrypt(String(req.header("user-id")))
+
+			
+	if(req.body.id != undefined){
+		//SET THIS BELOW AS THE CALLBACK FUNTION OF THE QUERY TO DELETE ALL PREVIOUS HERDS WITH THE SAME USERID
+		sqlQuery("UPDATE herd SET id = ?, location = ?, milkingSystem = ?, pin = ? WHERE userID = ?", [id, location, milkingSystem, pin, userID], (err, rows) => {
+			if(err != null){
+				return res.send(err)
+			}
+			else{
+				return res.send("Success")
+			}
+		})
+	}
+	else{
+		return res.send("Request contained no herd data")
+	}
+
+})
+
+
+
+
+
+
+
+
+
+
+
+
+
 //FROM HELENA !!!!!!!!!!Based on file that is beeing send from CPS API
 app.get("/user-cow", (req, res) => {
 	console.log("Fetching cows by userID and herdID")

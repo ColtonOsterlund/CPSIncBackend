@@ -526,7 +526,16 @@ app.get("/user-herd-delete-app", authorizeUser, (req, res) => {
 				return res.send("Error: " + err)
 			}
 			else{
-				return res.send(JSON.stringify("Success"))
+
+				sqlQuery("DELETE FROM cow WHERE userID = ? && herdID = ?", [encrypt(req.query.userID), encrypt(req.query.herdID)], (err, objects) => {
+					if(err){
+						return res.send("Error: " + err)
+					}
+					else{
+						return res.send(JSON.stringify("Success"))
+					}
+				})
+
 			}
 		})
 	}
@@ -537,7 +546,7 @@ app.get("/user-cow-delete-app", (req, res) => {
 	console.log("Fetching cows by userID and herdID")
 
 	if(req.query.userID != null && req.query.herdID != null){
-		sqlQuery("DELETE FROM cow WHERE userID = ? && herdID = ? && cowID = ?", [encrypt(req.query.userID), encrypt(req.query.herdID), encrypt(req.query.cowID)], (err, objects) => {
+		sqlQuery("DELETE FROM cow WHERE userID = ? && herdID = ? && id = ?", [encrypt(req.query.userID), encrypt(req.query.herdID), encrypt(req.query.cowID)], (err, objects) => {
 			if(err){
 				return res.send("Error: " + err)
 			}

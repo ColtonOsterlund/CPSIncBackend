@@ -518,6 +518,41 @@ app.get("/user-herd-app", authorizeUser, (req, res) => {
 
 
 
+app.get("/user-herd-delete-app", authorizeUser, (req, res) => {
+
+	if(req.query.userID != null){
+		sqlQuery("DELETE FROM herd WHERE userID = ? && id = ?", [encrypt(req.query.userID), encrypt(req.query.herdID)], (err, objects) => {
+			if(err){
+				return res.send("Error: " + err)
+			}
+			else{
+				return res.send(JSON.stringify("Success"))
+			}
+		})
+	}
+})
+
+
+app.get("/user-cow-delete-app", (req, res) => {
+	console.log("Fetching cows by userID and herdID")
+
+	if(req.query.userID != null && req.query.herdID != null){
+		sqlQuery("DELETE FROM cow WHERE userID = ? && herdID = ? && cowID = ?", [encrypt(req.query.userID), encrypt(req.query.herdID), encrypt(req.query.cowID)], (err, objects) => {
+			if(err){
+				return res.send("Error: " + err)
+			}
+			else{
+				
+				return res.send(JSON.stringify("Success"))
+			}
+		})
+	}
+})
+
+
+
+
+
 
 
 
@@ -606,6 +641,7 @@ app.post('/herd-update', authorizeUser, (req, res) => { //NOT YET BEING VALIDATE
 	}
 
 })
+
 
 
 

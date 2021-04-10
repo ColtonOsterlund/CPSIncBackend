@@ -636,7 +636,7 @@ app.post('/herd-update', authorizeUser, (req, res) => { //NOT YET BEING VALIDATE
 			
 	if(req.body.id != undefined){
 		//SET THIS BELOW AS THE CALLBACK FUNTION OF THE QUERY TO DELETE ALL PREVIOUS HERDS WITH THE SAME USERID
-		sqlQuery("UPDATE herd SET id = ?, location = ?, milkingSystem = ?, pin = ? WHERE userID = ? AND herdID = ?", [id, location, milkingSystem, pin, userID, encrypt(req.query.herdID)], (err, rows) => {
+		sqlQuery("UPDATE herd SET id = ?, location = ?, milkingSystem = ?, pin = ? WHERE userID = ? AND id = ?", [id, location, milkingSystem, pin, userID, encrypt(req.query.herdID)], (err, rows) => {
 			if(err != null){
 				return res.send(err)
 			}

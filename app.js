@@ -573,6 +573,8 @@ app.post('/saveEmail', (req, res) => {
 	if(req.body.uuid != null){
 		console.log("UUID: " + req.query.uuid);
 	}
+
+	return res.send("Success")
 })
 
 

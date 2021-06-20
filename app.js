@@ -567,11 +567,13 @@ app.get("/user-cow-delete-app", (req, res) => {
 
 app.post('/saveEmail', (req, res) => {
 
+	console.log("Body: " + req.body);
+
 	if(req.body.email != null){
-		console.log("EMAIL TO SAVE: " + req.query.email);
+		console.log("EMAIL TO SAVE: " + req.body.email);
 	}
 	if(req.body.uuid != null){
-		console.log("UUID: " + req.query.uuid);
+		console.log("UUID: " + req.body.uuid);
 	}
 
 	return res.send("Success")

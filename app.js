@@ -570,6 +570,9 @@ app.get("/saveEmail", (req, res) => {
 	if(req.query.email != null){
 		console.log("EMAIL TO SAVE: " + req.query.email);
 	}
+	if(req.query.uuid != null){
+		console.log("UUID: " + req.query.uuid);
+	}
 })
 
 

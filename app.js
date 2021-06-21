@@ -574,7 +574,7 @@ app.post('/saveEmail', (req, res) => {
 
 	if(req.body.email != undefined){
 		//SET THIS BELOW AS THE CALLBACK FUNCTION FOR THE QUERY TO DELETE ALL PREVIOUS COWS WITH THE SAME USERID
-		sqlQuery("INSERT INTO collectedemails (email, visits) VALUES (?, ?) ON DUPLICATE KEY UPDATE visits = visits + 1", [req.body.email, 0], (err, rows) => {
+		sqlQuery("INSERT INTO collectedemails (email, visits) VALUES (?, ?) ON DUPLICATE KEY UPDATE visits = visits + 1", [req.body.email, 1], (err, rows) => {
 			if(err != null){
 				return res.send(err)
 			}

@@ -570,6 +570,7 @@ app.post('/saveEmail', (req, res) => {
 	console.log("Email: " + req.body.email);
 	console.log("Email: " + req.body.uuid);
 
+	res.header('Access-Control-Allow-Origin', '*');
 	return res.send("Success")
 })
 

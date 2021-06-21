@@ -12,6 +12,7 @@ const dotenv = require('dotenv')
 const crypto = require('crypto')
 const async = require('async')
 const { v4: uuidv4 } = require("uuid");
+const nodemailer = require('nodemailer');
 const validatePhoneNumber = require('validate-phone-number-node-js');
 const { Console } = require('console');
 app.use(bodyParser.urlencoded({extended: false}));
@@ -572,8 +573,6 @@ app.post('/saveEmail', (req, res) => {
 	console.log("URL: " + req.body.url);
 	let uuid = uuidv4();
 
-
-
 	res.header('Access-Control-Allow-Origin', '*');
 
 	if(req.body.email != undefined){
@@ -589,6 +588,24 @@ app.post('/saveEmail', (req, res) => {
 						return res.send(err)
 					}
 					else{
+
+						var transporter = nodemailer.createTransport({
+							service: 'gmail',
+							auth: {
+							  user: 'coltonericosterlund@gmail.com',
+							  pass: 'Gmcia330'
+							}
+						});
+						  
+						var mailOptions = {
+							from: 'creativeproteinsolutions@gmail.com',
+							to: req.body.email,
+							subject: 'Calciulator One-Time-Use Link',
+							text: 'Use this link to gain one-time access to the online Creative Protein Solutions Calciulator tool: ' + req.body.url + "?id=" + uuid;
+						};
+
+
+
 						return res.send("An email has been sent to " + req.body.email + " containing a one-time-use link for the Calciulator tool. Please check your spam and/or junk folders if you do not see it in your inbox shortly.")
 					}
 				})

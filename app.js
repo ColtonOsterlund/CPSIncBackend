@@ -11,6 +11,7 @@ const jwt = require('jsonwebtoken')
 const dotenv = require('dotenv')
 const crypto = require('crypto')
 const async = require('async')
+const { v4: uuidv4 } = require("uuid");
 const validatePhoneNumber = require('validate-phone-number-node-js');
 const { Console } = require('console');
 app.use(bodyParser.urlencoded({extended: false}));
@@ -569,6 +570,9 @@ app.post('/saveEmail', (req, res) => {
 
 	console.log("Email: " + req.body.email);
 	console.log("URL: " + req.body.url);
+	let uuid = uuidv4();
+
+
 
 	res.header('Access-Control-Allow-Origin', '*');
 
@@ -579,8 +583,16 @@ app.post('/saveEmail', (req, res) => {
 				return res.send(err)
 			}
 			else{
-				return res.send("Success");
-				//return res.send("An email has been sent to " + req.body.email + " containing a one-time-use link for the Calciulator tool. Please check your spam and/or junk folders if you do not see it in your inbox shortly.")
+
+				sqlQuery("INSERT INTO newuuids (uuid) VALUES (?)", [uuid], (err, rows) => {
+					if(err != null){
+						return res.send(err)
+					}
+					else{
+						return res.send("An email has been sent to " + req.body.email + " containing a one-time-use link for the Calciulator tool. Please check your spam and/or junk folders if you do not see it in your inbox shortly.")
+					}
+				})
+
 			}
 		})
 	}

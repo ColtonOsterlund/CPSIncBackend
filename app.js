@@ -568,6 +568,7 @@ app.get("/user-cow-delete-app", (req, res) => {
 app.post('/saveEmail', (req, res) => {
 
 	console.log("Email: " + req.body.email);
+	console.log("Email: " + req.body.uuid);
 
 	return res.send("Success")
 })

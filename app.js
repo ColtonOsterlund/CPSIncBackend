@@ -568,10 +568,25 @@ app.get("/user-cow-delete-app", (req, res) => {
 app.post('/saveEmail', (req, res) => {
 
 	console.log("Email: " + req.body.email);
-	console.log("Email: " + req.body.uuid);
+	console.log("URL: " + req.body.url);
 
-	
 	res.header('Access-Control-Allow-Origin', '*');
+
+	// if(req.body.email != undefined){
+	// 	//SET THIS BELOW AS THE CALLBACK FUNCTION FOR THE QUERY TO DELETE ALL PREVIOUS COWS WITH THE SAME USERID
+	// 	sqlQuery("INSERT IGNORE INTO  SET id = ?, daysInMilk = ?, dryOffDay = ?, mastitisHistory = ?, methodOfDryOff = ?, dailyMilkAverage = ?, parity = ?, reproductionStatus = ?, numberOfTimesBred = ?, farmBreedingIndex = ?, lactationNumber = ?, daysCarriedCalfIfPregnant = ?, projectedDueDate = ?, current305DayMilk = ?, currentSomaticCellCount = ?, linearScoreAtLastTest = ?, dateOfLastClinicalMastitis = ?, chainVisibleId = ?, animalRegistrationNoNLID = ?, damBreed = ?, culled = ?, modifyDate = ? WHERE userID = ? AND herdID = ? AND id = ?", [id, daysInMilk, dryOffDay, mastitisHistory, methodOfDryOff, dailyMilkAverage, parity, reproductionStatus, numberOfTimesBred, farmBreedingIndex, lactationNumber, daysCarriedCalfIfPregnant, projectedDueDate, current305DayMilk, currentSomaticCellCount, linearScoreAtLastTest, dateOfLastClinicalMastitis, chainVisibleId, animalRegistrationNoNLID, damBreed, culled, modifyDate, userID, herdID, encrypt(req.query.cowID)], (err, rows) => {
+	// 		if(err != null){
+	// 			return res.send(err)
+	// 		}
+	// 		else{
+	// 			return res.send("Success")
+	// 		}
+	// 	})
+	// }
+	// else{
+	// 	return res.send("Incomplete Request")
+	// }
+
 	return res.send("Success")
 })
 

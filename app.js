@@ -605,8 +605,14 @@ app.post('/saveEmail', (req, res) => {
 						};
 
 
+						transporter.sendMail(mailOptions, function(error, info){
+							if (error) {
+								return res.send(error)
+							} else {
+								return res.send("An email has been sent to " + req.body.email + " containing a one-time-use link for the Calciulator tool. Please check your spam and/or junk folders if you do not see it in your inbox shortly.")
+							}
+						  });
 
-						return res.send("An email has been sent to " + req.body.email + " containing a one-time-use link for the Calciulator tool. Please check your spam and/or junk folders if you do not see it in your inbox shortly.")
 					}
 				})
 

@@ -601,7 +601,7 @@ app.post('/saveEmail', (req, res) => {
 							from: 'creativeproteinsolutions@gmail.com',
 							to: req.body.email,
 							subject: 'Calciulator One-Time-Use Link',
-							text: 'Use this link to gain one-time access to the online Creative Protein Solutions Calciulator tool: ' + req.body.url + "?id=" + uuid;
+							text: 'Use this link to gain one-time access to the online Creative Protein Solutions Calciulator tool: ' + req.body.url + "?id=" + uuid
 						};
 
 

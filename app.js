@@ -642,9 +642,12 @@ app.get('/checkID', (req, res) => {
 			}
 			else{
 
-				console.log(rows.length);
-
-				return res.send(rows.length);
+				if(rows.length > 0){
+					return res.send("True");
+				}
+				else{
+					return res.send("False");
+				}
 			}
 		})
 	}

@@ -629,14 +629,14 @@ app.post('/saveEmail', (req, res) => {
 
 
 
-app.post('/checkID', (req, res) => {
+app.get('/checkID', (req, res) => {
 
-	console.log("Id: " + req.body.id);
+	console.log("Id: " + req.query.id);
 
 	res.header('Access-Control-Allow-Origin', '*');
 
 	if(req.body.id != undefined){
-		sqlQuery("SELECT * FROM newuuids WHERE uuid = ?", [req.body.id], (err, rows) => {
+		sqlQuery("SELECT * FROM newuuids WHERE uuid = ?", [req.query.id], (err, rows) => {
 			if(err != null){
 				return res.send(err)
 			}

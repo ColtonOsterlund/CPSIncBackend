@@ -641,6 +641,9 @@ app.get('/checkID', (req, res) => {
 				return res.send(err)
 			}
 			else{
+
+				console.log(rows.length);
+
 				return res.send(rows.length);
 			}
 		})

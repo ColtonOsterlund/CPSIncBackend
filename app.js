@@ -643,7 +643,14 @@ app.get('/checkID', (req, res) => {
 			else{
 
 				if(rows.length > 0){
-					return res.send("True");
+					sqlQuery("DELETE FROM newuuids WHERE uuid = ?", [req.query.id], (err, rows) => {
+						if(err != null){
+							return res.send(err)
+						}
+						else{
+							return res.send("True");
+						}
+					})
 				}
 				else{
 					return res.send("False");

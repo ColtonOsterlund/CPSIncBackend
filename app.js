@@ -635,7 +635,7 @@ app.get('/checkID', (req, res) => {
 
 	res.header('Access-Control-Allow-Origin', '*');
 
-	if(req.body.id != undefined){
+	if(req.query.id != undefined){
 		sqlQuery("SELECT * FROM newuuids WHERE uuid = ?", [req.query.id], (err, rows) => {
 			if(err != null){
 				return res.send(err)

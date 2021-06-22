@@ -629,6 +629,31 @@ app.post('/saveEmail', (req, res) => {
 
 
 
+app.post('/checkID', (req, res) => {
+
+	console.log("Id: " + req.body.id);
+
+	res.header('Access-Control-Allow-Origin', '*');
+
+	if(req.body.id != undefined){
+		sqlQuery("SELECT * FROM newuuids WHERE uuid = ?", [req.body.id], (err, rows) => {
+			if(err != null){
+				return res.send(err)
+			}
+			else{
+				return res.send(rows.length);
+			}
+		})
+	}
+	else{
+		return res.send("Incomplete Request")
+	}
+})
+
+
+
+
+
 
 
 

@@ -592,8 +592,8 @@ app.post('/saveEmail', (req, res) => {
 						var transporter = nodemailer.createTransport({
 							service: 'gmail',
 							auth: {
-							  user: 'coltonericosterlund@gmail.com',
-							  pass: 'pnydngboxqxpqmlw'
+							  user: 'creativeproteinsolutions@gmail.com',
+							  pass: 'ggimhctejkxjlqjp'
 							}
 						});
 						  

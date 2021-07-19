@@ -598,7 +598,7 @@ app.post('/saveEmail', (req, res) => {
 						});
 						  
 						var mailOptions = {
-							from: 'Creative Protein Solutions',
+							from: 'creativeproteinsolutions@gmail.com',
 							to: req.body.email,
 							subject: 'Creative Protein Solutions Calciulator',
 							text: 'Use this link to gain one-time access to the online Creative Protein Solutions Calciulator tool: ' + req.body.url + "?id=" + uuid

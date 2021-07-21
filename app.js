@@ -592,13 +592,13 @@ app.post('/saveEmail', (req, res) => {
 						var transporter = nodemailer.createTransport({
 							service: 'gmail',
 							auth: {
-							  user: 'coltonericosterlund@gmail.com',
-							  pass: 'yyzjeluobuzykpft'
+							  user: 'creativeproteinsolutions@gmail.com',
+							  pass: 'fjammuzzaddgherw'
 							}
 						});
 						  
 						var mailOptions = {
-							from: 'coltonericosterlund@gmail.com',
+							from: 'creativeproteinsolutions@gmail.com',
 							to: req.body.email,
 							subject: 'Creative Protein Solutions Calciulator',
 							text: 'Use this link to gain one-time access to the online Creative Protein Solutions Calciulator tool: ' + req.body.url + "?id=" + uuid +

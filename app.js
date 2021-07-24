@@ -2,6 +2,8 @@
 
 const express = require('express');
 const app = express();
+const cors = require('cors');
+const net = require('net');
 const morgan = require('morgan');
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
@@ -20,6 +22,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json());
 app.use(morgan('short'));
 dotenv.config()
+app.use(cors());
 
 
 //GET REQUESTS/////////////////////////////////////////////////////////////////////////////////////////////
@@ -597,19 +600,26 @@ app.post('/saveEmail', (req, res) => {
 							auth: {
 							  user: 'creativeproteinsolutions@gmail.com',
 							  pass: 'fjammuzzaddgherw'
-							}
+							},
+							host: process.env.EMAIL_HOST,
+							port: process.env.EMAIL_HOST || 456,
+							secure: true
 						});
 						  
 						var mailOptions = {
 							from: 'creativeproteinsolutions@gmail.com',
 							to: req.body.email,
-							html: emailTemplate({username: 'John Doe', link: req.body.url + "?id=" + uuid}),
-							subject: 'Creative Protein Solutions Calciulator'//,
-							//text: 'Use this link to gain one-time access to the online Creative Protein Solutions Calciulator tool: ' + req.body.url + "?id=" + uuid +
-							//"\n\nInformation Collection and Use\n" +
-							//"By using this service, you are giving CPS the permission to collect the email address you provide to send you the on-time link to the applet. We see your use of the applet as an indication of your interest in the blood calcium test CPS produces. " +
-							//"We might use this email address to send you more information about the blood calcium test, Calciulate. " +
-							//"We are not collecting any of the information you fill out in the applet online.  This information is only temporarily read by your internet browser to perform the calculation and display the result on your device only."
+							html: 'Use this link to gain one-time access to the online Creative Protein Solutions Calciulator tool: ' + req.body.url + "?id=" + uuid +
+							"\n\nInformation Collection and Use\n" +
+							"By using this service, you are giving CPS the permission to collect the email address you provide to send you the on-time link to the applet. We see your use of the applet as an indication of your interest in the blood calcium test CPS produces. " +
+							"We might use this email address to send you more information about the blood calcium test, Calciulate. " +
+							"We are not collecting any of the information you fill out in the applet online.  This information is only temporarily read by your internet browser to perform the calculation and display the result on your device only.",
+							 subject: 'Creative Protein Solutions Calciulator'//,
+							// text: 'Use this link to gain one-time access to the online Creative Protein Solutions Calciulator tool: ' + req.body.url + "?id=" + uuid +
+							// "\n\nInformation Collection and Use\n" +
+							// "By using this service, you are giving CPS the permission to collect the email address you provide to send you the on-time link to the applet. We see your use of the applet as an indication of your interest in the blood calcium test CPS produces. " +
+							// "We might use this email address to send you more information about the blood calcium test, Calciulate. " +
+							// "We are not collecting any of the information you fill out in the applet online.  This information is only temporarily read by your internet browser to perform the calculation and display the result on your device only."
 						};
 
 

@@ -609,7 +609,7 @@ app.post('/saveEmail', (req, res) => {
 						var mailOptions = {
 							from: 'creativeproteinsolutions@gmail.com',
 							to: req.body.email,
-							html: '<p><a href="' + req.body.url + "?id=" + uuid + '">Click Here</a> to gain one-time access to the online Creative Protein Solutions Calciulator tool</p><br><br>' + 
+							html: '<p><a href="' + req.body.url + "?id=" + uuid + '">Click here</a> to gain one-time access to the online Creative Protein Solutions Calciulator tool</p><br><br>' + 
 							"<p>Information Collection and Use:</p>" +
 							"<p>By using this service, you are giving CPS the permission to collect the email address you provide to send you the on-time link to the applet. We see your use of the applet as an indication of your interest in the blood calcium test CPS produces. " +
 							"We might use this email address to send you more information about the blood calcium test, Calciulate. " +

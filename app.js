@@ -996,6 +996,8 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 	var cowID = encrypt(String(req.body.cowID))
 	var herdID = encrypt(String(req.body.herdID))
 	var userID = encrypt(String(req.header("user-id")))
+	var milkFever = encrypt(String(req.body.milkFever))
+	var followUpNum = encrypt(String(req.body.followUpNum))
 	
 
 	// sqlQuery("DELETE FROM test WHERE userID = ?", [userID.substring(0, 60)], (err, rows) => {
@@ -1007,7 +1009,7 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 	// 	else{
 			if(req.body.value != undefined){
 				//SET THIS AS THE CALLBACK FUNCTION FOR THE QUERY TO DELETE ALL PREVIOUS TESTS WITH THE SAME USERID
-				sqlQuery("INSERT INTO test (date, testType, units, value, cowID, userID, herdID) VALUES (?, ?, ?, ?, ?, ?, ?)", [date, testType, units, value, cowID, userID, herdID], (err, rows) => {
+				sqlQuery("INSERT INTO test (date, testType, units, value, cowID, userID, herdID, milkFever, followUpNum) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", [date, testType, units, value, cowID, userID, herdID, milkFever, followUpNum], (err, rows) => {
 					if(err != null){
 						return res.send(err)
 					}

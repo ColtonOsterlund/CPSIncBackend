@@ -1007,7 +1007,7 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 	// 	else{
 			if(req.body.value != undefined){
 				//SET THIS AS THE CALLBACK FUNCTION FOR THE QUERY TO DELETE ALL PREVIOUS TESTS WITH THE SAME USERID
-				sqlQuery("INSERT INTO test (date, dataType, runtime, testType, units, value, cowID, userID, herdID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)", [date, dataType, runtime, testType, units, value, cowID, userID, herdID], (err, rows) => {
+				sqlQuery("INSERT INTO test (date, testType, units, value, cowID, userID, herdID) VALUES (?, ?, ?, ?, ?, ?, ?)", [date, testType, units, value, cowID, userID, herdID], (err, rows) => {
 					if(err != null){
 						return res.send(err)
 					}

@@ -18,10 +18,10 @@ const { v4: uuidv4 } = require("uuid");
 const nodemailer = require('nodemailer');
 const validatePhoneNumber = require('validate-phone-number-node-js');
 const { Console } = require('console');
-app.use(bodyParser.urlencoded({extended: false}));
-app.use(bodyParser.json());
-app.use(express.json({ limit: '10mb' }));
-app.use(express.urlencoded({ limit: '10mb' }));
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ extended: true, limit: '10mb' }));
+// app.use(express.json({ limit: '10mb' }));
+// app.use(express.urlencoded({ limit: '10mb' }));
 app.use(morgan('short'));
 dotenv.config()
 app.use(cors());

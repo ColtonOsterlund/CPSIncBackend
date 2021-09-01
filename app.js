@@ -1078,7 +1078,17 @@ app.post('/cow-file', (req, res) => { //NOT YET BEING VALIDATED
 			}else{
 				//whatever you wanna do after all the iterations are done
 				console.log("Success")
-				return res.send("Success")
+
+
+				//add herd to the database
+				sqlQuery("INSERT INTO herd (id, location, milkingSystem, pin, userID) VALUES (?, ?, ?, ?, ?)", [herdID, "", "", "", userID], (err, rows) => {
+					if(err != null){
+						return res.send(err)
+					}
+					else{
+						return res.send("Success")
+					}
+				})
 			}
 		});	
 	}

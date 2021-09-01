@@ -1036,7 +1036,7 @@ app.post('/cow-file', (req, res) => { //NOT YET BEING VALIDATED
 
 
 
-	sqlQuery("INSERT INTO herd (id, location, milkingSystem, pin, userID) VALUES (?, ?, ?, ?, ?)", [encrypt(String(object.herdID)), "", "", "", encrypt(String(req.header("user-id")))], (err, rows) => {
+	sqlQuery("INSERT INTO herd (id, location, milkingSystem, pin, userID) VALUES (?, ?, ?, ?, ?)", [encrypt(String(cowArray[0].herdID)), "", "", "", encrypt(String(req.header("user-id")))], (err, rows) => {
 		if(err != null){
 			return res.send(err)
 		}

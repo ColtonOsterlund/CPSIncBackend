@@ -1034,64 +1034,70 @@ app.post('/cow-file', (req, res) => { //NOT YET BEING VALIDATED
 	
 	var cowArray = req.body
 
-		async.forEachOf(cowArray, function(object, key, callback) {
-			var id = encrypt(String(object.id))
-			var herdID = encrypt(String(object.herdID))
-			var daysInMilk = encrypt(String(object.daysInMilk))
-			var dryOffDay = encrypt(String(object.dryOffDay))
-			var lactationNumber = encrypt(String(object.lactationNumber))
-			var daysCarriedCalfIfPregnant = encrypt(String(object.daysCarriedCalfIfPregnant))
-			var projectedDueDate = encrypt(String(object.projectedDueDate))
-			var current305DayMilk = encrypt(String(object.current305DayMilk))
-			var currentSomaticCellCount = encrypt(String(object.currentSomaticCellCount))
-			var linearScoreAtLastTest = encrypt(String(object.linearScoreAtLastTest))
-			var dateOfLastClinicalMastitis = encrypt(String(object.dateOfLastClinicalMastitis))
-			var chainVisibleId = encrypt(String(object.chainVisibleId))
-			var animalRegistrationNoNLID = encrypt(String(object.animalRegistrationNoNLID))
-			var damBreed = encrypt(String(object.damBreed))
-			var modifyDate = encrypt(String(object.modifyDate))
-			var userID = encrypt(String(req.header("user-id")))
+
+
+	sqlQuery("INSERT INTO herd (id, location, milkingSystem, pin, userID) VALUES (?, ?, ?, ?, ?)", [encrypt(String(object.herdID)), "", "", "", encrypt(String(req.header("user-id")))], (err, rows) => {
+		if(err != null){
+			return res.send(err)
+		}
+		else{
 			
-				//query from query string
-				sqlQuery("INSERT INTO cow (id, herdID, daysInMilk, dryOffDay, lactationNumber, daysCarriedCalfIfPregnant, projectedDueDate, current305DayMilk, currentSomaticCellCount, "
-							+ "linearScoreAtLastTest, dateOfLastClinicalMastitis, chainVisibleId, animalRegistrationNoNLID, damBreed, userID, modifyDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 
-						[id, herdID, daysInMilk, dryOffDay, lactationNumber, daysCarriedCalfIfPregnant, projectedDueDate, current305DayMilk, currentSomaticCellCount,
-						linearScoreAtLastTest, dateOfLastClinicalMastitis, chainVisibleId, animalRegistrationNoNLID, damBreed, userID, modifyDate], (err, objects) => {
-					if(err != null){
-						return res.send(err)
-					}
-					else{
-						return ("Finished creating cow")
-					}
-				})
+
+			async.forEachOf(cowArray, function(object, key, callback) {
+				var id = encrypt(String(object.id))
+				var herdID = encrypt(String(object.herdID))
+				var daysInMilk = encrypt(String(object.daysInMilk))
+				var dryOffDay = encrypt(String(object.dryOffDay))
+				var lactationNumber = encrypt(String(object.lactationNumber))
+				var daysCarriedCalfIfPregnant = encrypt(String(object.daysCarriedCalfIfPregnant))
+				var projectedDueDate = encrypt(String(object.projectedDueDate))
+				var current305DayMilk = encrypt(String(object.current305DayMilk))
+				var currentSomaticCellCount = encrypt(String(object.currentSomaticCellCount))
+				var linearScoreAtLastTest = encrypt(String(object.linearScoreAtLastTest))
+				var dateOfLastClinicalMastitis = encrypt(String(object.dateOfLastClinicalMastitis))
+				var chainVisibleId = encrypt(String(object.chainVisibleId))
+				var animalRegistrationNoNLID = encrypt(String(object.animalRegistrationNoNLID))
+				var damBreed = encrypt(String(object.damBreed))
+				var modifyDate = encrypt(String(object.modifyDate))
+				var userID = encrypt(String(req.header("user-id")))
+	
+				herdIDG = herdID;
+				userIDG = userID;
 				
-			return callback()
-
-		}, function(err, herdID, userID){
+					//query from query string
+					sqlQuery("INSERT INTO cow (id, herdID, daysInMilk, dryOffDay, lactationNumber, daysCarriedCalfIfPregnant, projectedDueDate, current305DayMilk, currentSomaticCellCount, "
+								+ "linearScoreAtLastTest, dateOfLastClinicalMastitis, chainVisibleId, animalRegistrationNoNLID, damBreed, userID, modifyDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 
+							[id, herdID, daysInMilk, dryOffDay, lactationNumber, daysCarriedCalfIfPregnant, projectedDueDate, current305DayMilk, currentSomaticCellCount,
+							linearScoreAtLastTest, dateOfLastClinicalMastitis, chainVisibleId, animalRegistrationNoNLID, damBreed, userID, modifyDate], (err, objects) => {
+						if(err != null){
+							return res.send(err)
+						}
+						else{
+							return ("Finished creating cow")
+						}
+					})
+					
+				return callback()
 	
-			console.log("Error in function")
-	
-			if(err){
-				//handle the error if the query throws an error
-				console.log("Error")
-				return res.send(err)
-			}else{
-				//whatever you wanna do after all the iterations are done
-				console.log("Success")
+			}, function(err){
+		
+				console.log("Error in function")
+		
+				if(err){
+					//handle the error if the query throws an error
+					console.log("Error")
+					return res.send(err)
+				}else{
+					//whatever you wanna do after all the iterations are done
+					console.log("Success")
+					return res.send("Success")
+				}
+			});	
+		
 
-
-				//add herd to the database
-				sqlQuery("INSERT INTO herd (id, location, milkingSystem, pin, userID) VALUES (?, ?, ?, ?, ?)", [herdID, "", "", "", userID], (err, rows) => {
-					if(err != null){
-						return res.send(err)
-					}
-					else{
-						return res.send("Success")
-					}
-				})
-			}
-		});	
-	}
+		}
+	})
+}
 	
 )
 

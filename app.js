@@ -1336,6 +1336,8 @@ app.put("/cow-culled", (req, res) => {
 				//create and assign JWT
 				console.log("passwords match")
 
+				console.log("ADMIN FLAG: " + objects[0].admin)
+
 				token = jwt.sign({_id: objects[0].userID}, process.env.TOKEN_SECRET, {expiresIn: '6h'}) //change the id from username to the userID
 				return res.header('auth-token', token).header('user-id', objects[0].userID).header('admin-flag', objects[0].admin).send("Logged In")
 			}

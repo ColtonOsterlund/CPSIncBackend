@@ -529,13 +529,13 @@ app.get("/user-herd-app", authorizeUser, (req, res) => {
 app.get("/user-herd-delete-app", authorizeUser, (req, res) => {
 
 	if(req.query.userID != null){
-		sqlQuery("DELETE FROM herd WHERE userID = ? && id = ?", [encrypt(req.query.userID), encrypt(req.query.herdID)], (err, objects) => {
+		sqlQuery("UPDATE herd SET deleted = ? WHERE userID = ? && id = ?", [1, encrypt(req.query.userID), encrypt(req.query.herdID)], (err, objects) => {
 			if(err){
 				return res.send("Error: " + err)
 			}
 			else{
 
-				sqlQuery("DELETE FROM cow WHERE userID = ? && herdID = ?", [encrypt(req.query.userID), encrypt(req.query.herdID)], (err, objects) => {
+				sqlQuery("UPDATE cow SET deleted = ? WHERE userID = ? && herdID = ?", [1, encrypt(req.query.userID), encrypt(req.query.herdID)], (err, objects) => {
 					if(err){
 						return res.send("Error: " + err)
 					}
@@ -554,7 +554,7 @@ app.get("/user-cow-delete-app", (req, res) => {
 	console.log("Fetching cows by userID and herdID")
 
 	if(req.query.userID != null && req.query.herdID != null){
-		sqlQuery("DELETE FROM cow WHERE userID = ? && herdID = ? && id = ?", [encrypt(req.query.userID), encrypt(req.query.herdID), encrypt(req.query.cowID)], (err, objects) => {
+		sqlQuery("UPDATE cow SET deleted = ? WHERE userID = ? && herdID = ? && id = ?", [1, encrypt(req.query.userID), encrypt(req.query.herdID), encrypt(req.query.cowID)], (err, objects) => {
 			if(err){
 				return res.send("Error: " + err)
 			}
@@ -727,6 +727,7 @@ app.post('/cow-update', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 				//SET THIS BELOW AS THE CALLBACK FUNCTION FOR THE QUERY TO DELETE ALL PREVIOUS COWS WITH THE SAME USERID
 				sqlQuery("UPDATE cow SET id = ?, daysInMilk = ?, dryOffDay = ?, mastitisHistory = ?, methodOfDryOff = ?, dailyMilkAverage = ?, parity = ?, reproductionStatus = ?, numberOfTimesBred = ?, farmBreedingIndex = ?, lactationNumber = ?, daysCarriedCalfIfPregnant = ?, projectedDueDate = ?, current305DayMilk = ?, currentSomaticCellCount = ?, linearScoreAtLastTest = ?, dateOfLastClinicalMastitis = ?, chainVisibleId = ?, animalRegistrationNoNLID = ?, damBreed = ?, culled = ?, modifyDate = ? WHERE userID = ? AND herdID = ? AND id = ?", [id, daysInMilk, dryOffDay, mastitisHistory, methodOfDryOff, dailyMilkAverage, parity, reproductionStatus, numberOfTimesBred, farmBreedingIndex, lactationNumber, daysCarriedCalfIfPregnant, projectedDueDate, current305DayMilk, currentSomaticCellCount, linearScoreAtLastTest, dateOfLastClinicalMastitis, chainVisibleId, animalRegistrationNoNLID, damBreed, culled, modifyDate, userID, herdID, encrypt(req.query.cowID)], (err, rows) => {
 					if(err != null){
+						console.log(err);
 						return res.send(err)
 					}
 					else{

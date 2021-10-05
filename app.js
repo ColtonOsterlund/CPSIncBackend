@@ -727,10 +727,11 @@ app.post('/cow-update', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 				//SET THIS BELOW AS THE CALLBACK FUNCTION FOR THE QUERY TO DELETE ALL PREVIOUS COWS WITH THE SAME USERID
 				sqlQuery("UPDATE cow SET id = ?, daysInMilk = ?, dryOffDay = ?, mastitisHistory = ?, methodOfDryOff = ?, dailyMilkAverage = ?, parity = ?, reproductionStatus = ?, numberOfTimesBred = ?, farmBreedingIndex = ?, lactationNumber = ?, daysCarriedCalfIfPregnant = ?, projectedDueDate = ?, current305DayMilk = ?, currentSomaticCellCount = ?, linearScoreAtLastTest = ?, dateOfLastClinicalMastitis = ?, chainVisibleId = ?, animalRegistrationNoNLID = ?, damBreed = ?, culled = ?, modifyDate = ? WHERE userID = ? AND herdID = ? AND id = ?", [id, daysInMilk, dryOffDay, mastitisHistory, methodOfDryOff, dailyMilkAverage, parity, reproductionStatus, numberOfTimesBred, farmBreedingIndex, lactationNumber, daysCarriedCalfIfPregnant, projectedDueDate, current305DayMilk, currentSomaticCellCount, linearScoreAtLastTest, dateOfLastClinicalMastitis, chainVisibleId, animalRegistrationNoNLID, damBreed, culled, modifyDate, userID, herdID, encrypt(req.query.cowID)], (err, rows) => {
 					if(err != null){
-						console.log(err);
+						console.log("ERROR: " + err);
 						return res.send(err)
 					}
 					else{
+						console.log("SUCCESS");
 						return res.send("Success")
 					}
 				})
@@ -1413,8 +1414,6 @@ function sqlQuery(query, arguments, callback){
  }
  
  function authorizeUser(req, res, next){
-
-	console.log("GOT HERE 1")
 
 	 const token = req.header('auth-token')
 	 if(!token){

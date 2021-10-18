@@ -67,7 +67,7 @@ function sqlQuery(){
 			headerRow += "Test ID, ";
 			headerRow += "Follow Up Number, ";
 			headerRow += "Herd ID, ";
-			headerRow += "Milivolts, ";
+			//headerRow += "Milivolts, ";
 			headerRow += "Deleted";
 
 			console.log(headerRow);
@@ -94,8 +94,8 @@ function sqlQuery(){
 				decrypted_CommaSeperated_Row += decrypt(row.followUpNum);
 				decrypted_CommaSeperated_Row += ", ";
 				decrypted_CommaSeperated_Row += decrypt(row.herdID);
-				decrypted_CommaSeperated_Row += ", ";
-				decrypted_CommaSeperated_Row += decrypt(row.milivolts);
+				// decrypted_CommaSeperated_Row += ", ";
+				// decrypted_CommaSeperated_Row += decrypt(row.milivolts);
 				decrypted_CommaSeperated_Row += ", ";
 				decrypted_CommaSeperated_Row += row.deleted;
 				

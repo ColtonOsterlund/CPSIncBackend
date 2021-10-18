@@ -415,7 +415,7 @@ app.get("/user-test-app", authorizeUser, (req, res) => {
 							testType: decrypt(test.testType),
 							units: decrypt(test.units),
 							value: decrypt(test.value),
-							value: decrypt(test.milivolts),
+							milivolts: decrypt(test.milivolts),
 							milkFever: decrypt(test.milkFever),
 							cowID: decrypt(test.cowID),
 							herdID: decrypt(test.herdID)

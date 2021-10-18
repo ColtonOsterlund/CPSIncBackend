@@ -395,7 +395,6 @@ app.get("/backup", authorizeUser, (req, res) => {
 
 
 app.get("/user-test-app", authorizeUser, (req, res) => {
-	console.log("Fetching cows by userID and herdID")
 
 	if(req.query.userID != null && req.query.herdID != null && req.query.cowID != null){
 		sqlQuery("SELECT * FROM test WHERE userID = ? AND herdID = ? AND cowID = ?", [encrypt(req.query.userID), encrypt(req.query.herdID), encrypt(req.query.cowID)], (err, objects) => {
@@ -416,6 +415,7 @@ app.get("/user-test-app", authorizeUser, (req, res) => {
 							testType: decrypt(test.testType),
 							units: decrypt(test.units),
 							value: decrypt(test.value),
+							value: decrypt(test.milivolts),
 							milkFever: decrypt(test.milkFever),
 							cowID: decrypt(test.cowID),
 							herdID: decrypt(test.herdID)

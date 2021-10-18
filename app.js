@@ -1003,6 +1003,7 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 	var milkFever = encrypt(String(req.body.milkFever))
 	var followUpNum = encrypt(String(req.body.followUpNum))
 	var testID = encrypt(String(req.body.testID))
+	var milivolts = encrypt(String(req.body.milivolts));
 
 	// sqlQuery("DELETE FROM test WHERE userID = ?", [userID.substring(0, 60)], (err, rows) => {
 
@@ -1013,7 +1014,7 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 	// 	else{
 			if(req.body.value != undefined){
 				//SET THIS AS THE CALLBACK FUNCTION FOR THE QUERY TO DELETE ALL PREVIOUS TESTS WITH THE SAME USERID
-				sqlQuery("INSERT INTO test (date, testType, units, value, cowID, userID, herdID, milkFever, followUpNum, testID) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [date, testType, units, value, cowID, userID, herdID, milkFever, followUpNum, testID], (err, rows) => {
+				sqlQuery("INSERT INTO test (date, testType, units, value, cowID, userID, herdID, milkFever, followUpNum, testID, milivolts) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [date, testType, units, value, cowID, userID, herdID, milkFever, followUpNum, testID, milivolts], (err, rows) => {
 					if(err != null){
 						return res.send(err)
 					}
@@ -1402,6 +1403,7 @@ function sqlQuery(query, arguments, callback){
 		callback(null, rows)
 	})
 }
+
 
  const pool = mysql.createPool({ //connection pool 
 	 connectionLimit: 10,

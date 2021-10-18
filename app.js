@@ -415,11 +415,11 @@ app.get("/user-test-app", authorizeUser, (req, res) => {
 							testType: decrypt(test.testType),
 							units: decrypt(test.units),
 							value: decrypt(test.value),
-							milivolts: decrypt(test.milivolts),
+							milivolts: test.milivolts,
 							milkFever: decrypt(test.milkFever),
 							cowID: decrypt(test.cowID),
-							herdID: decrypt(test.herdID)
-								
+							herdID: decrypt(test.herdID),
+							deleted: test.deleted
 						}
 
 						jsonObjects.push(testObject)
@@ -1003,7 +1003,7 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 	var milkFever = encrypt(String(req.body.milkFever))
 	var followUpNum = encrypt(String(req.body.followUpNum))
 	var testID = encrypt(String(req.body.testID))
-	var milivolts = encrypt(String(req.body.milivolts));
+	var milivolts = String(req.body.milivolts);
 
 	// sqlQuery("DELETE FROM test WHERE userID = ?", [userID.substring(0, 60)], (err, rows) => {
 

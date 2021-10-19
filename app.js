@@ -1055,6 +1055,8 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 		}
 		else{
 
+			console.log("SIZE::")
+			console.log(objects.length)
 			
 			if(req.body.value != undefined){
 				//SET THIS AS THE CALLBACK FUNCTION FOR THE QUERY TO DELETE ALL PREVIOUS TESTS WITH THE SAME USERID

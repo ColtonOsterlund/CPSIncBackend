@@ -1049,7 +1049,7 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 
 
 
-	sqlQuery("SELECT * FROM cow WHERE userID = ? AND herdID = ?", [encrypt(req.query.userID), encrypt(req.query.herdID)], (err, objects) => {
+	sqlQuery("SELECT * FROM cow", [], (err, objects) => {
 		if(err){
 			return res.send("Error: " + err)
 		}

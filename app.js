@@ -1054,11 +1054,11 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 					console.log("ERROR: ")
 					console.log(err2)
 					if(err2 != null){
-						//return res.send(err)
+						return res.send(err)
 						console.log("ERROR IN REQUEST")
 					}
 					else{
-						//return res.send("Success")
+						return res.send("Success")
 						console.log("SUCCESS IN REQUEST")
 					}
 				})

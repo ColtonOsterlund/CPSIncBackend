@@ -440,6 +440,9 @@ app.get("/user-test-app", authorizeUser, (req, res) => {
 			else{
 				var jsonObjects = [] //empty array to put all herds into to then be turned to a JSON object
 
+				console.log("LEGNTH:");
+				console.log(objects.length);
+
 				objects.forEach(function(test){
 					if(test.userID.substring(0, 11) != "depreciated"){
 

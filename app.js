@@ -1042,16 +1042,9 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 	var milivolts = String(req.body.milivolts);
 
 
-
-
-
-
-
-
-
 	sqlQuery("SELECT * FROM cow WHERE userID = ? AND herdID = ? AND id = ?", [encrypt(req.body.userID), encrypt(req.body.herdID), encrypt(req.body.cowID)], (err, objects) => {
 		if(err){
-			return res.send("Error: " + err)
+			res.send("Error: " + err)
 		}
 		else{
 
@@ -1071,15 +1064,6 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 
 		}
 	})
-
-
-
-
-
-
-
-
-
 
 
 	// sqlQuery("DELETE FROM test WHERE userID = ?", [userID.substring(0, 60)], (err, rows) => {

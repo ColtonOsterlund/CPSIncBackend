@@ -1041,16 +1041,59 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 	var testID = encrypt(String(req.body.testID))
 	var milivolts = String(req.body.milivolts);
 
-	// sqlQuery("DELETE FROM test WHERE userID = ?", [userID.substring(0, 60)], (err, rows) => {
 
 
-	// 	if(err != null){
-	// 		return res.send(err)
-	// 	}
-	// 	else{
+
+
+
+
+
+
+	sqlQuery("SELECT * FROM cow WHERE userID = ? AND herdID = ? AND cowID = ?", [encrypt(req.query.userID), encrypt(req.query.herdID), cowID], (err, objects) => {
+		if(err){
+			return res.send("Error: " + err)
+		}
+		else{
+
+			objects.forEach(function(cow){
+				if(cow.userID.substring(0, 11) != "depreciated"){
+
+					var cowObject = {
+						id: decrypt(cow.id),
+							daysInMilk: decrypt(cow.daysInMilk),
+							dryOffDay: decrypt(cow.dryOffDay),
+							mastitisHistory: decrypt(cow.mastitisHistory),
+							methodOfDryOff: decrypt(cow.methodOfDryOff),
+							dailyMilkAverage: decrypt(cow.dailyMilkAverage),
+							parity: decrypt(cow.parity),
+							reproductionStatus: decrypt(cow.reproductionStatus),
+							numberOfTimesBred: decrypt(cow.numberOfTimesBred),
+							farmBreedingIndex: decrypt(cow.farmBreedingIndex),
+							herdID: decrypt(cow.herdID),
+							userID: decrypt(cow.userID),
+							lactationNumber: decrypt(cow.lactationNumber),
+							daysCarriedCalfIfPregnant: decrypt(cow.daysCarriedCalfIfPregnant),
+							projectedDueDate: decrypt(cow.projectedDueDate),
+							current305DayMilk: decrypt(cow.current305DayMilk),
+							currentSomaticCellCount: decrypt(cow.currentSomaticCellCount),
+							linearScoreAtLastTest: decrypt(cow.linearScoreAtLastTest),
+							dateOfLastClinicalMastitis: decrypt(cow.dateOfLastClinicalMastitis),
+							chainVisibleId: decrypt(cow.chainVisibleId),
+							animalRegistrationNoNLID: decrypt(cow.animalRegistrationNoNLID),
+							damBreed: decrypt(cow.damBreed),
+							culled: cow.culled,
+							modifyDate: decrypt(cow.modifyDate)
+					}
+				}
+			})
+
+
+
+
+
 			if(req.body.value != undefined){
 				//SET THIS AS THE CALLBACK FUNCTION FOR THE QUERY TO DELETE ALL PREVIOUS TESTS WITH THE SAME USERID
-				sqlQuery("INSERT INTO test (date, testType, units, value, cowID, userID, herdID, milkFever, followUpNum, testID, milivolts) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [date, testType, units, value, cowID, userID, herdID, milkFever, followUpNum, testID, milivolts], (err, rows) => {
+				sqlQuery("INSERT INTO test (date, testType, units, value, cowID, userID, herdID, milkFever, followUpNum, testID, milivolts, daysInMilk, dryOffDay, mastitisHistory, methodOfDryOff, farmBreedingIndex, parity, reproductionStatus, numberOfTimesBred, lactationNumber, daysCarriedCalfIfPregnant, projectedDueDate, current305DayMilk, currentSommaticCellCount, linearScoreAtLastTest, dateOfLastClinicalMastitis, chainVisibleID, animalRegistrationNoNLID, damBreed) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [date, testType, units, value, cowID, userID, herdID, milkFever, followUpNum, testID, milivolts, objects[0].daysInMilk, objects[0].dryOffDay, objects[0].mastitisHistory, objects[0].methodOfDryOff, objects[0].farmBreedingIndex, objects[0].parity, objects[0].reproductionStatus, objects[0].numberOfTimesBred, objects[0].lactationNumber, objects[0].daysCarriedCalfIfPregnant, objects[0].projectedDueDate, objects[0].current305DayMilk, objects[0].currentSomaticCellCount, objects[0].linearScoreAtLastTest, objects[0].dateOfLastClinicalMastitis, objects[0].chainVisibleID, objects[0].animalRegistrationNoNLID, objects[0].damBreed], (err, rows) => {
 					if(err != null){
 						return res.send(err)
 					}
@@ -1062,6 +1105,33 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 			else{
 				return res.send("Success")
 			}
+
+
+
+
+
+
+		}
+	})
+
+
+
+
+
+
+
+
+
+
+
+	// sqlQuery("DELETE FROM test WHERE userID = ?", [userID.substring(0, 60)], (err, rows) => {
+
+
+	// 	if(err != null){
+	// 		return res.send(err)
+	// 	}
+	// 	else{
+			
 // 		}
 
 // 	})

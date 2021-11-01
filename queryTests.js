@@ -68,6 +68,16 @@ function sqlQuery(){
 			headerRow += "Follow Up Number, ";
 			headerRow += "Herd ID, ";
 			headerRow += "Milivolts, ";
+			headerRow += "Lactation Number, ";
+			headerRow += "Days Carried Calf if Pregnant, ";
+			headerRow += "Projected Due Date, ";
+			headerRow += "Current 305 Day Milk, ";
+			headerRow += "Current Somatic Cell Count, ";
+			headerRow += "Linear Score at Last Test, ";
+			headerRow += "Date of Last Clinical Mastitis, ";
+			headerRow += "Chain Visible ID, ";
+			headerRow += "Animal Registration No NLID, ";
+			headerRow += "Dam Breed, ";
 			headerRow += "Deleted";
 
 			console.log(headerRow);
@@ -97,6 +107,26 @@ function sqlQuery(){
 				decrypted_CommaSeperated_Row += ", ";
 				decrypted_CommaSeperated_Row += row.milivolts;
 				decrypted_CommaSeperated_Row += ", ";
+				decrypted_CommaSeperated_Row += decrypt(row.lactationNumber);
+				decrypted_CommaSeperated_Row += ", ";
+				decrypted_CommaSeperated_Row += decrypt(row.daysCarriedCalfIfPregnant);
+				decrypted_CommaSeperated_Row += ", ";
+				decrypted_CommaSeperated_Row += decrypt(row.projectedDueDate);
+				decrypted_CommaSeperated_Row += ", ";
+				decrypted_CommaSeperated_Row += decrypt(row.current305DayMilk);
+				decrypted_CommaSeperated_Row += ", ";
+				decrypted_CommaSeperated_Row += decrypt(row.currentSomaticCellCount);
+				decrypted_CommaSeperated_Row += ", ";
+				decrypted_CommaSeperated_Row += decrypt(row.linearScoreAtLastTest);
+				decrypted_CommaSeperated_Row += ", ";
+				decrypted_CommaSeperated_Row += decrypt(row.dateOfLastClinicalMastitis);
+				decrypted_CommaSeperated_Row += ", ";
+				decrypted_CommaSeperated_Row += decrypt(row.chainVisibleID);
+				decrypted_CommaSeperated_Row += ", ";
+				decrypted_CommaSeperated_Row += decrypt(row.animalRegistrationNoNLID);
+				decrypted_CommaSeperated_Row += ", ";
+				decrypted_CommaSeperated_Row += decrypt(row.damBreed);
+				decrypted_CommaSeperated_Row += ", ";
 				decrypted_CommaSeperated_Row += row.deleted;
 				
 				console.log(decrypted_CommaSeperated_Row);
@@ -110,6 +140,44 @@ function sqlQuery(){
 
 	})
 }
+
+
+
+
+// //run sql query
+// function sqlQuery(){
+
+// 	query = "SELECT * FROM herd;";
+// 	arguments = null;
+
+// 	getConnection().query(query, arguments, (err, rows, fields) => {
+
+// 		if(err != null){
+// 			console.log(err);
+// 		}
+// 		else{
+
+// 			console.log('\r\n');
+// 			console.log('\r\n');
+// 			console.log('\r\n');
+
+// 			rows.forEach(function(row){
+// 				console.log(decrypt(row.id));
+// 				console.log(decrypt(row.userID));
+// 			});
+
+// 			console.log('\r\n');
+// 			console.log('\r\n');
+// 			console.log('\r\n');
+
+// 		}
+
+// 	})
+// }
+
+
+
+
 
 function encrypt(text){
 	if (text == null) {

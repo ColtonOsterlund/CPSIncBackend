@@ -1,17 +1,17 @@
 const express = require('express');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const {
   createUser,
-  getUser,
   userExistsByEmail,
+  getUserByEmail,
 } = require('../../database/users/users');
+const { authenticateToken } = require('../../middleware/auth');
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-  // TODO: Obtain email from authenticated user
-  const tempEmail = '';
-  const user = await getUser(tempEmail);
+router.get('/', authenticateToken, async (req, res) => {
+  const { iat, exp, ...user } = req.user;
   res.status(200).json(user);
 });
 
@@ -29,7 +29,7 @@ router.post('/', async (req, res) => {
     !req.body?.zipCode ||
     !req.body?.phone
   ) {
-    return res.status(400).json({ message: 'Missing fields' });
+    return res.status(400).json({ message: 'Missing fields in request body' });
   }
 
   // TODO: Validation
@@ -65,12 +65,43 @@ router.post('/', async (req, res) => {
 });
 
 router.post('/login', async (req, res) => {
-  // TODO: Login user
-  res.status(201).json({});
+  if (!req.body?.email || !req.body?.password) {
+    return res.status(400).json({ message: 'Missing fields in request body' });
+  }
+
+  const user = await getUserByEmail(req.body.email);
+  const { password, ...payload } = user;
+
+  if (Object.keys(user).length > 0) {
+    try {
+      bcrypt.compare(req.body.password, password, (error, result) => {
+        if (error) throw error;
+
+        if (result) {
+          const token = jwt.sign(payload, process.env.TOKEN_SECRET, {
+            expiresIn: '6h',
+          });
+          return res.status(200).json({ message: 'Logged in', token: token });
+        }
+
+        return res
+          .status(400)
+          .json({ message: 'Incorrect email and/or password' });
+      });
+    } catch (error) {
+      console.error(error);
+      return res
+        .status(400)
+        .json({ message: 'Incorrect email and/or password' });
+    }
+  } else {
+    return res.status(400).json({ message: 'Incorrect email and/or password' });
+  }
 });
 
 router.get('/logout', async (req, res) => {
   // TODO: Logout user
+  // TODO: Blacklist JWTs since they cannot be manually expired
   res.status(200).json({});
 });
 

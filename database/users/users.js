@@ -2,10 +2,11 @@ const escape = require('sql-template-strings');
 const db = require('../connection');
 
 module.exports = {
-  getUser: async (email) => {
+  getUserByEmail: async (email) => {
     const results = await db.query(escape`
-      SELECT 
+      SELECT
         email,
+        password,
         first_name AS firstName,
         last_name AS lastName,
         main_address AS mainAddress,
@@ -19,7 +20,7 @@ module.exports = {
       WHERE email = ${email}
     `);
 
-    return results[0];
+    return { ...(results[0] ?? {}) };
   },
   createUser: async (user) => {
     const {

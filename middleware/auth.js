@@ -5,7 +5,7 @@ module.exports = {
     const authHeader = req.headers['authorization'];
     const token = authHeader && authHeader.split(' ')[1];
 
-    if (token === null)
+    if (token == null)
       return res.status(403).json({ message: 'Invalid token' });
 
     jwt.verify(token, process.env.TOKEN_SECRET, (error, user) => {

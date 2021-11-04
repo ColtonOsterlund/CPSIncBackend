@@ -5,6 +5,7 @@ module.exports = {
   getUserByEmail: async (email) => {
     const results = await db.query(escape`
       SELECT
+        BIN_TO_UUID(id) AS id,
         email,
         password,
         first_name AS firstName,

@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const {
   createUser,
   userExistsByEmail,
-  getUserByEmail,
+  readUserByEmail,
 } = require('../../database/users/users');
 const { authenticateToken } = require('../../middleware/auth');
 
@@ -69,7 +69,7 @@ router.post('/login', async (req, res) => {
     return res.status(400).json({ message: 'Missing fields in request body' });
   }
 
-  const user = await getUserByEmail(req.body.email);
+  const user = await readUserByEmail(req.body.email);
   const { password, ...payload } = user;
 
   if (Object.keys(user).length > 0) {

@@ -2,7 +2,7 @@ const escape = require('sql-template-strings');
 const db = require('../connection');
 
 module.exports = {
-  getUserByEmail: async (email) => {
+  readUserByEmail: async (email) => {
     const results = await db.query(escape`
       SELECT
         BIN_TO_UUID(id) AS id,

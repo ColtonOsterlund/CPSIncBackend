@@ -38,7 +38,7 @@ module.exports = {
       phone,
     } = user;
 
-    const result = db.query(escape`
+    const result = await db.query(escape`
       INSERT
       INTO users (
         email,

@@ -1,4 +1,4 @@
-const mysql = require('mysql');
+const mysql = require('mysql-await');
 
 const pool = mysql.createPool({
   connectionLimit: 10,
@@ -9,14 +9,13 @@ const pool = mysql.createPool({
 });
 
 module.exports = {
-  query: (query, callback) => {
-    pool.query(query, (error, results, fields) => {
-      if (error) {
-        callback(error, {});
-      } else {
-        callback(null, results[0].solution);
-      }
-    });
+  query: async (query) => {
+    try {
+      const result = await pool.awaitQuery(query);
+      return result;
+    } catch (error) {
+      console.error(error);
+    }
   },
   client: pool,
 };

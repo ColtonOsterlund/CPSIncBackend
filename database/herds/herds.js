@@ -16,6 +16,25 @@ module.exports = {
 
     return results;
   },
+  readHerdById: async (id, userId) => {
+    try {
+      const results = await db.query(escape`
+        SELECT
+          BIN_TO_UUID(id) AS id,
+          herd_id AS herdId,
+          location,
+          milking_system AS milkingSystem,
+          pin
+        FROM herds
+        WHERE id = UUID_TO_BIN(${id})
+        AND user_id = UUID_TO_BIN(${userId})
+      `);
+
+      return results[0] ?? {};
+    } catch (error) {
+      return {};
+    }
+  },
   createHerd: async (herd, userId) => {
     const { herdId, location, milkingSystem, pin, modifyDate } = herd;
 

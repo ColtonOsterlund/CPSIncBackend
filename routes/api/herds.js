@@ -1,5 +1,9 @@
 const express = require('express');
-const { readHerds, createHerd } = require('../../database/herds/herds');
+const {
+  readHerds,
+  readHerdById,
+  createHerd,
+} = require('../../database/herds/herds');
 const { authenticateToken } = require('../../middleware/auth');
 const { mySqlDateTimeNow } = require('../../utils/format_date');
 
@@ -33,31 +37,30 @@ router.post('/', authenticateToken, async (req, res) => {
   res.status(201).json({ message: 'Successfully created herd' });
 });
 
-router.get('/:herdId', async (req, res) => {
-  // TODO: Read specific herd from authenticated user
-  // {req.params.herdId} to get herd ID
-  res.status(200).json({});
+router.get('/:herdId', authenticateToken, async (req, res) => {
+  const herd = await readHerdById(req.params.herdId, req.user.id);
+  res.status(200).json(herd);
 });
 
-router.put('/:herdId', async (req, res) => {
+router.put('/:herdId', authenticateToken, async (req, res) => {
   // TODO: Update specific herd by authenticated user
   // {req.params.herdId} to get herd ID
   res.status(201).json({});
 });
 
-router.delete('/:herdId', async (req, res) => {
+router.delete('/:herdId', authenticateToken, async (req, res) => {
   // TODO: Delete specific herd by authenticated user
   // {req.params.herdId} to get herd ID
   res.status(201).json({});
 });
 
-router.get('/:herdId/cows', async (req, res) => {
+router.get('/:herdId/cows', authenticateToken, async (req, res) => {
   // TODO: Read all cows of a herd from authenticated user
   // {req.params.herdId} to get herd ID
   res.status(200).json({});
 });
 
-router.post('/:herdId/cows', async (req, res) => {
+router.post('/:herdId/cows', authenticateToken, async (req, res) => {
   // TODO: Create new cow in a herd by authenticated user
   // {req.params.herdId} to get herd ID
   res.status(201).json({});

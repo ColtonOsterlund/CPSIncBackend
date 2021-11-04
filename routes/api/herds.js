@@ -1,17 +1,36 @@
 const express = require('express');
+const { readHerds, createHerd } = require('../../database/herds/herds');
+const { authenticateToken } = require('../../middleware/auth');
+const { mySqlDateTimeNow } = require('../../utils/format_date');
 
 const router = express.Router();
 
-// TODO: Add middleware for authentication
-
-router.get('/', async (req, res) => {
-  // TODO: Read all herds from authenticated user
-  res.status(200).json({});
+router.get('/', authenticateToken, async (req, res) => {
+  const herds = await readHerds(req.user.id);
+  res.status(200).json(herds);
 });
 
-router.post('/', async (req, res) => {
-  // TODO: Create new herd by authenticated user
-  res.status(201).json({});
+router.post('/', authenticateToken, async (req, res) => {
+  if (
+    !req.body?.herdId ||
+    !req.body?.location ||
+    !req.body?.milkingSystem ||
+    !req.body?.pin
+  ) {
+    return res.status(400).json({ message: 'Missing fields in request body' });
+  }
+
+  const herd = {
+    herdId: req.body.herdId,
+    location: req.body.location,
+    milkingSystem: req.body.milkingSystem,
+    pin: req.body.pin,
+    modifyDate: mySqlDateTimeNow(),
+  };
+
+  const result = await createHerd(herd, req.user.id);
+
+  res.status(201).json({ message: 'Successfully created herd' });
 });
 
 router.get('/:herdId', async (req, res) => {

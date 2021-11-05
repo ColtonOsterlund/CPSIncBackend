@@ -60,4 +60,38 @@ module.exports = {
 
     return result;
   },
+  updateHerd: async (herd, id, userId) => {
+    const { herdId, location, milkingSystem, pin, modifyDate } = herd;
+
+    try {
+      const result = await db.query(escape`
+        UPDATE herds
+        SET
+          herd_id = ${herdId},
+          location = ${location},
+          milking_system = ${milkingSystem},
+          pin = ${pin},
+          modify_date = ${modifyDate}
+        WHERE id = UUID_TO_BIN(${id})
+        AND user_id = UUID_TO_BIN(${userId})
+      `);
+      return result;
+    } catch (error) {
+      // TODO: Error handling
+      return;
+    }
+  },
+  deleteHerd: async (id, userId) => {
+    try {
+      const result = await db.query(escape`
+        DELETE FROM herds
+        WHERE id = UUID_TO_BIN(${id})
+        AND user_id = UUID_TO_BIN(${userId})
+      `);
+      return result;
+    } catch (error) {
+      // TODO: Error handling
+      return;
+    }
+  },
 };

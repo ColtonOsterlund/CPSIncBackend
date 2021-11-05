@@ -79,4 +79,13 @@ module.exports = {
 
     return result.length > 0;
   },
+  blacklistToken: async (token, expiration) => {
+    const result = await db.query(escape`
+      INSERT
+      INTO blacklisted_jwts (token, expiration)
+      VALUES (${token}, ${expiration})
+    `);
+
+    return result;
+  },
 };

@@ -12,6 +12,7 @@ module.exports = {
       if (error) return res.status(403).json({ message: 'Invalid token' });
 
       req.user = user;
+      req.token = token;
 
       next();
     });

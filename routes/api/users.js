@@ -5,6 +5,7 @@ const {
   createUser,
   userExistsByEmail,
   readUserByEmail,
+  blacklistToken,
 } = require('../../database/users/users');
 const { authenticateToken } = require('../../middleware/auth');
 
@@ -99,10 +100,9 @@ router.post('/login', async (req, res) => {
   }
 });
 
-router.get('/logout', async (req, res) => {
-  // TODO: Logout user
-  // TODO: Blacklist JWTs since they cannot be manually expired
-  res.status(200).json({});
+router.get('/logout', authenticateToken, async (req, res) => {
+  const result = await blacklistToken(req.token, req.user.exp);
+  res.status(200).json({ message: 'Logged out' });
 });
 
 module.exports = router;

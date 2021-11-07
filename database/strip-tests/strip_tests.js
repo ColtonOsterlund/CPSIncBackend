@@ -13,7 +13,7 @@ module.exports = {
           millivolts,
           result,
           milk_fever AS milkFever,
-          follow_up_num,
+          follow_up_num AS followUpNum,
           BIN_TO_UUID(cow_id) AS cowId
         FROM strip_tests
         WHERE cow_id = UUID_TO_BIN(${cowId})
@@ -37,7 +37,7 @@ module.exports = {
           millivolts,
           result,
           milk_fever AS milkFever,
-          follow_up_num,
+          follow_up_num AS followUpNum,
           BIN_TO_UUID(cow_id) AS cowId
         FROM strip_tests
         WHERE id = UUID_TO_BIN(${id})

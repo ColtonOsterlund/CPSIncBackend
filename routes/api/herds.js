@@ -14,7 +14,7 @@ const router = express.Router();
 
 router.get('/', authenticateToken, async (req, res) => {
   const herds = await readHerds(req.user.id);
-  res.status(200).json(herds);
+  res.status(200).json(JSON.stringify(herds));
 });
 
 router.post('/', authenticateToken, async (req, res) => {
@@ -43,7 +43,7 @@ router.post('/', authenticateToken, async (req, res) => {
 
 router.get('/:herdId', authenticateToken, async (req, res) => {
   const herd = await readHerdById(req.params.herdId, req.user.id);
-  res.status(200).json(herd);
+  res.status(200).json(JSON.stringify(herd));
 });
 
 router.put('/:herdId', authenticateToken, async (req, res) => {
@@ -78,7 +78,7 @@ router.delete('/:herdId', authenticateToken, async (req, res) => {
 
 router.get('/:herdId/cows', authenticateToken, async (req, res) => {
   const cows = await readCows(req.params.herdId, req.user.id);
-  res.status(200).json(cows);
+  res.status(200).json(JSON.stringify(cows));
 });
 
 router.post('/:herdId/cows', authenticateToken, async (req, res) => {

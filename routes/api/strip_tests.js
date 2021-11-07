@@ -13,7 +13,7 @@ router.get('/:stripTestId', authenticateToken, async (req, res) => {
     req.params.stripTestId,
     req.user.id
   );
-  res.status(200).json(stripTest);
+  res.status(200).json(JSON.stringify(stripTest));
 });
 
 router.put('/:stripTestId', authenticateToken, async (req, res) => {

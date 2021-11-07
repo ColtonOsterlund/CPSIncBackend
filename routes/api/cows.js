@@ -15,7 +15,7 @@ const router = express.Router();
 
 router.get('/:cowId', authenticateToken, async (req, res) => {
   const cow = await readCowById(req.params.cowId, req.user.id);
-  res.status(200).json(cow);
+  res.status(200).json(JSON.stringify(cow));
 });
 
 router.put('/:cowId', authenticateToken, async (req, res) => {
@@ -84,7 +84,7 @@ router.delete('/:cowId', authenticateToken, async (req, res) => {
 
 router.get('/:cowId/strip-tests', authenticateToken, async (req, res) => {
   const stripTests = await readStripTests(req.params.cowId, req.user.id);
-  res.status(200).json(stripTests);
+  res.status(200).json(JSON.stringify(stripTests));
 });
 
 router.post('/:cowId/strip-tests', authenticateToken, async (req, res) => {

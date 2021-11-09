@@ -466,6 +466,41 @@ app.get("/user-test-app", authorizeUser, (req, res) => {
 			}
 		})
 	}
+	else if(req.query.userID != null && req.query.herdID != null){
+
+		sqlQuery("SELECT * FROM test WHERE userID = ? AND herdID = ?", [encrypt(req.query.userID), encrypt(req.query.herdID)], (err, objects) => {
+			if(err){
+				return res.send("Error: " + err)
+			}
+			else{
+				var jsonObjects = [] //empty array to put all herds into to then be turned to a JSON object
+
+				objects.forEach(function(test){
+					if(test.userID.substring(0, 11) != "depreciated"){
+
+						var testObject = {
+							objectType: "Test",
+							date: decrypt(test.date),
+							followUpNum: decrypt(test.followUpNum),
+							testID: decrypt(test.testID),
+							testType: decrypt(test.testType),
+							units: decrypt(test.units),
+							value: decrypt(test.value),
+							milivolts: test.milivolts,
+							milkFever: decrypt(test.milkFever),
+							cowID: decrypt(test.cowID),
+							herdID: decrypt(test.herdID),
+							deleted: test.deleted
+						}
+
+						jsonObjects.push(testObject)
+					}
+				})
+
+				return res.send(JSON.stringify(jsonObjects))
+			}
+		})
+	}
 })
 
 

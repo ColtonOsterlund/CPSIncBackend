@@ -467,7 +467,6 @@ app.get("/user-test-app", authorizeUser, (req, res) => {
 		})
 	}
 	else if(req.query.userID != null && req.query.herdID != null){
-
 		sqlQuery("SELECT * FROM test WHERE userID = ? AND herdID = ?", [encrypt(req.query.userID), encrypt(req.query.herdID)], (err, objects) => {
 			if(err){
 				return res.send("Error: " + err)

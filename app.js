@@ -810,8 +810,6 @@ app.post('/cow-update', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 				return res.send("Request contained no cow data")
 			}
 
-
-	
 })
 
 
@@ -1410,7 +1408,7 @@ app.put("/cow-culled", (req, res) => {
 
 				console.log("ADMIN FLAG: " + objects[0].admin)
 
-				token = jwt.sign({_id: objects[0].userID}, process.env.TOKEN_SECRET, {expiresIn: '6h'}) //change the id from username to the userID
+				token = jwt.sign({_id: objects[0].userID}, process.env.TOKEN_SECRET, {expiresIn: '168h'}) //change the id from username to the userID
 				return res.header('auth-token', token).header('user-id', objects[0].userID).header('admin-flag', objects[0].admin).send("Logged In")
 			}
 			else{
@@ -1598,5 +1596,5 @@ app.listen(PORT, () => {
 
 
 
-	}, 3600 * 1000) //3600 seconds = 1h (x 1000 because it is measured in miliseconds)
+	}, 3600 * 168 * 1000) //3600 seconds = 1h (x 1000 because it is measured in miliseconds) (x168 because 168 hours in a week)
 })

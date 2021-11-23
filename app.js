@@ -37,6 +37,1171 @@ app.get("/", authorizeUser, (req, res) => {
 })
 
 
+
+
+
+app.get("/correlations", authorizeUser, (req, res) => {
+
+	var cowList = [];
+	var testList = [];
+	var param1 = req.query.param1
+	var param2 = req.query.param2
+	var selfdata = Number(req.query.selfdata)
+	var userID = req.query.userID
+
+	if (selfdata == 1) {
+		//GET ALL COWS
+		sqlQuery("SELECT * FROM cow WHERE userID = ?", [encrypt(userID)], (err, objects) => {
+			if (err) {
+				return res.send("Error: " + err)
+			}
+			else {
+				objects.forEach(function (cow) {
+					var cowObject = {
+						id: decrypt(cow.id),
+						herdID: decrypt(cow.herdID),
+						userID: decrypt(cow.userID),
+						daysInMilk: decrypt(cow.daysInMilk),
+						dryOffDay: decrypt(cow.dryOffDay),
+						lactationNumber: decrypt(cow.lactationNumber),
+						daysCarriedCalfIfPregnant: decrypt(cow.daysCarriedCalfIfPregnant),
+						projectedDueDate: decrypt(cow.projectedDueDate),
+						current305DayMilk: decrypt(cow.current305DayMilk),
+						currentSomaticCellCount: decrypt(cow.currentSomaticCellCount),
+						linearScoreAtLastTest: decrypt(cow.linearScoreAtLastTest),
+						dateOfLastClinicalMastitis: decrypt(cow.dateOfLastClinicalMastitis),
+						chainVisibleId: decrypt(cow.chainVisibleId),
+						animalRegistrationNoNLID: decrypt(cow.animalRegistrationNoNLID),
+						damBreed: decrypt(cow.damBreed),
+						culled: cow.culled
+					}
+
+					cowList.push(cowObject)
+
+				})
+
+				//GET ALL TESTS
+				sqlQuery("SELECT * FROM test WHERE userID = ?", [encrypt(userID)], (err, objects) => {
+					if (err) {
+						return res.send("Error: " + err)
+					}
+					else {
+						objects.forEach(function (test) {
+							var testObject = {
+								date: decrypt(test.date),
+								followUpNum: decrypt(test.followUpNum),
+								testID: decrypt(test.testID),
+								testType: decrypt(test.testType),
+								units: decrypt(test.units),
+								value: decrypt(test.value),
+								milkFever: decrypt(test.milkFever),
+								cowID: decrypt(test.cowID),
+								userID: decrypt(test.userID),
+								herdID: decrypt(test.herdID),
+								milivolts: test.milivolts,
+								daysInMilk: decrypt(test.daysInMilk),
+								dryOffDay: decrypt(test.dryOffDay),
+								mastitisHistory: decrypt(test.mastitisHistory),
+								methodOfDryOff: decrypt(test.methodOfDryOff),
+								farmBreedingIndex: decrypt(test.farmBreedingIndex),
+								parity: decrypt(test.parity),
+								reproductionStatus: decrypt(test.reproductionStatus),
+								numberOfTimesBred: decrypt(test.numberOfTimesBred),
+								lactationNumber: decrypt(test.lactationNumber),
+								daysCarriedCalfIfPregnant: decrypt(test.daysCarriedCalfIfPregnant),
+								projectedDueDate: decrypt(test.projectedDueDate),
+								current305DayMilk: decrypt(test.current305DayMilk),
+								currentSomaticCellCount: decrypt(test.currentSomaticCellCount),
+								linearScoreAtLastTest: decrypt(test.linearScoreAtLastTest),
+								dateOfLastClinicalMastitis: decrypt(test.dateOfLastClinicalMastitis),
+								chainVisibleID: decrypt(test.chainVisibleID),
+								animalRegistrationNoNLID: decrypt(test.animalRegistrationNoNLID),
+								damBreed: decrypt(test.damBreed)
+							}
+
+							testList.push(testObject)
+						})
+
+						console.log("\n\nCow List: \n")
+						console.log(cowList)
+						console.log("\n\nTest List: \n")
+						console.log(testList)
+
+						//DIM0-4 CORRELATED WITH SCC
+						console.log(param1)
+						console.log(param2)
+
+
+						if (param1 == "DIM0") {
+							if (param2 == "SCC") {
+								return res.send(correlation_DIM0_SCC(testList, cowList));
+							}
+							else if (param2 == "305M") {
+								return res.send(correlation_DIM0_305M(testList, cowList));
+							}
+							else {
+								var jsonObject = {
+									status: "Failure",
+									message: "This correlation is not yet supported"
+								}
+						
+								return res.send(jsonObject)
+							}
+						}
+						else if (param1 == "DIM1") {
+							if (param2 == "SCC") {
+								return res.send(correlation_DIM1_SCC(testList, cowList));
+							}
+							else if (param2 == "305M") {
+								return res.send(correlation_DIM1_305M(testList, cowList));
+							}
+							else {
+								var jsonObject = {
+									status: "Failure",
+									message: "This correlation is not yet supported"
+								}
+						
+								return res.send(jsonObject)
+							}
+						}
+						else if (param1 == "DIM2") {
+							if (param2 == "SCC") {
+								return res.send(correlation_DIM2_SCC(testList, cowList));
+							}
+							else if (param2 == "305M") {
+								return res.send(correlation_DIM2_305M(testList, cowList));
+							}
+							else {
+								var jsonObject = {
+									status: "Failure",
+									message: "This correlation is not yet supported"
+								}
+						
+								return res.send(jsonObject)
+							}
+						}
+						else if (param1 == "DIM3") {
+							if (param2 == "SCC") {
+								return res.send(correlation_DIM3_SCC(testList, cowList));
+							}
+							else if (param2 == "305M") {
+								return res.send(correlation_DIM3_305M(testList, cowList));
+							}
+							else {
+								var jsonObject = {
+									status: "Failure",
+									message: "This correlation is not yet supported"
+								}
+						
+								return res.send(jsonObject)
+							}
+						}
+						else if (param1 == "DIM4") {
+							if (param2 == "SCC") {
+								return res.send(correlation_DIM4_SCC(testList, cowList));
+							}
+							else if (param2 == "305M") {
+								return res.send(correlation_DIM4_305M(testList, cowList));
+							}
+							else {
+								var jsonObject = {
+									status: "Failure",
+									message: "This correlation is not yet supported"
+								}
+						
+								return res.send(jsonObject)
+							}
+						}
+						else {
+							var jsonObject = {
+								status: "Failure",
+								message: "This correlation is not yet supported"
+							}
+					
+							return res.send(jsonObject)
+						}
+
+					}
+				})
+
+
+			}
+		})
+	}
+	else if (selfdata == 0) {
+		//GET ALL COWS
+		sqlQuery("SELECT * FROM cow", [], (err, objects) => {
+			if (err) {
+				return res.send("Error: " + err)
+			}
+			else {
+				objects.forEach(function (cow) {
+					var cowObject = {
+						id: decrypt(cow.id),
+						herdID: decrypt(cow.herdID),
+						userID: decrypt(cow.userID),
+						daysInMilk: decrypt(cow.daysInMilk),
+						dryOffDay: decrypt(cow.dryOffDay),
+						lactationNumber: decrypt(cow.lactationNumber),
+						daysCarriedCalfIfPregnant: decrypt(cow.daysCarriedCalfIfPregnant),
+						projectedDueDate: decrypt(cow.projectedDueDate),
+						current305DayMilk: decrypt(cow.current305DayMilk),
+						currentSomaticCellCount: decrypt(cow.currentSomaticCellCount),
+						linearScoreAtLastTest: decrypt(cow.linearScoreAtLastTest),
+						dateOfLastClinicalMastitis: decrypt(cow.dateOfLastClinicalMastitis),
+						chainVisibleId: decrypt(cow.chainVisibleId),
+						animalRegistrationNoNLID: decrypt(cow.animalRegistrationNoNLID),
+						damBreed: decrypt(cow.damBreed),
+						culled: cow.culled
+					}
+
+					cowList.push(cowObject)
+
+				})
+
+				//GET ALL TESTS
+				sqlQuery("SELECT * FROM test", [], (err, objects) => {
+					if (err) {
+						return res.send("Error: " + err)
+					}
+					else {
+						objects.forEach(function (test) {
+							var testObject = {
+								date: decrypt(test.date),
+								followUpNum: decrypt(test.followUpNum),
+								testID: decrypt(test.testID),
+								testType: decrypt(test.testType),
+								units: decrypt(test.units),
+								value: decrypt(test.value),
+								milkFever: decrypt(test.milkFever),
+								cowID: decrypt(test.cowID),
+								userID: decrypt(test.userID),
+								herdID: decrypt(test.herdID),
+								milivolts: test.milivolts,
+								daysInMilk: decrypt(test.daysInMilk),
+								dryOffDay: decrypt(test.dryOffDay),
+								mastitisHistory: decrypt(test.mastitisHistory),
+								methodOfDryOff: decrypt(test.methodOfDryOff),
+								farmBreedingIndex: decrypt(test.farmBreedingIndex),
+								parity: decrypt(test.parity),
+								reproductionStatus: decrypt(test.reproductionStatus),
+								numberOfTimesBred: decrypt(test.numberOfTimesBred),
+								lactationNumber: decrypt(test.lactationNumber),
+								daysCarriedCalfIfPregnant: decrypt(test.daysCarriedCalfIfPregnant),
+								projectedDueDate: decrypt(test.projectedDueDate),
+								current305DayMilk: decrypt(test.current305DayMilk),
+								currentSomaticCellCount: decrypt(test.currentSomaticCellCount),
+								linearScoreAtLastTest: decrypt(test.linearScoreAtLastTest),
+								dateOfLastClinicalMastitis: decrypt(test.dateOfLastClinicalMastitis),
+								chainVisibleID: decrypt(test.chainVisibleID),
+								animalRegistrationNoNLID: decrypt(test.animalRegistrationNoNLID),
+								damBreed: decrypt(test.damBreed)
+							}
+
+							testList.push(testObject)
+						})
+
+						console.log("\n\nCow List: \n")
+						console.log(cowList)
+						console.log("\n\nTest List: \n")
+						console.log(testList)
+
+						//DIM0-4 CORRELATED WITH SCC
+						console.log(param1)
+						console.log(param2)
+
+
+						if (param1 == "DIM0") {
+							if (param2 == "SCC") {
+								return res.send(correlation_DIM0_SCC(testList, cowList));
+							}
+							else if (param2 == "305M") {
+								return res.send(correlation_DIM0_305M(testList, cowList));
+							}
+							else {
+								var jsonObject = {
+									status: "Failure",
+									message: "This correlation is not yet supported"
+								}
+						
+								return res.send(jsonObject)
+							}
+						}
+						else if (param1 == "DIM1") {
+							if (param2 == "SCC") {
+								return res.send(correlation_DIM1_SCC(testList, cowList));
+							}
+							else if (param2 == "305M") {
+								return res.send(correlation_DIM1_305M(testList, cowList));
+							}
+							else {
+								var jsonObject = {
+									status: "Failure",
+									message: "This correlation is not yet supported"
+								}
+						
+								return res.send(jsonObject)
+							}
+						}
+						else if (param1 == "DIM2") {
+							if (param2 == "SCC") {
+								return res.send(correlation_DIM2_SCC(testList, cowList));
+							}
+							else if (param2 == "305M") {
+								return res.send(correlation_DIM2_305M(testList, cowList));
+							}
+							else {
+								var jsonObject = {
+									status: "Failure",
+									message: "This correlation is not yet supported"
+								}
+						
+								return res.send(jsonObject)
+							}
+						}
+						else if (param1 == "DIM3") {
+							if (param2 == "SCC") {
+								return res.send(correlation_DIM3_SCC(testList, cowList));
+							}
+							else if (param2 == "305M") {
+								return res.send(correlation_DIM3_305M(testList, cowList));
+							}
+							else {
+								var jsonObject = {
+									status: "Failure",
+									message: "This correlation is not yet supported"
+								}
+						
+								return res.send(jsonObject)
+							}
+						}
+						else if (param1 == "DIM4") {
+							if (param2 == "SCC") {
+								return res.send(correlation_DIM4_SCC(testList, cowList));
+							}
+							else if (param2 == "305M") {
+								return res.send(correlation_DIM4_305M(testList, cowList));
+							}
+							else {
+								var jsonObject = {
+									status: "Failure",
+									message: "This correlation is not yet supported"
+								}
+						
+								return res.send(jsonObject)
+							}
+						}
+						else {
+							var jsonObject = {
+								status: "Failure",
+								message: "This correlation is not yet supported"
+							}
+					
+							return res.send(jsonObject)
+						}
+
+					}
+				})
+
+
+			}
+		})
+	}
+	else {
+
+		var jsonObject = {
+			status: "Failure",
+			message: "selfdata query string value is invalid"
+		}
+
+		return res.send(jsonObject)
+	}
+
+
+})
+
+
+
+
+
+
+
+
+
+function correlation_DIM0_305M(testList, cowList){
+
+	var meanOfX = 0;
+	var meanOfY = 0;
+	var standardDeviationOfX = 0;
+	var standardDeviationOfY = 0;
+	var piersonCorrelationOfXAndY = 0;
+
+	var xValues = []
+	var yValues = []
+
+	testList.forEach(function(test){
+		if(test.daysInMilk == 0){
+			xValues.push(Number(test.value));
+
+			cowList.forEach(function(cow){
+				if(test.cowID == cow.id && test.herdID == cow.herdID){
+					yValues.push(Number(cow.current305DayMilk))
+				}
+			})
+
+		}
+	})
+
+	if(xValues.length == 0){
+		return "There are no test results for cows in DIM 0"
+	}
+
+	xValues.forEach(function(value){
+		meanOfX += value
+	})
+
+	yValues.forEach(function(value){
+		meanOfY += value
+	})
+
+	meanOfX = meanOfX / xValues.length
+	meanOfY = meanOfY / yValues.length
+
+	console.log("Mean of x: " + meanOfX)
+	console.log("Mean of y: " + meanOfY)
+
+	xValues.forEach(function(value){
+		standardDeviationOfX += ((value - meanOfX) * (value - meanOfX))
+	})
+	yValues.forEach(function(value){
+		standardDeviationOfY += ((value - meanOfY) * (value - meanOfY))
+	})
+
+	standardDeviationOfX = Math.sqrt((1 / (xValues.length - 1)) * standardDeviationOfX);
+	standardDeviationOfY = Math.sqrt((1 / (yValues.length - 1)) * standardDeviationOfY);
+
+	console.log("Standard Dev of x: " + standardDeviationOfX)
+	console.log("Standard Dev of y: " + standardDeviationOfY)
+
+	piersonCorrelationOfXAndY = (1 / (xValues.length - 1))
+	var piersonMultiplier = 0;
+
+	for(var i = 0; i < xValues.length; i++){
+		piersonMultiplier = piersonMultiplier + ((xValues[i] - meanOfX) / standardDeviationOfX) * ((yValues[i] - meanOfY) / standardDeviationOfY);
+	}
+
+	piersonCorrelationOfXAndY = piersonCorrelationOfXAndY * piersonMultiplier;
+
+	console.log("Pierson Correlation of X and Y: " + piersonCorrelationOfXAndY)
+
+	var jsonObject = {
+		status: "Success",
+		xValues: xValues,
+		yValues: yValues,
+		correlation: piersonCorrelationOfXAndY,
+		message: "The Pierson-Correlation value is: " + piersonCorrelationOfXAndY
+	}
+
+	return jsonObject
+}
+
+
+
+
+
+
+function correlation_DIM1_305M(testList, cowList){
+	var meanOfX = 0;
+	var meanOfY = 0;
+	var standardDeviationOfX = 0;
+	var standardDeviationOfY = 0;
+	var piersonCorrelationOfXAndY = 0;
+
+	var xValues = []
+	var yValues = []
+
+	testList.forEach(function(test){
+		if(test.daysInMilk == 0){
+			xValues.push(Number(test.value));
+
+			cowList.forEach(function(cow){
+				if(test.cowID == cow.id && test.herdID == cow.herdID){
+					yValues.push(Number(cow.current305DayMilk))
+				}
+			})
+
+		}
+	})
+
+	if(xValues.length == 0){
+		return "There are no test results for cows in DIM 1"
+	}
+
+	xValues.forEach(function(value){
+		meanOfX += value
+	})
+
+	yValues.forEach(function(value){
+		meanOfY += value
+	})
+
+	meanOfX = meanOfX / xValues.length
+	meanOfY = meanOfY / yValues.length
+
+	console.log("Mean of x: " + meanOfX)
+	console.log("Mean of y: " + meanOfY)
+
+	xValues.forEach(function(value){
+		standardDeviationOfX += ((value - meanOfX) * (value - meanOfX))
+	})
+	yValues.forEach(function(value){
+		standardDeviationOfY += ((value - meanOfY) * (value - meanOfY))
+	})
+
+	standardDeviationOfX = Math.sqrt((1 / (xValues.length - 1)) * standardDeviationOfX);
+	standardDeviationOfY = Math.sqrt((1 / (yValues.length - 1)) * standardDeviationOfY);
+
+	console.log("Standard Dev of x: " + standardDeviationOfX)
+	console.log("Standard Dev of y: " + standardDeviationOfY)
+
+	piersonCorrelationOfXAndY = (1 / (xValues.length - 1))
+
+	for(var i = 0; i < xValues.length; i++){
+		piersonCorrelationOfXAndY += ((xValues[i] - meanOfX) / standardDeviationOfX) * ((yValues[i] - meanOfY) / standardDeviationOfY);
+	}
+
+	console.log("Pierson Correlation of X and Y: " + piersonCorrelationOfXAndY)
+
+	var jsonObject = {
+		status: "Success",
+		xValues: xValues,
+		yValues: yValues,
+		correlation: piersonCorrelationOfXAndY,
+		message: "The Pierson-Correlation value is: " + piersonCorrelationOfXAndY
+	}
+
+	return jsonObject
+}
+
+
+
+
+
+
+function correlation_DIM2_305M(testList, cowList){
+	var meanOfX = 0;
+	var meanOfY = 0;
+	var standardDeviationOfX = 0;
+	var standardDeviationOfY = 0;
+	var piersonCorrelationOfXAndY = 0;
+
+	var xValues = []
+	var yValues = []
+
+	testList.forEach(function(test){
+		if(test.daysInMilk == 2){
+			xValues.push(Number(test.value));
+
+			cowList.forEach(function(cow){
+				if(test.cowID == cow.id && test.herdID == cow.herdID){
+					yValues.push(Number(cow.current305DayMilk))
+				}
+			})
+
+		}
+	})
+
+	if(xValues.length == 0){
+		return "There are no test results for cows in DIM 2"
+	}
+
+	xValues.forEach(function(value){
+		meanOfX += value
+	})
+
+	yValues.forEach(function(value){
+		meanOfY += value
+	})
+
+	meanOfX = meanOfX / xValues.length
+	meanOfY = meanOfY / yValues.length
+
+	console.log("Mean of x: " + meanOfX)
+	console.log("Mean of y: " + meanOfY)
+
+	xValues.forEach(function(value){
+		standardDeviationOfX += ((value - meanOfX) * (value - meanOfX))
+	})
+	yValues.forEach(function(value){
+		standardDeviationOfY += ((value - meanOfY) * (value - meanOfY))
+	})
+
+	standardDeviationOfX = Math.sqrt((1 / (xValues.length - 1)) * standardDeviationOfX);
+	standardDeviationOfY = Math.sqrt((1 / (yValues.length - 1)) * standardDeviationOfY);
+
+	console.log("Standard Dev of x: " + standardDeviationOfX)
+	console.log("Standard Dev of y: " + standardDeviationOfY)
+
+	piersonCorrelationOfXAndY = (1 / (xValues.length - 1))
+
+	for(var i = 0; i < xValues.length; i++){
+		piersonCorrelationOfXAndY += ((xValues[i] - meanOfX) / standardDeviationOfX) * ((yValues[i] - meanOfY) / standardDeviationOfY);
+	}
+
+	console.log("Pierson Correlation of X and Y: " + piersonCorrelationOfXAndY)
+
+	var jsonObject = {
+		status: "Success",
+		xValues: xValues,
+		yValues: yValues,
+		correlation: piersonCorrelationOfXAndY,
+		message: "The Pierson-Correlation value is: " + piersonCorrelationOfXAndY
+	}
+
+	return jsonObject
+}
+
+
+
+
+
+
+
+function correlation_DIM3_305M(testList, cowList){
+	var meanOfX = 0;
+	var meanOfY = 0;
+	var standardDeviationOfX = 0;
+	var standardDeviationOfY = 0;
+	var piersonCorrelationOfXAndY = 0;
+
+	var xValues = []
+	var yValues = []
+
+	testList.forEach(function(test){
+		if(test.daysInMilk == 0){
+			xValues.push(Number(test.value));
+
+			cowList.forEach(function(cow){
+				if(test.cowID == cow.id && test.herdID == cow.herdID){
+					yValues.push(Number(cow.current305DayMilk))
+				}
+			})
+
+		}
+	})
+
+	if(xValues.length == 0){
+		return "There are no test results for cows in DIM 3"
+	}
+
+	xValues.forEach(function(value){
+		meanOfX += value
+	})
+
+	yValues.forEach(function(value){
+		meanOfY += value
+	})
+
+	meanOfX = meanOfX / xValues.length
+	meanOfY = meanOfY / yValues.length
+
+	console.log("Mean of x: " + meanOfX)
+	console.log("Mean of y: " + meanOfY)
+
+	xValues.forEach(function(value){
+		standardDeviationOfX += ((value - meanOfX) * (value - meanOfX))
+	})
+	yValues.forEach(function(value){
+		standardDeviationOfY += ((value - meanOfY) * (value - meanOfY))
+	})
+
+	standardDeviationOfX = Math.sqrt((1 / (xValues.length - 1)) * standardDeviationOfX);
+	standardDeviationOfY = Math.sqrt((1 / (yValues.length - 1)) * standardDeviationOfY);
+
+	console.log("Standard Dev of x: " + standardDeviationOfX)
+	console.log("Standard Dev of y: " + standardDeviationOfY)
+
+	piersonCorrelationOfXAndY = (1 / (xValues.length - 1))
+
+	for(var i = 0; i < xValues.length; i++){
+		piersonCorrelationOfXAndY += ((xValues[i] - meanOfX) / standardDeviationOfX) * ((yValues[i] - meanOfY) / standardDeviationOfY);
+	}
+
+	console.log("Pierson Correlation of X and Y: " + piersonCorrelationOfXAndY)
+
+	var jsonObject = {
+		status: "Success",
+		xValues: xValues,
+		yValues: yValues,
+		correlation: piersonCorrelationOfXAndY,
+		message: "The Pierson-Correlation value is: " + piersonCorrelationOfXAndY
+	}
+
+	return jsonObject
+}
+
+
+
+
+
+
+function correlation_DIM4_305M(testList, cowList){
+	var meanOfX = 0;
+	var meanOfY = 0;
+	var standardDeviationOfX = 0;
+	var standardDeviationOfY = 0;
+	var piersonCorrelationOfXAndY = 0;
+
+	var xValues = []
+	var yValues = []
+
+	testList.forEach(function(test){
+		if(test.daysInMilk == 0){
+			xValues.push(Number(test.value));
+
+			cowList.forEach(function(cow){
+				if(test.cowID == cow.id && test.herdID == cow.herdID){
+					yValues.push(Number(cow.current305DayMilk))
+				}
+			})
+
+		}
+	})
+
+	if(xValues.length == 0){
+		return "There are no test results for cows in DIM 4"
+	}
+
+	xValues.forEach(function(value){
+		meanOfX += value
+	})
+
+	yValues.forEach(function(value){
+		meanOfY += value
+	})
+
+	meanOfX = meanOfX / xValues.length
+	meanOfY = meanOfY / yValues.length
+
+	console.log("Mean of x: " + meanOfX)
+	console.log("Mean of y: " + meanOfY)
+
+	xValues.forEach(function(value){
+		standardDeviationOfX += ((value - meanOfX) * (value - meanOfX))
+	})
+	yValues.forEach(function(value){
+		standardDeviationOfY += ((value - meanOfY) * (value - meanOfY))
+	})
+
+	standardDeviationOfX = Math.sqrt((1 / (xValues.length - 1)) * standardDeviationOfX);
+	standardDeviationOfY = Math.sqrt((1 / (yValues.length - 1)) * standardDeviationOfY);
+
+	console.log("Standard Dev of x: " + standardDeviationOfX)
+	console.log("Standard Dev of y: " + standardDeviationOfY)
+
+	piersonCorrelationOfXAndY = (1 / (xValues.length - 1))
+
+	for(var i = 0; i < xValues.length; i++){
+		piersonCorrelationOfXAndY += ((xValues[i] - meanOfX) / standardDeviationOfX) * ((yValues[i] - meanOfY) / standardDeviationOfY);
+	}
+
+	console.log("Pierson Correlation of X and Y: " + piersonCorrelationOfXAndY)
+
+	var jsonObject = {
+		status: "Success",
+		xValues: xValues,
+		yValues: yValues,
+		correlation: piersonCorrelationOfXAndY,
+		message: "The Pierson-Correlation value is: " + piersonCorrelationOfXAndY
+	}
+
+	return jsonObject
+}
+
+
+
+
+
+
+
+function correlation_DIM0_SCC(testList, cowList){
+	var meanOfX = 0;
+	var meanOfY = 0;
+	var standardDeviationOfX = 0;
+	var standardDeviationOfY = 0;
+	var piersonCorrelationOfXAndY = 0;
+
+	var xValues = []
+	var yValues = []
+
+	testList.forEach(function(test){
+		if(test.daysInMilk == 0){
+			xValues.push(Number(test.value));
+
+			cowList.forEach(function(cow){
+				if(test.cowID == cow.id && test.herdID == cow.herdID){
+					yValues.push(Number(cow.currentSomaticCellCount))
+				}
+			})
+
+		}
+	})
+
+	if(xValues.length == 0){
+		return "There are no test results for cows in DIM 0"
+	}
+
+	xValues.forEach(function(value){
+		meanOfX += value
+	})
+
+	yValues.forEach(function(value){
+		meanOfY += value
+	})
+
+	meanOfX = meanOfX / xValues.length
+	meanOfY = meanOfY / yValues.length
+
+	console.log("Mean of x: " + meanOfX)
+	console.log("Mean of y: " + meanOfY)
+
+	xValues.forEach(function(value){
+		standardDeviationOfX += ((value - meanOfX) * (value - meanOfX))
+	})
+	yValues.forEach(function(value){
+		standardDeviationOfY += ((value - meanOfY) * (value - meanOfY))
+	})
+
+	standardDeviationOfX = Math.sqrt((1 / (xValues.length - 1)) * standardDeviationOfX);
+	standardDeviationOfY = Math.sqrt((1 / (yValues.length - 1)) * standardDeviationOfY);
+
+	console.log("Standard Dev of x: " + standardDeviationOfX)
+	console.log("Standard Dev of y: " + standardDeviationOfY)
+
+	piersonCorrelationOfXAndY = (1 / (xValues.length - 1))
+
+	for(var i = 0; i < xValues.length; i++){
+		piersonCorrelationOfXAndY += ((xValues[i] - meanOfX) / standardDeviationOfX) * ((yValues[i] - meanOfY) / standardDeviationOfY);
+	}
+
+	console.log("Pierson Correlation of X and Y: " + piersonCorrelationOfXAndY)
+
+	var jsonObject = {
+		status: "Success",
+		xValues: xValues,
+		yValues: yValues,
+		correlation: piersonCorrelationOfXAndY,
+		message: "The Pierson-Correlation value is: " + piersonCorrelationOfXAndY
+	}
+
+	return jsonObject
+}
+
+
+function correlation_DIM1_SCC(testList, cowList){
+	var meanOfX = 0;
+	var meanOfY = 0;
+	var standardDeviationOfX = 0;
+	var standardDeviationOfY = 0;
+	var piersonCorrelationOfXAndY = 0;
+
+	var xValues = []
+	var yValues = []
+
+	testList.forEach(function(test){
+		if(test.daysInMilk == 1){
+			xValues.push(Number(test.value));
+
+			cowList.forEach(function(cow){
+				if(test.cowID == cow.id && test.herdID == cow.herdID){
+					yValues.push(Number(cow.currentSomaticCellCount))
+				}
+			})
+
+		}
+	})
+
+	if(xValues.length == 0){
+		return "There are no test results for cows in DIM 1"
+	}
+
+	xValues.forEach(function(value){
+		meanOfX += value
+	})
+
+	yValues.forEach(function(value){
+		meanOfY += value
+	})
+
+	meanOfX = meanOfX / xValues.length
+	meanOfY = meanOfY / yValues.length
+
+	console.log("Mean of x: " + meanOfX)
+	console.log("Mean of y: " + meanOfY)
+
+	xValues.forEach(function(value){
+		standardDeviationOfX += ((value - meanOfX) * (value - meanOfX))
+	})
+	yValues.forEach(function(value){
+		standardDeviationOfY += ((value - meanOfY) * (value - meanOfY))
+	})
+
+	standardDeviationOfX = Math.sqrt((1 / (xValues.length - 1)) * standardDeviationOfX);
+	standardDeviationOfY = Math.sqrt((1 / (yValues.length - 1)) * standardDeviationOfY);
+
+	console.log("Standard Dev of x: " + standardDeviationOfX)
+	console.log("Standard Dev of y: " + standardDeviationOfY)
+
+	piersonCorrelationOfXAndY = (1 / (xValues.length - 1))
+
+	for(var i = 0; i < xValues.length; i++){
+		piersonCorrelationOfXAndY += ((xValues[i] - meanOfX) / standardDeviationOfX) * ((yValues[i] - meanOfY) / standardDeviationOfY);
+	}
+
+	console.log("Pierson Correlation of X and Y: " + piersonCorrelationOfXAndY)
+
+	var jsonObject = {
+		status: "Success",
+		xValues: xValues,
+		yValues: yValues,
+		correlation: piersonCorrelationOfXAndY,
+		message: "The Pierson-Correlation value is: " + piersonCorrelationOfXAndY
+	}
+
+	return jsonObject
+}
+
+
+
+
+function correlation_DIM2_SCC(testList, cowList){
+	var meanOfX = 0;
+	var meanOfY = 0;
+	var standardDeviationOfX = 0;
+	var standardDeviationOfY = 0;
+	var piersonCorrelationOfXAndY = 0;
+
+	var xValues = []
+	var yValues = []
+
+	testList.forEach(function(test){
+		if(test.daysInMilk == 2){
+			xValues.push(Number(test.value));
+
+			cowList.forEach(function(cow){
+				if(test.cowID == cow.id && test.herdID == cow.herdID){
+					yValues.push(Number(cow.currentSomaticCellCount))
+				}
+			})
+
+		}
+	})
+
+	if(xValues.length == 0){
+		return "There are no test results for cows in DIM 2"
+	}
+
+	xValues.forEach(function(value){
+		meanOfX += value
+	})
+
+	yValues.forEach(function(value){
+		meanOfY += value
+	})
+
+	meanOfX = meanOfX / xValues.length
+	meanOfY = meanOfY / yValues.length
+
+	console.log("Mean of x: " + meanOfX)
+	console.log("Mean of y: " + meanOfY)
+
+	xValues.forEach(function(value){
+		standardDeviationOfX += ((value - meanOfX) * (value - meanOfX))
+	})
+	yValues.forEach(function(value){
+		standardDeviationOfY += ((value - meanOfY) * (value - meanOfY))
+	})
+
+	standardDeviationOfX = Math.sqrt((1 / (xValues.length - 1)) * standardDeviationOfX);
+	standardDeviationOfY = Math.sqrt((1 / (yValues.length - 1)) * standardDeviationOfY);
+
+	console.log("Standard Dev of x: " + standardDeviationOfX)
+	console.log("Standard Dev of y: " + standardDeviationOfY)
+
+	piersonCorrelationOfXAndY = (1 / (xValues.length - 1))
+
+	for(var i = 0; i < xValues.length; i++){
+		piersonCorrelationOfXAndY += ((xValues[i] - meanOfX) / standardDeviationOfX) * ((yValues[i] - meanOfY) / standardDeviationOfY);
+	}
+
+	console.log("Pierson Correlation of X and Y: " + piersonCorrelationOfXAndY)
+
+	var jsonObject = {
+		status: "Success",
+		xValues: xValues,
+		yValues: yValues,
+		correlation: piersonCorrelationOfXAndY,
+		message: "The Pierson-Correlation value is: " + piersonCorrelationOfXAndY
+	}
+
+	return jsonObject
+}
+
+
+
+function correlation_DIM3_SCC(testList, cowList){
+	var meanOfX = 0;
+	var meanOfY = 0;
+	var standardDeviationOfX = 0;
+	var standardDeviationOfY = 0;
+	var piersonCorrelationOfXAndY = 0;
+
+	var xValues = []
+	var yValues = []
+
+	testList.forEach(function(test){
+		if(test.daysInMilk == 3){
+			xValues.push(Number(test.value));
+
+			cowList.forEach(function(cow){
+				if(test.cowID == cow.id && test.herdID == cow.herdID){
+					yValues.push(Number(cow.currentSomaticCellCount))
+				}
+			})
+
+		}
+	})
+
+	if(xValues.length == 0){
+		return "There are no test results for cows in DIM 3"
+	}
+
+	xValues.forEach(function(value){
+		meanOfX += value
+	})
+
+	yValues.forEach(function(value){
+		meanOfY += value
+	})
+
+	meanOfX = meanOfX / xValues.length
+	meanOfY = meanOfY / yValues.length
+
+	console.log("Mean of x: " + meanOfX)
+	console.log("Mean of y: " + meanOfY)
+
+	xValues.forEach(function(value){
+		standardDeviationOfX += ((value - meanOfX) * (value - meanOfX))
+	})
+	yValues.forEach(function(value){
+		standardDeviationOfY += ((value - meanOfY) * (value - meanOfY))
+	})
+
+	standardDeviationOfX = Math.sqrt((1 / (xValues.length - 1)) * standardDeviationOfX);
+	standardDeviationOfY = Math.sqrt((1 / (yValues.length - 1)) * standardDeviationOfY);
+
+	console.log("Standard Dev of x: " + standardDeviationOfX)
+	console.log("Standard Dev of y: " + standardDeviationOfY)
+
+	piersonCorrelationOfXAndY = (1 / (xValues.length - 1))
+
+	for(var i = 0; i < xValues.length; i++){
+		piersonCorrelationOfXAndY += ((xValues[i] - meanOfX) / standardDeviationOfX) * ((yValues[i] - meanOfY) / standardDeviationOfY);
+	}
+
+	console.log("Pierson Correlation of X and Y: " + piersonCorrelationOfXAndY)
+
+	var jsonObject = {
+		status: "Success",
+		xValues: xValues,
+		yValues: yValues,
+		correlation: piersonCorrelationOfXAndY,
+		message: "The Pierson-Correlation value is: " + piersonCorrelationOfXAndY
+	}
+
+	return jsonObject
+}
+
+
+
+
+
+function correlation_DIM4_SCC(testList, cowList){
+	var meanOfX = 0;
+	var meanOfY = 0;
+	var standardDeviationOfX = 0;
+	var standardDeviationOfY = 0;
+	var piersonCorrelationOfXAndY = 0;
+
+	var xValues = []
+	var yValues = []
+
+	testList.forEach(function(test){
+		if(test.daysInMilk == 4){
+			xValues.push(Number(test.value));
+
+			cowList.forEach(function(cow){
+				if(test.cowID == cow.id && test.herdID == cow.herdID){
+					yValues.push(Number(cow.currentSomaticCellCount))
+				}
+			})
+
+		}
+	})
+
+	if(xValues.length == 0){
+		return "There are no test results for cows in DIM 4"
+	}
+
+	xValues.forEach(function(value){
+		meanOfX += value
+	})
+
+	yValues.forEach(function(value){
+		meanOfY += value
+	})
+
+	meanOfX = meanOfX / xValues.length
+	meanOfY = meanOfY / yValues.length
+
+	console.log("Mean of x: " + meanOfX)
+	console.log("Mean of y: " + meanOfY)
+
+	xValues.forEach(function(value){
+		standardDeviationOfX += ((value - meanOfX) * (value - meanOfX))
+	})
+	yValues.forEach(function(value){
+		standardDeviationOfY += ((value - meanOfY) * (value - meanOfY))
+	})
+
+	standardDeviationOfX = Math.sqrt((1 / (xValues.length - 1)) * standardDeviationOfX);
+	standardDeviationOfY = Math.sqrt((1 / (yValues.length - 1)) * standardDeviationOfY);
+
+	console.log("Standard Dev of x: " + standardDeviationOfX)
+	console.log("Standard Dev of y: " + standardDeviationOfY)
+
+	piersonCorrelationOfXAndY = (1 / (xValues.length - 1))
+
+	for(var i = 0; i < xValues.length; i++){
+		piersonCorrelationOfXAndY += ((xValues[i] - meanOfX) / standardDeviationOfX) * ((yValues[i] - meanOfY) / standardDeviationOfY);
+	}
+
+	console.log("Pierson Correlation of X and Y: " + piersonCorrelationOfXAndY)
+
+	var jsonObject = {
+		status: "Success",
+		xValues: xValues,
+		yValues: yValues,
+		correlation: piersonCorrelationOfXAndY,
+		message: "The Pierson-Correlation value is: " + piersonCorrelationOfXAndY
+	}
+
+	return jsonObject
+}
+
+
+
+
 app.get("/herd", authorizeUser, (req, res) => {
 		console.log("Fetching ALL Herds")
 

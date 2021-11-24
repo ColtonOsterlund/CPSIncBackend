@@ -453,7 +453,11 @@ function correlation_DIM0_305M(testList, cowList){
 	})
 
 	if(xValues.length == 0){
-		return "There are no test results for cows in DIM 0"
+		var jsonObject = {
+			status: "Failure",
+			message: "There are no test results for cows in DIM 0"
+		}
+		return jsonObject
 	}
 
 	xValues.forEach(function(value){
@@ -521,7 +525,7 @@ function correlation_DIM1_305M(testList, cowList){
 	var yValues = []
 
 	testList.forEach(function(test){
-		if(test.daysInMilk == 0){
+		if(test.daysInMilk == 1){
 			xValues.push(Number(test.value));
 
 			cowList.forEach(function(cow){
@@ -534,7 +538,11 @@ function correlation_DIM1_305M(testList, cowList){
 	})
 
 	if(xValues.length == 0){
-		return "There are no test results for cows in DIM 1"
+		var jsonObject = {
+			status: "Failure",
+			message: "There are no test results for cows in DIM 1"
+		}
+		return jsonObject
 	}
 
 	xValues.forEach(function(value){
@@ -612,7 +620,11 @@ function correlation_DIM2_305M(testList, cowList){
 	})
 
 	if(xValues.length == 0){
-		return "There are no test results for cows in DIM 2"
+		var jsonObject = {
+			status: "Failure",
+			message: "There are no test results for cows in DIM 2"
+		}
+		return jsonObject
 	}
 
 	xValues.forEach(function(value){
@@ -678,7 +690,7 @@ function correlation_DIM3_305M(testList, cowList){
 	var yValues = []
 
 	testList.forEach(function(test){
-		if(test.daysInMilk == 0){
+		if(test.daysInMilk == 3){
 			xValues.push(Number(test.value));
 
 			cowList.forEach(function(cow){
@@ -691,7 +703,11 @@ function correlation_DIM3_305M(testList, cowList){
 	})
 
 	if(xValues.length == 0){
-		return "There are no test results for cows in DIM 3"
+		var jsonObject = {
+			status: "Failure",
+			message: "There are no test results for cows in DIM 3"
+		}
+		return jsonObject
 	}
 
 	xValues.forEach(function(value){
@@ -756,7 +772,7 @@ function correlation_DIM4_305M(testList, cowList){
 	var yValues = []
 
 	testList.forEach(function(test){
-		if(test.daysInMilk == 0){
+		if(test.daysInMilk == 4){
 			xValues.push(Number(test.value));
 
 			cowList.forEach(function(cow){
@@ -769,7 +785,11 @@ function correlation_DIM4_305M(testList, cowList){
 	})
 
 	if(xValues.length == 0){
-		return "There are no test results for cows in DIM 4"
+		var jsonObject = {
+			status: "Failure",
+			message: "There are no test results for cows in DIM 4"
+		}
+		return jsonObject
 	}
 
 	xValues.forEach(function(value){
@@ -848,7 +868,11 @@ function correlation_DIM0_SCC(testList, cowList){
 	})
 
 	if(xValues.length == 0){
-		return "There are no test results for cows in DIM 0"
+		var jsonObject = {
+			status: "Failure",
+			message: "There are no test results for cows in DIM 0"
+		}
+		return jsonObject
 	}
 
 	xValues.forEach(function(value){
@@ -922,7 +946,11 @@ function correlation_DIM1_SCC(testList, cowList){
 	})
 
 	if(xValues.length == 0){
-		return "There are no test results for cows in DIM 1"
+		var jsonObject = {
+			status: "Failure",
+			message: "There are no test results for cows in DIM 1"
+		}
+		return jsonObject
 	}
 
 	xValues.forEach(function(value){
@@ -998,7 +1026,11 @@ function correlation_DIM2_SCC(testList, cowList){
 	})
 
 	if(xValues.length == 0){
-		return "There are no test results for cows in DIM 2"
+		var jsonObject = {
+			status: "Failure",
+			message: "There are no test results for cows in DIM 2"
+		}
+		return jsonObject
 	}
 
 	xValues.forEach(function(value){
@@ -1073,7 +1105,11 @@ function correlation_DIM3_SCC(testList, cowList){
 	})
 
 	if(xValues.length == 0){
-		return "There are no test results for cows in DIM 3"
+		var jsonObject = {
+			status: "Failure",
+			message: "There are no test results for cows in DIM 3"
+		}
+		return jsonObject
 	}
 
 	xValues.forEach(function(value){
@@ -1150,7 +1186,11 @@ function correlation_DIM4_SCC(testList, cowList){
 	})
 
 	if(xValues.length == 0){
-		return "There are no test results for cows in DIM 4"
+		var jsonObject = {
+			status: "Failure",
+			message: "There are no test results for cows in DIM 4"
+		}
+		return jsonObject
 	}
 
 	xValues.forEach(function(value){

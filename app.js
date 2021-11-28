@@ -540,7 +540,7 @@ function correlation_DIM1_305M(testList, cowList){
 	if(xValues.length == 0){
 		var jsonObject = {
 			status: "Failure",
-			message: "There are no test results for cows in DIM 1"
+			message: "There are no test results for cows in DIM 0"
 		}
 		return jsonObject
 	}
@@ -573,10 +573,13 @@ function correlation_DIM1_305M(testList, cowList){
 	console.log("Standard Dev of y: " + standardDeviationOfY)
 
 	piersonCorrelationOfXAndY = (1 / (xValues.length - 1))
+	var piersonMultiplier = 0;
 
 	for(var i = 0; i < xValues.length; i++){
-		piersonCorrelationOfXAndY += ((xValues[i] - meanOfX) / standardDeviationOfX) * ((yValues[i] - meanOfY) / standardDeviationOfY);
+		piersonMultiplier = piersonMultiplier + ((xValues[i] - meanOfX) / standardDeviationOfX) * ((yValues[i] - meanOfY) / standardDeviationOfY);
 	}
+
+	piersonCorrelationOfXAndY = piersonCorrelationOfXAndY * piersonMultiplier;
 
 	console.log("Pierson Correlation of X and Y: " + piersonCorrelationOfXAndY)
 
@@ -708,7 +711,7 @@ function correlation_DIM3_305M(testList, cowList){
 	if(xValues.length == 0){
 		var jsonObject = {
 			status: "Failure",
-			message: "There are no test results for cows in DIM 3"
+			message: "There are no test results for cows in DIM 0"
 		}
 		return jsonObject
 	}
@@ -741,10 +744,13 @@ function correlation_DIM3_305M(testList, cowList){
 	console.log("Standard Dev of y: " + standardDeviationOfY)
 
 	piersonCorrelationOfXAndY = (1 / (xValues.length - 1))
+	var piersonMultiplier = 0;
 
 	for(var i = 0; i < xValues.length; i++){
-		piersonCorrelationOfXAndY += ((xValues[i] - meanOfX) / standardDeviationOfX) * ((yValues[i] - meanOfY) / standardDeviationOfY);
+		piersonMultiplier = piersonMultiplier + ((xValues[i] - meanOfX) / standardDeviationOfX) * ((yValues[i] - meanOfY) / standardDeviationOfY);
 	}
+
+	piersonCorrelationOfXAndY = piersonCorrelationOfXAndY * piersonMultiplier;
 
 	console.log("Pierson Correlation of X and Y: " + piersonCorrelationOfXAndY)
 
@@ -790,7 +796,7 @@ function correlation_DIM4_305M(testList, cowList){
 	if(xValues.length == 0){
 		var jsonObject = {
 			status: "Failure",
-			message: "There are no test results for cows in DIM 4"
+			message: "There are no test results for cows in DIM 0"
 		}
 		return jsonObject
 	}
@@ -823,10 +829,13 @@ function correlation_DIM4_305M(testList, cowList){
 	console.log("Standard Dev of y: " + standardDeviationOfY)
 
 	piersonCorrelationOfXAndY = (1 / (xValues.length - 1))
+	var piersonMultiplier = 0;
 
 	for(var i = 0; i < xValues.length; i++){
-		piersonCorrelationOfXAndY += ((xValues[i] - meanOfX) / standardDeviationOfX) * ((yValues[i] - meanOfY) / standardDeviationOfY);
+		piersonMultiplier = piersonMultiplier + ((xValues[i] - meanOfX) / standardDeviationOfX) * ((yValues[i] - meanOfY) / standardDeviationOfY);
 	}
+
+	piersonCorrelationOfXAndY = piersonCorrelationOfXAndY * piersonMultiplier;
 
 	console.log("Pierson Correlation of X and Y: " + piersonCorrelationOfXAndY)
 
@@ -906,10 +915,13 @@ function correlation_DIM0_SCC(testList, cowList){
 	console.log("Standard Dev of y: " + standardDeviationOfY)
 
 	piersonCorrelationOfXAndY = (1 / (xValues.length - 1))
+	var piersonMultiplier = 0;
 
 	for(var i = 0; i < xValues.length; i++){
-		piersonCorrelationOfXAndY += ((xValues[i] - meanOfX) / standardDeviationOfX) * ((yValues[i] - meanOfY) / standardDeviationOfY);
+		piersonMultiplier = piersonMultiplier + ((xValues[i] - meanOfX) / standardDeviationOfX) * ((yValues[i] - meanOfY) / standardDeviationOfY);
 	}
+
+	piersonCorrelationOfXAndY = piersonCorrelationOfXAndY * piersonMultiplier;
 
 	console.log("Pierson Correlation of X and Y: " + piersonCorrelationOfXAndY)
 
@@ -951,7 +963,7 @@ function correlation_DIM1_SCC(testList, cowList){
 	if(xValues.length == 0){
 		var jsonObject = {
 			status: "Failure",
-			message: "There are no test results for cows in DIM 1"
+			message: "There are no test results for cows in DIM 0"
 		}
 		return jsonObject
 	}
@@ -984,10 +996,13 @@ function correlation_DIM1_SCC(testList, cowList){
 	console.log("Standard Dev of y: " + standardDeviationOfY)
 
 	piersonCorrelationOfXAndY = (1 / (xValues.length - 1))
+	var piersonMultiplier = 0;
 
 	for(var i = 0; i < xValues.length; i++){
-		piersonCorrelationOfXAndY += ((xValues[i] - meanOfX) / standardDeviationOfX) * ((yValues[i] - meanOfY) / standardDeviationOfY);
+		piersonMultiplier = piersonMultiplier + ((xValues[i] - meanOfX) / standardDeviationOfX) * ((yValues[i] - meanOfY) / standardDeviationOfY);
 	}
+
+	piersonCorrelationOfXAndY = piersonCorrelationOfXAndY * piersonMultiplier;
 
 	console.log("Pierson Correlation of X and Y: " + piersonCorrelationOfXAndY)
 
@@ -1031,7 +1046,7 @@ function correlation_DIM2_SCC(testList, cowList){
 	if(xValues.length == 0){
 		var jsonObject = {
 			status: "Failure",
-			message: "There are no test results for cows in DIM 2"
+			message: "There are no test results for cows in DIM 0"
 		}
 		return jsonObject
 	}
@@ -1064,10 +1079,13 @@ function correlation_DIM2_SCC(testList, cowList){
 	console.log("Standard Dev of y: " + standardDeviationOfY)
 
 	piersonCorrelationOfXAndY = (1 / (xValues.length - 1))
+	var piersonMultiplier = 0;
 
 	for(var i = 0; i < xValues.length; i++){
-		piersonCorrelationOfXAndY += ((xValues[i] - meanOfX) / standardDeviationOfX) * ((yValues[i] - meanOfY) / standardDeviationOfY);
+		piersonMultiplier = piersonMultiplier + ((xValues[i] - meanOfX) / standardDeviationOfX) * ((yValues[i] - meanOfY) / standardDeviationOfY);
 	}
+
+	piersonCorrelationOfXAndY = piersonCorrelationOfXAndY * piersonMultiplier;
 
 	console.log("Pierson Correlation of X and Y: " + piersonCorrelationOfXAndY)
 
@@ -1110,7 +1128,7 @@ function correlation_DIM3_SCC(testList, cowList){
 	if(xValues.length == 0){
 		var jsonObject = {
 			status: "Failure",
-			message: "There are no test results for cows in DIM 3"
+			message: "There are no test results for cows in DIM 0"
 		}
 		return jsonObject
 	}
@@ -1143,10 +1161,13 @@ function correlation_DIM3_SCC(testList, cowList){
 	console.log("Standard Dev of y: " + standardDeviationOfY)
 
 	piersonCorrelationOfXAndY = (1 / (xValues.length - 1))
+	var piersonMultiplier = 0;
 
 	for(var i = 0; i < xValues.length; i++){
-		piersonCorrelationOfXAndY += ((xValues[i] - meanOfX) / standardDeviationOfX) * ((yValues[i] - meanOfY) / standardDeviationOfY);
+		piersonMultiplier = piersonMultiplier + ((xValues[i] - meanOfX) / standardDeviationOfX) * ((yValues[i] - meanOfY) / standardDeviationOfY);
 	}
+
+	piersonCorrelationOfXAndY = piersonCorrelationOfXAndY * piersonMultiplier;
 
 	console.log("Pierson Correlation of X and Y: " + piersonCorrelationOfXAndY)
 
@@ -1191,7 +1212,7 @@ function correlation_DIM4_SCC(testList, cowList){
 	if(xValues.length == 0){
 		var jsonObject = {
 			status: "Failure",
-			message: "There are no test results for cows in DIM 4"
+			message: "There are no test results for cows in DIM 0"
 		}
 		return jsonObject
 	}
@@ -1224,10 +1245,13 @@ function correlation_DIM4_SCC(testList, cowList){
 	console.log("Standard Dev of y: " + standardDeviationOfY)
 
 	piersonCorrelationOfXAndY = (1 / (xValues.length - 1))
+	var piersonMultiplier = 0;
 
 	for(var i = 0; i < xValues.length; i++){
-		piersonCorrelationOfXAndY += ((xValues[i] - meanOfX) / standardDeviationOfX) * ((yValues[i] - meanOfY) / standardDeviationOfY);
+		piersonMultiplier = piersonMultiplier + ((xValues[i] - meanOfX) / standardDeviationOfX) * ((yValues[i] - meanOfY) / standardDeviationOfY);
 	}
+
+	piersonCorrelationOfXAndY = piersonCorrelationOfXAndY * piersonMultiplier;
 
 	console.log("Pierson Correlation of X and Y: " + piersonCorrelationOfXAndY)
 

@@ -2364,7 +2364,7 @@ app.post('/cow-file', (req, res) => { //NOT YET BEING VALIDATED
     });
 	
 
-	sqlQuery(query, cowValues, (err, objects) => {
+	sqlQuery(query, values, (err, objects) => {
 		if(err != null){
 			console.log("Error")
 			return res.send(err)

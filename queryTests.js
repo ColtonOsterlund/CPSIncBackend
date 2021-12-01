@@ -147,34 +147,34 @@ function getConnection(){
 // //run sql query
 function sqlQuery(){
 
-	query = "INSERT * FROM herd;";
-	arguments = null;
+	// query = "INSERT * FROM herd;";
+	// arguments = null;
 
-	for(var i = 0; i < 100; i++){
-		var cowID = encrypt(String(i))
-		var daysInMilk = encrypt(String(2))
-		var dryOffDay = encrypt(String(2))
-		var mastitisHistory = encrypt(String(2))
-		var methodOfDryOff = encrypt(String(2))
-		var dailyMilkAverage = encrypt(String(2))
-		var parity = encrypt(String(2))
-		var reproductionStatus = encrypt(String(2))
-		var numberOfTimesBred = encrypt(String(2))
-		var farmBreedingIndex = encrypt(String(2))
-		var herdID = encrypt(String(100000))
-		var userID = encrypt(String(100000))
-		var lactationNumber = encrypt(String(2))
-		var daysCarriedCalfIfPregnant = encrypt(String(2))
-		var projectedDueDate = encrypt(String(2))
-		var current305DayMilk = encrypt(String(100 - i))
-		var currentSomaticCellCount = encrypt(String(i))
-		var linearScoreAtLastTest = encrypt(String(2))
-		var dateOfLastClinicalMastitis = encrypt(String(2))
-		var chainVisibleId = encrypt(String(2))
-		var animalRegistrationNoNLID = encrypt(String(2))
-		var damBreed = encrypt(String(2))
-		var culled = 0
-		var modifyDate = encrypt(String(2))
+	// for(var i = 0; i < 100; i++){
+	// 	var cowID = encrypt(String(i))
+	// 	var daysInMilk = encrypt(String(2))
+	// 	var dryOffDay = encrypt(String(2))
+	// 	var mastitisHistory = encrypt(String(2))
+	// 	var methodOfDryOff = encrypt(String(2))
+	// 	var dailyMilkAverage = encrypt(String(2))
+	// 	var parity = encrypt(String(2))
+	// 	var reproductionStatus = encrypt(String(2))
+	// 	var numberOfTimesBred = encrypt(String(2))
+	// 	var farmBreedingIndex = encrypt(String(2))
+	// 	var herdID = encrypt(String(100000))
+	// 	var userID = encrypt(String(100000))
+	// 	var lactationNumber = encrypt(String(2))
+	// 	var daysCarriedCalfIfPregnant = encrypt(String(2))
+	// 	var projectedDueDate = encrypt(String(2))
+	// 	var current305DayMilk = encrypt(String(100 - i))
+	// 	var currentSomaticCellCount = encrypt(String(i))
+	// 	var linearScoreAtLastTest = encrypt(String(2))
+	// 	var dateOfLastClinicalMastitis = encrypt(String(2))
+	// 	var chainVisibleId = encrypt(String(2))
+	// 	var animalRegistrationNoNLID = encrypt(String(2))
+	// 	var damBreed = encrypt(String(2))
+	// 	var culled = 0
+	// 	var modifyDate = encrypt(String(2))
 	
 	
 		// getConnection().query("INSERT INTO cow (id, daysInMilk, dryOffDay, mastitisHistory, methodOfDryOff, dailyMilkAverage, parity, reproductionStatus, numberOfTimesBred, farmBreedingIndex, herdID, userID, lactationNumber, daysCarriedCalfIfPregnant, projectedDueDate, current305DayMilk, currentSomaticCellCount, linearScoreAtLastTest, dateOfLastClinicalMastitis, chainVisibleId, animalRegistrationNoNLID, damBreed, culled, modifyDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [cowID, daysInMilk, dryOffDay, mastitisHistory, methodOfDryOff, dailyMilkAverage, parity, reproductionStatus, numberOfTimesBred, farmBreedingIndex, herdID, userID, lactationNumber, daysCarriedCalfIfPregnant, projectedDueDate, current305DayMilk, currentSomaticCellCount, linearScoreAtLastTest, dateOfLastClinicalMastitis, chainVisibleId, animalRegistrationNoNLID, damBreed, culled, modifyDate], (err, rows) => {
@@ -184,37 +184,40 @@ function sqlQuery(){
 		// 	else{
 		// 		console.log("Cow added")
 
-				var date = encrypt(String(2))
-				var dataType = encrypt(String(2))
-				var runtime = encrypt(String(2))
-				var testType = encrypt(String(2))
-				var units = encrypt(String(2))
-				var value = encrypt(String(i * 0.06))
-				var milkFever = encrypt(String(2))
-				var followUpNum = encrypt(String(2))
-				var testID = encrypt(String(i))
-				var milivolts = String(2)
+				// var date = encrypt(String(2))
+				// var dataType = encrypt(String(2))
+				// var runtime = encrypt(String(2))
+				// var testType = encrypt(String(2))
+				// var units = encrypt(String(2))
+				// var value = encrypt(String(i * 0.06))
+				// var milkFever = encrypt(String(2))
+				// var followUpNum = encrypt(String(2))
+				// var testID = encrypt(String(i))
+				// var milivolts = String(2)
+				console.log(encrypt('$2a$10$nbkOiQ4JOWLdJ76KPWrokursuBHnfYJ69j4dZl6Jkrgs9M63ouv9C'))
 
 
 
-				getConnection().query("INSERT INTO test (date, testType, units, value, cowID, userID, herdID, milkFever, followUpNum, testID, milivolts, daysInMilk, dryOffDay, mastitisHistory, methodOfDryOff, farmBreedingIndex, parity, reproductionStatus, numberOfTimesBred, lactationNumber, daysCarriedCalfIfPregnant, projectedDueDate, current305DayMilk, currentSomaticCellCount, linearScoreAtLastTest, dateOfLastClinicalMastitis, chainVisibleID, animalRegistrationNoNLID, damBreed) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", [date, testType, units, value, cowID, userID, herdID, milkFever, followUpNum, testID, milivolts, daysInMilk, dryOffDay, mastitisHistory, methodOfDryOff, farmBreedingIndex, parity, reproductionStatus, numberOfTimesBred, lactationNumber, daysCarriedCalfIfPregnant, projectedDueDate, current305DayMilk, currentSomaticCellCount, linearScoreAtLastTest, dateOfLastClinicalMastitis, chainVisibleId, animalRegistrationNoNLID, damBreed], (err2, rows) => {
-								
-								
-								if(err2 != null){
-									console.log("Error: " + err)
-									
-								}
-								else{
-									console.log("Test Saved")
-									
-								}
-							})
+				// getConnection().query("DELETE FROM herd WHERE userID = ?", [encrypt('$2a$10$nbkOiQ4JOWLdJ76KPWrokursuBHnfYJ69j4dZl6Jkrgs9M63ouv9C')], (err2, rows) => {
+
+				// 	if(err2 != null){
+
+				// 		console.log("Error: " + err)	
+
+				// 	}
+				// 	else{
+
+				// 		console.log("Test Saved")	
+
+				// 	}
+
+				// })
 
 
 			// }
 		// })
 
-	}
+// }
 
 
 	

@@ -2632,17 +2632,17 @@ app.post('/cow-file', async (req, res) => { //NOT YET BEING VALIDATED
 					if(err != null){
 						//return res.send(err)
 						console.log("error creating cow: " + err)
-						return callback(err)
+						//return callback(err)
 					}
 					else{
 						//return ("Finished creating cow")
 						console.log("success creating cow")
-						return callback(null)
+						//return callback(null)
 					}
 
 				})
 				
-			return callback()
+			//return callback()
 
 		}
 		//, function(err){
@@ -2707,11 +2707,11 @@ for(const object of cowArray){
 					if(err != null){
 						//return res.send(err)
 						console.log("error updating cow: " + err)
-						return callback(err)
+						//return callback(err)
 					}
 					else{
 						console.log("success updating cow")
-						return callback(null)
+						//return callback(null)
 					}
 				})
 				

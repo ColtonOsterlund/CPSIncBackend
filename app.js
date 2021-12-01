@@ -2600,12 +2600,10 @@ app.post('/cow-file', (req, res) => { //NOT YET BEING VALIDATED
 	
 	var cowArray = req.body
 
-	var connectionCounter = 0;
 
 		async.forEachOf(cowArray, function(object, key, callback) {
 
-			connectionCounter++
-			while(connectionCounter >= 5){}
+
 
 			var id = encrypt(String(object.id))
 			var herdID = encrypt(String(object.herdID))
@@ -2630,7 +2628,6 @@ app.post('/cow-file', (req, res) => { //NOT YET BEING VALIDATED
 						[id, herdID, daysInMilk, dryOffDay, lactationNumber, daysCarriedCalfIfPregnant, projectedDueDate, current305DayMilk, currentSomaticCellCount,
 						linearScoreAtLastTest, dateOfLastClinicalMastitis, chainVisibleId, animalRegistrationNoNLID, damBreed, userID, modifyDate], (err, objects) => {
 
-					connectionCounter--
 
 					if(err != null){
 						//return res.send(err)
@@ -2670,12 +2667,10 @@ app.put("/cow", (req, res) => {
 
 	var cowArray = req.body
 
-	var connectionCounter = 0
 
 		async.forEachOf(cowArray, function(object, key, callback) {
 
-			connectionCounter++
-			while(connectionCounter >= 5){}
+
 
 			var id = encrypt(String(object.id))
 			var herdID = encrypt(String(object.herdID))
@@ -2707,7 +2702,6 @@ app.put("/cow", (req, res) => {
 							current305DayMilk, current305DayMilk, currentSomaticCellCount, currentSomaticCellCount, linearScoreAtLastTest, linearScoreAtLastTest, dateOfLastClinicalMastitis, 
 							dateOfLastClinicalMastitis, chainVisibleId, chainVisibleId, animalRegistrationNoNLID, animalRegistrationNoNLID, damBreed, damBreed, culled, modifyDate, userID, id, herdID], (err, objects) => {
 					
-					connectionCounter--
 					
 					if(err != null){
 						//return res.send(err)
@@ -2740,12 +2734,9 @@ app.put("/cow-culled", (req, res) => {
 
 	var cowArray = req.body
 
-	var connectionCounter = 0
-
 		async.forEachOf(cowArray, function(object, key, callback) {
 
-			connectionCounter++
-			while(connectionCounter >= 5){}
+
 
 			var id = encrypt(String(object.id))
 			var herdID = encrypt(String(object.herdID))
@@ -2756,7 +2747,6 @@ app.put("/cow-culled", (req, res) => {
 				sqlQuery("UPDATE cow SET culled = ? WHERE userID = ? && id = ? && herdID = ?", 
 						[culled, userID, id, herdID], (err, objects) => {
 
-					connectionCounter--
 
 					if(err != null){
 						//return res.send(err)

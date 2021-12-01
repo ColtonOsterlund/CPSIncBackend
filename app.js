@@ -2600,7 +2600,13 @@ app.post('/cow-file', (req, res) => { //NOT YET BEING VALIDATED
 	
 	var cowArray = req.body
 
+	var connectionCounter = 0;
+
 		async.forEachOf(cowArray, function(object, key, callback) {
+
+			connectionCounter++
+			while(connectionCounter >= 5){}
+
 			var id = encrypt(String(object.id))
 			var herdID = encrypt(String(object.herdID))
 			var daysInMilk = encrypt(String(object.daysInMilk))
@@ -2623,21 +2629,25 @@ app.post('/cow-file', (req, res) => { //NOT YET BEING VALIDATED
 							+ "linearScoreAtLastTest, dateOfLastClinicalMastitis, chainVisibleId, animalRegistrationNoNLID, damBreed, userID, modifyDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 
 						[id, herdID, daysInMilk, dryOffDay, lactationNumber, daysCarriedCalfIfPregnant, projectedDueDate, current305DayMilk, currentSomaticCellCount,
 						linearScoreAtLastTest, dateOfLastClinicalMastitis, chainVisibleId, animalRegistrationNoNLID, damBreed, userID, modifyDate], (err, objects) => {
+
+					connectionCounter--
+
 					if(err != null){
 						//return res.send(err)
 						console.log("error creating cow: " + err)
+						return callback(err)
 					}
 					else{
 						//return ("Finished creating cow")
 						console.log("success creating cow")
+						return callback(null)
 					}
+
 				})
 				
 			return callback()
 
 		}, function(err){
-	
-			console.log("Error in function")
 	
 			if(err){
 				//handle the error if the query throws an error
@@ -2660,7 +2670,13 @@ app.put("/cow", (req, res) => {
 
 	var cowArray = req.body
 
+	var connectionCounter = 0
+
 		async.forEachOf(cowArray, function(object, key, callback) {
+
+			connectionCounter++
+			while(connectionCounter >= 5){}
+
 			var id = encrypt(String(object.id))
 			var herdID = encrypt(String(object.herdID))
 			var daysInMilk = object.daysInMilk == null ? null : encrypt(String(object.daysInMilk))
@@ -2690,20 +2706,23 @@ app.put("/cow", (req, res) => {
 						[daysInMilk, daysInMilk, dryOffDay, dryOffDay, lactationNumber, lactationNumber, daysCarriedCalfIfPregnant, daysCarriedCalfIfPregnant, projectedDueDate, projectedDueDate, 
 							current305DayMilk, current305DayMilk, currentSomaticCellCount, currentSomaticCellCount, linearScoreAtLastTest, linearScoreAtLastTest, dateOfLastClinicalMastitis, 
 							dateOfLastClinicalMastitis, chainVisibleId, chainVisibleId, animalRegistrationNoNLID, animalRegistrationNoNLID, damBreed, damBreed, culled, modifyDate, userID, id, herdID], (err, objects) => {
+					
+					connectionCounter--
+					
 					if(err != null){
 						//return res.send(err)
 						console.log("error updating cow: " + err)
+						return callback(err)
 					}
 					else{
-						return ("success updating cow")
+						console.log("success updating cow")
+						return callback(null)
 					}
 				})
 				
-			return callback()
+			//return callback()
 
 		}, function(err){
-	
-			console.log("Error in function")
 	
 			if(err){
 				//handle the error if the query throws an error
@@ -2721,7 +2740,13 @@ app.put("/cow-culled", (req, res) => {
 
 	var cowArray = req.body
 
+	var connectionCounter = 0
+
 		async.forEachOf(cowArray, function(object, key, callback) {
+
+			connectionCounter++
+			while(connectionCounter >= 5){}
+
 			var id = encrypt(String(object.id))
 			var herdID = encrypt(String(object.herdID))
 			var culled = object.culled
@@ -2730,21 +2755,24 @@ app.put("/cow-culled", (req, res) => {
 				//query from query string
 				sqlQuery("UPDATE cow SET culled = ? WHERE userID = ? && id = ? && herdID = ?", 
 						[culled, userID, id, herdID], (err, objects) => {
+
+					connectionCounter--
+
 					if(err != null){
 						//return res.send(err)
 						console.log("error updating culled on cow: " + err)
+						return callback(err)
 					}
 					else{
 						//return ("Finished setting cow to culled")
 						console.log("success updating culled on cow")
+						return callback(null)
 					}
 				})
 				
-			return callback()
+			//return callback()
 
 		}, function(err){
-	
-			console.log("Error in function")
 	
 			if(err){
 				//handle the error if the query throws an error
@@ -2965,7 +2993,7 @@ function sqlQuery(query, arguments, callback){
 
 
  const pool = mysql.createPool({ //connection pool 
-	 connectionLimit: 10,
+	 connectionLimit: 20,
 	 host: 'us-cdbr-iron-east-02.cleardb.net',
    	 user: 'b97ac0ec9c55a7',
 	 password: process.env.DB_PASSWORD, //find how to do this properly

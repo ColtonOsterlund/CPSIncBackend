@@ -2623,7 +2623,7 @@ app.post('/cow-file', (req, res) => { //NOT YET BEING VALIDATED
 			var userID = encrypt(String(req.header("user-id")))
 			
 				//query from query string
-				sqlQuery("INSERT INTO cow (id, herdID, daysInMilk, dryOffDay, lactationNumber, daysCarriedCalfIfPregnant, projectedDueDate, current305DayMilk, currentSomaticCellCount, "
+				await sqlQuery("INSERT INTO cow (id, herdID, daysInMilk, dryOffDay, lactationNumber, daysCarriedCalfIfPregnant, projectedDueDate, current305DayMilk, currentSomaticCellCount, "
 							+ "linearScoreAtLastTest, dateOfLastClinicalMastitis, chainVisibleId, animalRegistrationNoNLID, damBreed, userID, modifyDate) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)", 
 						[id, herdID, daysInMilk, dryOffDay, lactationNumber, daysCarriedCalfIfPregnant, projectedDueDate, current305DayMilk, currentSomaticCellCount,
 						linearScoreAtLastTest, dateOfLastClinicalMastitis, chainVisibleId, animalRegistrationNoNLID, damBreed, userID, modifyDate], (err, objects) => {
@@ -2691,7 +2691,7 @@ app.put("/cow", (req, res) => {
 			var userID = encrypt(String(req.header("user-id")))
 			
 				//query from query string
-				sqlQuery("UPDATE cow SET daysInMilk = CASE WHEN ? IS NOT NULL THEN ? ELSE daysInMilk END, dryOffDay = CASE WHEN ? IS NOT NULL THEN ? ELSE dryOffDay END, "
+				await sqlQuery("UPDATE cow SET daysInMilk = CASE WHEN ? IS NOT NULL THEN ? ELSE daysInMilk END, dryOffDay = CASE WHEN ? IS NOT NULL THEN ? ELSE dryOffDay END, "
 						+ "lactationNumber = CASE WHEN ? IS NOT NULL THEN ? ELSE lactationNumber END, daysCarriedCalfIfPregnant = CASE WHEN ? IS NOT NULL THEN ? ELSE daysCarriedCalfIfPregnant END, "
 						+ "projectedDueDate = CASE WHEN ? IS NOT NULL THEN ? ELSE projectedDueDate END, current305DayMilk = CASE WHEN ? IS NOT NULL THEN ? ELSE current305DayMilk END, "
 						+ "currentSomaticCellCount = CASE WHEN ? IS NOT NULL THEN ? ELSE currentSomaticCellCount END, linearScoreAtLastTest = CASE WHEN ? IS NOT NULL THEN ? ELSE linearScoreAtLastTest END, "
@@ -2744,23 +2744,19 @@ app.put("/cow-culled", (req, res) => {
 			var userID = encrypt(String(req.header("user-id")))
 			
 				//query from query string
-				sqlQuery("UPDATE cow SET culled = ? WHERE userID = ? && id = ? && herdID = ?", 
+				await sqlQuery("UPDATE cow SET culled = ? WHERE userID = ? && id = ? && herdID = ?", 
 						[culled, userID, id, herdID], (err, objects) => {
 
 
 					if(err != null){
 						//return res.send(err)
 						console.log("error updating culled on cow: " + err)
-						return callback(err)
 					}
 					else{
 						//return ("Finished setting cow to culled")
 						console.log("success updating culled on cow")
-						return callback(null)
 					}
 				})
-				
-			//return callback()
 
 		}, function(err){
 	
@@ -2983,7 +2979,7 @@ function sqlQuery(query, arguments, callback){
 
 
  const pool = mysql.createPool({ //connection pool 
-	 connectionLimit: 20,
+	 connectionLimit: 10,
 	 host: 'us-cdbr-iron-east-02.cleardb.net',
    	 user: 'b97ac0ec9c55a7',
 	 password: process.env.DB_PASSWORD, //find how to do this properly

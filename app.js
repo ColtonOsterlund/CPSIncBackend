@@ -2596,7 +2596,7 @@ app.post('/test', authorizeUser, (req, res) => { //NOT YET BEING VALIDATED
 
 
 //!!!!!!!!!!Based on file that is beeing send from CPS API
-app.post('/cow-file', (req, res) => { //NOT YET BEING VALIDATED
+app.post('/cow-file', async (req, res) => { //NOT YET BEING VALIDATED
 	
 	var cowArray = req.body
 
@@ -2663,7 +2663,7 @@ app.post('/cow-file', (req, res) => { //NOT YET BEING VALIDATED
 
 //PUT REQUESTS///////////////////////////////////////////////////////////////////////////////////////////
 //Based on file that is beeing send from CPS API
-app.put("/cow", (req, res) => {
+app.put("/cow", async (req, res) => {
 
 	var cowArray = req.body
 
@@ -2730,7 +2730,7 @@ app.put("/cow", (req, res) => {
 		});			
 })
 
-app.put("/cow-culled", (req, res) => {
+app.put("/cow-culled", async (req, res) => {
 
 	var cowArray = req.body
 

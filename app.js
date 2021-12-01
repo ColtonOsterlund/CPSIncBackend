@@ -2624,10 +2624,12 @@ app.post('/cow-file', (req, res) => { //NOT YET BEING VALIDATED
 						[id, herdID, daysInMilk, dryOffDay, lactationNumber, daysCarriedCalfIfPregnant, projectedDueDate, current305DayMilk, currentSomaticCellCount,
 						linearScoreAtLastTest, dateOfLastClinicalMastitis, chainVisibleId, animalRegistrationNoNLID, damBreed, userID, modifyDate], (err, objects) => {
 					if(err != null){
-						return res.send(err)
+						//return res.send(err)
+						console.log("error creating cow: " + err)
 					}
 					else{
-						return ("Finished creating cow")
+						//return ("Finished creating cow")
+						console.log("success creating cow")
 					}
 				})
 				
@@ -2689,10 +2691,11 @@ app.put("/cow", (req, res) => {
 							current305DayMilk, current305DayMilk, currentSomaticCellCount, currentSomaticCellCount, linearScoreAtLastTest, linearScoreAtLastTest, dateOfLastClinicalMastitis, 
 							dateOfLastClinicalMastitis, chainVisibleId, chainVisibleId, animalRegistrationNoNLID, animalRegistrationNoNLID, damBreed, damBreed, culled, modifyDate, userID, id, herdID], (err, objects) => {
 					if(err != null){
-						return res.send(err)
+						//return res.send(err)
+						console.log("error updating cow: " + err)
 					}
 					else{
-						return ("Finished updating cow")
+						return ("success updating cow")
 					}
 				})
 				
@@ -2728,10 +2731,12 @@ app.put("/cow-culled", (req, res) => {
 				sqlQuery("UPDATE cow SET culled = ? WHERE userID = ? && id = ? && herdID = ?", 
 						[culled, userID, id, herdID], (err, objects) => {
 					if(err != null){
-						return res.send(err)
+						//return res.send(err)
+						console.log("error updating culled on cow: " + err)
 					}
 					else{
-						return ("Finished setting cow to culled")
+						//return ("Finished setting cow to culled")
+						console.log("success updating culled on cow")
 					}
 				})
 				

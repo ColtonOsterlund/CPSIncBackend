@@ -2601,9 +2601,9 @@ app.post('/cow-file', async (req, res) => { //NOT YET BEING VALIDATED
 	var cowArray = req.body
 
 
-		async.forEachOf(cowArray, function(object, key, callback) {
+		//async.forEachOf(cowArray, function(object, key, callback) {
 
-
+		for(const object of cowArray){
 
 			var id = encrypt(String(object.id))
 			var herdID = encrypt(String(object.herdID))
@@ -2644,18 +2644,19 @@ app.post('/cow-file', async (req, res) => { //NOT YET BEING VALIDATED
 				
 			return callback()
 
-		}, function(err){
+		}
+		//, function(err){
 	
-			if(err){
+			//if(err){
 				//handle the error if the query throws an error
-				console.log("Error")
-				return res.send(err)
-			}else{
+				//console.log("Error")
+			//	return res.send(err)
+		//	}else{
 				//whatever you wanna do after all the iterations are done
 				console.log("Success")
 				return res.send("Success")
-			}
-		});	
+			//}
+		//});	
 	}
 	
 )
@@ -2668,9 +2669,9 @@ app.put("/cow", async (req, res) => {
 	var cowArray = req.body
 
 
-		async.forEachOf(cowArray, function(object, key, callback) {
+		//async.forEachOf(cowArray, function(object, key, callback) {
 
-
+for(const object of cowArray){
 
 			var id = encrypt(String(object.id))
 			var herdID = encrypt(String(object.herdID))
@@ -2716,26 +2717,27 @@ app.put("/cow", async (req, res) => {
 				
 			//return callback()
 
-		}, function(err){
+		}
+		//, function(err){
 	
-			if(err){
-				//handle the error if the query throws an error
-				console.log("Error")
-				return res.send(err)
-			}else{
+			// if(err){
+			// 	//handle the error if the query throws an error
+			// 	console.log("Error")
+			// 	return res.send(err)
+			// }else{
 				//whatever you wanna do after all the iterations are done
 				console.log("Success")
-				return res.send("Success")
-			}
-		});			
+		 		return res.send("Success")
+		// 	}
+		// });			
 })
 
 app.put("/cow-culled", async (req, res) => {
 
 	var cowArray = req.body
 
-		async.forEachOf(cowArray, function(object, key, callback) {
-
+		//async.forEachOf(cowArray, function(object, key, callback) {
+for(const object of cowArray){
 
 
 			var id = encrypt(String(object.id))
@@ -2758,18 +2760,19 @@ app.put("/cow-culled", async (req, res) => {
 					}
 				})
 
-		}, function(err){
+		}
+		//, function(err){
 	
-			if(err){
-				//handle the error if the query throws an error
-				console.log("Error")
-				return res.send(err)
-			}else{
-				//whatever you wanna do after all the iterations are done
-				console.log("Success")
+			// if(err){
+			// 	//handle the error if the query throws an error
+			// 	console.log("Error")
+			// 	return res.send(err)
+			// }else{
+			// 	//whatever you wanna do after all the iterations are done
+			 	console.log("Success")
 				return res.send("Success")
-			}
-		});			
+		// 	}
+		// });			
 })
 
 
